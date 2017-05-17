@@ -2,7 +2,6 @@ package twilio
 
 import (
 	"context"
-	"net/url"
 
 	types "github.com/kevinburke/go-types"
 )
@@ -65,21 +64,21 @@ type IncomingPhoneNumberPage struct {
 // Create a phone number (buy a number) with the given values.
 //
 // https://www.twilio.com/docs/api/rest/incoming-phone-numbers#toll-free-incomingphonenumber-factory-resource
-func (n *NumberPurchasingService) Create(ctx context.Context, data url.Values) (*IncomingPhoneNumber, error) {
+func (n *NumberPurchasingService) Create(ctx context.Context, opts ...RequestOption) (*IncomingPhoneNumber, error) {
 	number := new(IncomingPhoneNumber)
 	pathPart := numbersPathPart
 	if n.pathPart != "" {
 		pathPart += "/" + n.pathPart
 	}
-	err := n.client.CreateResource(ctx, pathPart, data, number)
+	err := n.client.CreateResource(ctx, pathPart, getValues(opts...), number)
 	return number, err
 }
 
 // BuyNumber attempts to buy the provided phoneNumber and returns it if
 // successful.
-func (ipn *IncomingNumberService) BuyNumber(phoneNumber string) (*IncomingPhoneNumber, error) {
-	data := url.Values{"PhoneNumber": []string{phoneNumber}}
-	return ipn.NumberPurchasingService.Create(context.Background(), data)
+func (ipn *IncomingNumberService) BuyNumber(ctx context.Context, phoneNumber string, opts ...RequestOption) (*IncomingPhoneNumber, error) {
+	opts = append(opts, WithPhoneNumber(phoneNumber))
+	return ipn.NumberPurchasingService.Create(ctx, opts...)
 }
 
 // Get retrieves a single IncomingPhoneNumber.
@@ -95,8 +94,8 @@ func (ipn *IncomingNumberService) Release(ctx context.Context, sid string) error
 }
 
 // GetPage retrieves an IncomingPhoneNumberPage, filtered by the given data.
-func (ins *IncomingNumberService) GetPage(ctx context.Context, data url.Values) (*IncomingPhoneNumberPage, error) {
-	iter := ins.GetPageIterator(data)
+func (ins *IncomingNumberService) GetPage(ctx context.Context, opts ...RequestOption) (*IncomingPhoneNumberPage, error) {
+	iter := ins.GetPageIterator(opts...)
 	return iter.Next(ctx)
 }
 
@@ -105,8 +104,8 @@ type IncomingPhoneNumberPageIterator struct {
 }
 
 // GetPageIterator returns an iterator which can be used to retrieve pages.
-func (c *IncomingNumberService) GetPageIterator(data url.Values) *IncomingPhoneNumberPageIterator {
-	iter := NewPageIterator(c.client, data, numbersPathPart)
+func (c *IncomingNumberService) GetPageIterator(opts ...RequestOption) *IncomingPhoneNumberPageIterator {
+	iter := NewPageIterator(c.client, getValues(opts...), numbersPathPart)
 	return &IncomingPhoneNumberPageIterator{
 		p: iter,
 	}

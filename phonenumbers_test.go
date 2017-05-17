@@ -2,7 +2,6 @@ package twilio
 
 import (
 	"context"
-	"net/url"
 	"testing"
 	"time"
 
@@ -14,10 +13,9 @@ func TestGetNumberPage(t *testing.T) {
 		t.Skip("skipping HTTP request in short mode")
 	}
 	t.Parallel()
-	data := url.Values{"PageSize": []string{"1000"}}
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
-	numbers, err := envClient.IncomingNumbers.GetPage(ctx, data)
+	numbers, err := envClient.IncomingNumbers.GetPage(ctx, WithPageSize(1000))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -31,7 +29,7 @@ func TestBuyNumber(t *testing.T) {
 		t.Skip("skipping HTTP request in short mode")
 	}
 	t.Parallel()
-	_, err := envClient.IncomingNumbers.BuyNumber("+1foobar")
+	_, err := envClient.IncomingNumbers.BuyNumber(context.Background(), "+1foobar")
 	if err == nil {
 		t.Fatal("expected to get an error, got nil")
 	}
