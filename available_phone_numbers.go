@@ -6,7 +6,7 @@ import (
 	"golang.org/x/net/context"
 )
 
-const availableNumbersPath = "AvailableNumbers"
+const availableNumbersPath = "AvailablePhoneNumbers"
 
 type AvailableNumberBase struct {
 	client   *Client
