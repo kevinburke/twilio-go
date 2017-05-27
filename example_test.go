@@ -25,7 +25,7 @@ func Example() {
 	call, _ := client.Calls.MakeCall("+14105551234", "+14105556789", callURL)
 	fmt.Println(call.Sid, call.FriendlyPrice())
 
-	_, err := client.IncomingNumbers.BuyNumber("+1badnumber")
+	_, err := client.IncomingNumbers.BuyNumber(context.TODO(),"+1badnumber")
 	// Twilio API errors are converted to rest.Error types
 	if err != nil {
 		restErr, ok := err.(*rest.Error)
