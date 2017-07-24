@@ -68,6 +68,7 @@ func getServer(response []byte) (*Client, *Server) {
 	client.Pricing.Base = s.URL
 	client.Fax.Base = s.URL
 	client.Wireless.Base = s.URL
+	client.Notify.Base = s.URL
 	return client, s
 }
 
@@ -79,6 +80,7 @@ func getServerCode(response []byte, code int) (*Client, *Server) {
 	client.Monitor.Base = s.URL
 	client.Pricing.Base = s.URL
 	client.Wireless.Base = s.URL
+	client.Notify.Base = s.URL
 	return client, s
 }
 
@@ -157,6 +159,53 @@ var conferencePage = []byte(`
     "previous_page_uri": null,
     "start": 0,
     "uri": "/2010-04-01/Accounts/AC58f1e8f2b1c6b88ca90a012a4be0c279/Conferences.json?PageSize=3"
+}
+`)
+
+var credentialsPage = []byte(`
+{
+  "credentials": [
+    {
+      "sid": "CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+      "friendly_name": "MyCredential",
+      "account_sid": "AC6bc21af903cc765a9d7f7e0467ec812a",
+      "type": "fcm",
+      "date_created": "2015-08-26T00:07:12Z",
+      "date_updated": "2015-08-26T00:07:12Z",
+      "url": "https://notify.twilio.com/v1/Credentials/CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    },
+    {
+      "sid": "CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+      "account_sid": "AC6bc21af903cc765a9d7f7e0467ec812a",
+      "friendly_name": "MyCredential2",
+      "type": "apn",
+      "date_created": "2015-08-26T00:07:43Z",
+      "date_updated": "2015-08-26T00:07:43Z",
+      "url": "https://notify.twilio.com/v1/Credentials/CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    }
+  ],
+  "meta": {
+    "page": 0,
+    "page_size": 50,
+    "first_page_url": "https://notify.twilio.com/v1/Credentials?PageSize=50&Page=0",
+    "previous_page_url": null,
+    "url": "https://notify.twilio.com/v1/Credentials?PageSize=50&Page=0",
+    "next_page_url": null,
+    "key": "credentials"
+  }
+}
+`)
+
+var notifyCredential = []byte(`
+{
+  "sid": "CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "account_sid": "AC6bc21af903cc765a9d7f7e0467ec812a",
+  "friendly_name": "MyFCMCredential",
+  "type": "fcm",
+  "sandbox": null,
+  "date_created": "2015-08-26T00:07:43Z",
+  "date_updated": "2015-08-26T00:07:43Z",
+  "url": "https://notify.twilio.com/v1/Credentials/CRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 }
 `)
 
