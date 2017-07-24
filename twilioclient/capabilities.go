@@ -103,12 +103,12 @@ func (c *Capability) doBuildIncomingScope() {
 	}
 }
 
-func (c *Capability) addCapability(service, privelege string, params map[string]string) {
-	c.capabilities = append(c.capabilities, scopeUriFor(service, privelege, params))
+func (c *Capability) addCapability(service, privilege string, params map[string]string) {
+	c.capabilities = append(c.capabilities, scopeUriFor(service, privilege, params))
 }
 
-func scopeUriFor(service, privelege string, params map[string]string) string {
-	scopeUri := "scope:" + service + ":" + privelege
+func scopeUriFor(service, privilege string, params map[string]string) string {
+	scopeUri := "scope:" + service + ":" + privilege
 	if len(params) > 0 {
 		scopeUri += "?" + generateParamString(params)
 	}

@@ -1,5 +1,33 @@
 # Changes
 
+## 0.65
+
+Support the Commands Wireless API.
+
+Add cmd/report-data-usage and cmd/report-data-usage-server for reporting recent
+data usage for Sims.
+
+## 0.64
+
+Partial support for wireless.twilio.com endpoints, including the Sim resource
+and UsageRecords for Sims.
+
+This version of the library requires github.com/kevinburke/go-types version
+0.20 at least.
+
+## 0.63
+
+Support Update() for the IncomingPhoneNumber resource.
+
+## 0.62
+
+Fix error in release 0.61.
+
+## 0.61
+
+Support the Available Phone Numbers API. Thanks to Maksym Pavlenko for
+contributing the patch.
+
 ## 0.59
 
 Support the Twilio Fax API.

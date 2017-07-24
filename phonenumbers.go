@@ -94,6 +94,14 @@ func (ipn *IncomingNumberService) Release(ctx context.Context, sid string) error
 	return ipn.client.DeleteResource(ctx, numbersPathPart, sid)
 }
 
+// Tries to update the incoming phone number's properties, and returns the updated resource representation if successful.
+// https://www.twilio.com/docs/api/rest/incoming-phone-numbers#instance-post
+func (ipn *IncomingNumberService) Update(ctx context.Context, sid string, data url.Values) (*IncomingPhoneNumber, error) {
+	number := new(IncomingPhoneNumber)
+	err := ipn.client.UpdateResource(ctx, numbersPathPart, sid, data, number)
+	return number, err
+}
+
 // GetPage retrieves an IncomingPhoneNumberPage, filtered by the given data.
 func (ins *IncomingNumberService) GetPage(ctx context.Context, data url.Values) (*IncomingPhoneNumberPage, error) {
 	iter := ins.GetPageIterator(data)

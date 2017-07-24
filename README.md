@@ -63,8 +63,19 @@ for {
 A [complete documentation reference can be found at
 godoc.org](https://godoc.org/github.com/kevinburke/twilio-go).
 
-The API is open to, but unlikely to change, and currently only covers
-these resources:
+## In Production
+
+twilio-go is being used by the following applications:
+
+- [Logrole][logrole], an open source Twilio log viewer that's faster than the API.
+
+Using twilio-go in production? [Let me know!](mailto:kevin@burke.services)
+
+[logrole]: https://github.com/kevinburke/logrole
+
+## Supported API's
+
+The API is unlikely to change, and currently covers these resources:
 
 - Alerts
 - Applications
@@ -72,6 +83,7 @@ these resources:
 - Conferences
 - Faxes
 - Incoming Phone Numbers
+- Available Phone Numbers
 - Keys
 - Messages
 - Media
@@ -81,14 +93,15 @@ these resources:
 - Queues
 - Recordings
 - Transcriptions
+- Wireless
 - Access Tokens for IPMessaging, Video and Programmable Voice SDK
 
 ### Error Parsing
 
-If the twilio-go client gets an error from
-the Twilio API, we attempt to convert it to a
-[`rest.Error`](https://godoc.org/github.com/kevinburke/rest#Error) before
-returning. Here's an example 404.
+If the twilio-go client gets an error from the Twilio API, we attempt to convert
+it to a [`rest.Error`][rest.error] before returning. Here's an example 404.
+
+[rest.error]: https://godoc.org/github.com/kevinburke/rest#Error
 
 ```
 &rest.Error{
@@ -111,9 +124,9 @@ There are no plans to support Twiml generation in this library. It may be
 more readable and maintainable to manually write the XML involved in a Twiml
 response.
 
-### API Problems this Library Solves For You
+### Errata
 
-- Media URL's are returned over HTTP. twilio-go rewrites these URL's to be
+- Media URL's used to be returned over HTTP. twilio-go rewrites these URL's to be
   HTTPS before returning them to you.
 
 - A subset of Notifications returned code 4107, which doesn't exist. These
@@ -125,15 +138,14 @@ messages for an entire day, and the day ranges are only available for UTC. Use
 GetCallsInRange or GetMessagesInRange to do timezone-aware, finer-grained date
 filtering.
 
-### Errata
-
-You can get Alerts for a given Call or MMS by passing `ResourceSid=CA123` as
+- You can get Alerts for a given Call or MMS by passing `ResourceSid=CA123` as
 a filter to Alerts.GetPage. This functionality is not documented in the API.
 
 ## Consulting
 
 I'm available for hire, for Twilio work or general-purpose engineering. For more
 on what I can do for your company, see here: https://burke.services/twilio.html.
+Contact me: kevin@burke.services
 
 ## Donating
 

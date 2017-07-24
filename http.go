@@ -15,7 +15,7 @@ import (
 )
 
 // The twilio-go version. Run "make release" to bump this number.
-const Version = "0.60"
+const Version = "0.65"
 const userAgent = "twilio-go/" + Version
 
 // The base URL serving the API. Override this for testing.
@@ -30,12 +30,18 @@ const MonitorVersion = "v1"
 // The base URL for Twilio Pricing.
 var PricingBaseURL = "https://pricing.twilio.com"
 
+// Version of the Twilio Pricing API.
+const PricingVersion = "v1"
+
 var FaxBaseURL = "https://fax.twilio.com"
 
 const FaxVersion = "v1"
 
-// Version of the Twilio Pricing API.
-const PricingVersion = "v1"
+// The base URL for Twilio Wireless.
+var WirelessBaseURL = "https://wireless.twilio.com"
+
+// Version of the Twilio Wireless API.
+const WirelessVersion = "v1"
 
 // The APIVersion to use. Your mileage may vary using other values for the
 // APIVersion; the resource representations may not match.
@@ -46,10 +52,11 @@ const NotifyVersion = "v1"
 
 type Client struct {
 	*rest.Client
-	Monitor *Client
-	Pricing *Client
-	Fax     *Client
-	Notify  *Client
+	Monitor  *Client
+	Pricing  *Client
+	Fax      *Client
+	Wireless *Client
+	Notify   *Client
 
 	// FullPath takes a path part (e.g. "Messages") and
 	// returns the full API path, including the version (e.g.
@@ -75,6 +82,7 @@ type Client struct {
 	Queues            *QueueService
 	Recordings        *RecordingService
 	Transcriptions    *TranscriptionService
+	AvailableNumbers  *AvailableNumberService
 
 	// NewMonitorClient initializes these services
 	Alerts *AlertService
@@ -86,6 +94,10 @@ type Client struct {
 
 	// NewFaxClient initializes these services
 	Faxes *FaxService
+
+	// NewWirelessClient initializes these services
+	Sims     *SimService
+	Commands *CommandService
 
 	// NewNotifyClient initializes these services
 	Credentials *NotifyCredentialsService
@@ -158,46 +170,46 @@ func NewFaxClient(accountSid string, authToken string, httpClient *http.Client) 
 	return c
 }
 
-// NewMonitorClient returns a Client for use with the Twilio Monitor API.
-func NewMonitorClient(accountSid string, authToken string, httpClient *http.Client) *Client {
-	if httpClient == nil {
-		httpClient = defaultHttpClient
+func newNewClient(sid, token, baseURL string, client *http.Client) *Client {
+	if client == nil {
+		client = defaultHttpClient
 	}
-	restClient := rest.NewClient(accountSid, authToken, MonitorBaseURL)
-	restClient.Client = httpClient
+	restClient := rest.NewClient(sid, token, baseURL)
+	restClient.Client = client
 	restClient.UploadType = rest.FormURLEncoded
 	restClient.ErrorParser = parseTwilioError
 	c := &Client{
 		Client:     restClient,
-		AccountSid: accountSid,
-		AuthToken:  authToken,
+		AccountSid: sid,
+		AuthToken:  token,
 	}
 	c.FullPath = func(pathPart string) string {
 		return "/" + c.APIVersion + "/" + pathPart
 	}
+	return c
+}
+
+// NewWirelessClient returns a Client for use with the Twilio Wireless API.
+func NewWirelessClient(accountSid string, authToken string, httpClient *http.Client) *Client {
+	c := newNewClient(accountSid, authToken, WirelessBaseURL, httpClient)
+	c.APIVersion = WirelessVersion
+	c.Sims = &SimService{client: c}
+	c.Commands = &CommandService{client: c}
+	return c
+}
+
+// NewMonitorClient returns a Client for use with the Twilio Monitor API.
+func NewMonitorClient(accountSid string, authToken string, httpClient *http.Client) *Client {
+	c := newNewClient(accountSid, authToken, MonitorBaseURL, httpClient)
 	c.APIVersion = MonitorVersion
 	c.Alerts = &AlertService{client: c}
 	return c
 }
 
-// returns a new Client to use the pricing API
+// NewPricingClient returns a new Client to use the pricing API
 func NewPricingClient(accountSid string, authToken string, httpClient *http.Client) *Client {
-	if httpClient == nil {
-		httpClient = defaultHttpClient
-	}
-	restClient := rest.NewClient(accountSid, authToken, PricingBaseURL)
-	restClient.Client = httpClient
-	restClient.UploadType = rest.FormURLEncoded
-	restClient.ErrorParser = parseTwilioError
-	c := &Client{
-		Client:     restClient,
-		AccountSid: accountSid,
-		AuthToken:  authToken,
-	}
+	c := newNewClient(accountSid, authToken, PricingBaseURL, httpClient)
 	c.APIVersion = PricingVersion
-	c.FullPath = func(pathPart string) string {
-		return "/" + c.APIVersion + "/" + pathPart
-	}
 	c.Voice = &VoicePriceService{
 		Countries: &CountryVoicePriceService{client: c},
 		Numbers:   &NumberVoicePriceService{client: c},
@@ -253,6 +265,7 @@ func NewClient(accountSid string, authToken string, httpClient *http.Client) *Cl
 	c.Monitor = NewMonitorClient(accountSid, authToken, httpClient)
 	c.Pricing = NewPricingClient(accountSid, authToken, httpClient)
 	c.Fax = NewFaxClient(accountSid, authToken, httpClient)
+	c.Wireless = NewWirelessClient(accountSid, authToken, httpClient)
 	c.Notify = NewNotifyClient(accountSid, authToken, httpClient)
 
 	c.Accounts = &AccountService{client: c}
@@ -282,6 +295,24 @@ func NewClient(accountSid string, authToken string, httpClient *http.Client) *Cl
 			pathPart: "TollFree",
 		},
 	}
+
+	c.AvailableNumbers = &AvailableNumberService{
+		Local: &AvailableNumberBase{
+			client:   c,
+			pathPart: "Local",
+		},
+
+		Mobile: &AvailableNumberBase{
+			client:   c,
+			pathPart: "Mobile",
+		},
+
+		TollFree: &AvailableNumberBase{
+			client:   c,
+			pathPart: "TollFree",
+		},
+	}
+
 	return c
 }
 
@@ -316,6 +347,12 @@ func (c *Client) UseSecretKey(key string) {
 	}
 	if c.Pricing != nil {
 		c.Pricing.UseSecretKey(key)
+	}
+	if c.Fax != nil {
+		c.Fax.UseSecretKey(key)
+	}
+	if c.Wireless != nil {
+		c.Wireless.UseSecretKey(key)
 	}
 }
 
