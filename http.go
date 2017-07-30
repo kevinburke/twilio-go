@@ -224,22 +224,8 @@ func NewPricingClient(accountSid string, authToken string, httpClient *http.Clie
 }
 
 func NewNotifyClient(accountSid string, authToken string, httpClient *http.Client) *Client {
-	if httpClient == nil {
-		httpClient = defaultHttpClient
-	}
-	restClient := rest.NewClient(accountSid, authToken, NotifyBaseURL)
-	restClient.Client = httpClient
-	restClient.UploadType = rest.FormURLEncoded
-	restClient.ErrorParser = parseTwilioError
-	c := &Client{
-		Client:     restClient,
-		AccountSid: accountSid,
-		AuthToken:  authToken,
-	}
+	c := newNewClient(accountSid, authToken, NotifyBaseURL, httpClient)
 	c.APIVersion = NotifyVersion
-	c.FullPath = func(pathPart string) string {
-		return "/" + c.APIVersion + "/" + pathPart
-	}
 	c.Credentials = &NotifyCredentialsService{client: c}
 	return c
 }
