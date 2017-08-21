@@ -166,6 +166,8 @@ func (m *MessageService) GetPage(ctx context.Context, data url.Values) (*Message
 //
 // Returned MessagePages will have at most PageSize results, but may have
 // fewer, based on filtering.
+//
+// https://www.twilio.com/docs/api/rest/message
 func (c *MessageService) GetMessagesInRange(start time.Time, end time.Time, data url.Values) MessagePageIterator {
 	if start.After(end) {
 		panic("start date is after end date")
@@ -182,7 +184,7 @@ func (c *MessageService) GetMessagesInRange(start time.Time, end time.Time, data
 	// that API paging will be faster.
 	if start != Epoch {
 		startFormat := start.UTC().Format(APISearchLayout)
-		d.Set("DateSent>", startFormat)
+		d.Set("DateSent>=", startFormat)
 	}
 	if end != HeatDeath {
 		// If you specify "DateSent<=YYYY-MM-DD", the *latest* result returned
