@@ -153,6 +153,8 @@ func (c *CallService) GetPage(ctx context.Context, data url.Values) (*CallPage, 
 //
 // Returned CallPages will have at most PageSize results, but may have fewer,
 // based on filtering.
+//
+// https://www.twilio.com/docs/api/rest/call
 func (c *CallService) GetCallsInRange(start time.Time, end time.Time, data url.Values) CallPageIterator {
 	if start.After(end) {
 		panic("start date is after end date")
@@ -167,7 +169,7 @@ func (c *CallService) GetCallsInRange(start time.Time, end time.Time, data url.V
 	d.Del("Page") // just in case
 	if start != Epoch {
 		startFormat := start.UTC().Format(APISearchLayout)
-		d.Set("StartTime>", startFormat)
+		d.Set("StartTime>=", startFormat)
 	}
 	if end != HeatDeath {
 		// If you specify "StartTime<=YYYY-MM-DD", the *latest* result returned
