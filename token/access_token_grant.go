@@ -5,7 +5,7 @@ const (
 	conversationsGrant = "rtc"
 	voiceGrant         = "voice"
 	videoGrant         = "video"
-	keyServiceSid      = "service_id"
+	keyServiceSid      = "service_sid"
 	keyEndpointId      = "endpoint_id"
 	keyDepRoleSide     = "deployment_role_sid"
 	keyPushCredSid     = "push_credential_sid"
