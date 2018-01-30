@@ -70,6 +70,7 @@ func getServer(response []byte) (*Client, *Server) {
 	client.Wireless.Base = s.URL
 	client.Notify.Base = s.URL
 	client.Lookup.Base = s.URL
+	client.Video.Base = s.URL
 	return client, s
 }
 
@@ -83,6 +84,7 @@ func getServerCode(response []byte, code int) (*Client, *Server) {
 	client.Wireless.Base = s.URL
 	client.Notify.Base = s.URL
 	client.Lookup.Base = s.URL
+	client.Video.Base = s.URL
 	return client, s
 }
 
@@ -2728,6 +2730,51 @@ var phoneLookupResponse = []byte(`
         "name": "Pacific Bell"
     }
 }	
+`)
+
+var roomResponse = []byte(`
+{
+    "api_key_sid": "AC58f1e8f2b1c6b88ca90a012a4be0c279",
+    "date_created": "2015-07-30T20:00:00Z",
+    "date_updated": "2015-07-30T20:00:00Z",
+    "status": "in-progress",
+    "type": "peer-to-peer",
+    "sid": "RMca86cf94c7d4f89e0bd45bfa7d9b9e7d",
+    "enable_turn": false,
+    "unique_name": "DailyStandup",
+    "max_participants": 10,
+    "duration": 0,
+    "status_callback_method": "POST",
+    "status_callback": "",
+    "record_participants_on_connect": false,
+    "end_time": "2015-07-30T20:00:00Z",
+    "url": "https://video.twilio.com/v1/Rooms/RMca86cf94c7d4f89e0bd45bfa7d9b9e7d",
+    "links": {
+        "recordings": "https://video.twilio.com/v1/Rooms/RMca86cf94c7d4f89e0bd45bfa7d9b9e7d/Recordings"
+    }
+}
+`)
+
+var videoRecordingResponse = []byte(`
+{
+    "api_key_sid": "AC58f1e8f2b1c6b88ca90a012a4be0c279",
+    "status": "processing",
+    "date_created": "2015-07-30T20:00:00Z",
+    "sid": "RT63868a235fc1cf3987e6a2b67346273f",
+    "source_sid": "MT58f1e8f2b1c6b88ca90a012a4be0c279",
+    "size": 0,
+    "url": "https://video.twilio.com/v1/Recordings/RT58f1e8f2b1c6b88ca90a012a4be0c279",
+    "type": "audio",
+    "duration": 20,
+    "container_format": "mka",
+    "codec": "OPUS",
+    "grouping_sids": {
+        "room_sid" : "RM58f1e8f2b1c6b88ca90a012a4be0c279"
+    },
+    "links": {
+        "media": "https://video.twilio.com/v1/Recordings/RT58f1e8f2b1c6b88ca90a012a4be0c279/Media"
+    }
+}
 `)
 
 const from = "+19253920364"

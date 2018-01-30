@@ -54,6 +54,11 @@ const NotifyVersion = "v1"
 const LookupBaseURL = "https://lookups.twilio.com"
 const LookupVersion = "v1"
 
+// Video service
+var VideoBaseUrl = "https://video.twilio.com"
+
+const VideoVersion = "v1"
+
 type Client struct {
 	*rest.Client
 	Monitor  *Client
@@ -62,6 +67,7 @@ type Client struct {
 	Wireless *Client
 	Notify   *Client
 	Lookup   *Client
+	Video    *Client
 
 	// FullPath takes a path part (e.g. "Messages") and
 	// returns the full API path, including the version (e.g.
@@ -108,6 +114,10 @@ type Client struct {
 
 	// NewLookupClient initializes these services
 	LookupPhoneNumbers *LookupPhoneNumbersService
+
+	// NewVideoClient initializes these services
+	Rooms           *RoomService
+	VideoRecordings *VideoRecordingService
 }
 
 const defaultTimeout = 30*time.Second + 500*time.Millisecond
@@ -245,6 +255,15 @@ func NewLookupClient(accountSid string, authToken string, httpClient *http.Clien
 	return c
 }
 
+// NewVideoClient returns a new Client to use the video API
+func NewVideoClient(accountSid string, authToken string, httpClient *http.Client) *Client {
+	c := newNewClient(accountSid, authToken, VideoBaseUrl, httpClient)
+	c.APIVersion = VideoVersion
+	c.Rooms = &RoomService{client: c}
+	c.VideoRecordings = &VideoRecordingService{client: c}
+	return c
+}
+
 // NewClient creates a Client for interacting with the Twilio API. This is the
 // main entrypoint for API interactions; view the methods on the subresources
 // for more information.
@@ -269,6 +288,7 @@ func NewClient(accountSid string, authToken string, httpClient *http.Client) *Cl
 	c.Wireless = NewWirelessClient(accountSid, authToken, httpClient)
 	c.Notify = NewNotifyClient(accountSid, authToken, httpClient)
 	c.Lookup = NewLookupClient(accountSid, authToken, httpClient)
+	c.Video = NewVideoClient(accountSid, authToken, httpClient)
 
 	c.Accounts = &AccountService{client: c}
 	c.Applications = &ApplicationService{client: c}

@@ -328,3 +328,7 @@ func capitalize(s string) string {
 	utf8.EncodeRune(b, unicode.ToTitle(r))
 	return strings.Join([]string{string(b), s[l:]}, "")
 }
+
+// types of video room
+const RoomType = "group"
+const RoomTypePeerToPeer = "peer-to-peer"
