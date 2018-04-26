@@ -12,9 +12,11 @@ const (
 	keyDepRoleSide     = "deployment_role_sid"
 	keyPushCredSid     = "push_credential_sid"
 	keyVoiceOutgoing   = "outgoing"
-	keyConfProfSid     = "room"
+	keyConfProfSid     = "configuration_profile_sid"
 	keyAppSid          = "application_sid"
 	keyVoiceParams     = "params"
+	// https://www.twilio.com/docs/video/tutorials/user-identity-access-tokens
+	keyRoomSid = "room"
 )
 
 // Grant is a Twilio SID resource that can be added to an AccessToken for extra
@@ -127,17 +129,17 @@ func (gr *VoiceGrant) Key() string {
 
 // VideoGrant is for Twilio Programmable Video access
 type VideoGrant struct {
-	configurationProfileSid string
+	roomSID string
 }
 
 func NewVideoGrant(sid string) *VideoGrant {
-	return &VideoGrant{configurationProfileSid: sid}
+	return &VideoGrant{roomSID: sid}
 }
 
 func (gr *VideoGrant) ToPayload() map[string]interface{} {
-	if len(gr.configurationProfileSid) > 0 {
+	if len(gr.roomSID) > 0 {
 		return map[string]interface{}{
-			keyConfProfSid: gr.configurationProfileSid,
+			keyRoomSid: gr.roomSID,
 		}
 	}
 	return make(map[string]interface{})
