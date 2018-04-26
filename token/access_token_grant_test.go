@@ -11,6 +11,7 @@ const (
 	DEP_ROLE_SID  = "1qaz2wsx3edc4rfv5tgb6yhn7ujm8ik9ol"
 	PUSH_CRED_SID = "cde3xsw2zaq1vfr4bgtnhy6mju78ijhgtf"
 	PROFILE_SID   = "erfergrtugdifuovudsfhguidhgouidrhg"
+	ROOM_SID      = "erfergrtugdifuovudsfhguidhgouidrhd"
 )
 
 func TestIPMessageGrant(t *testing.T) {
@@ -95,13 +96,13 @@ func TestVoiceGrant(t *testing.T) {
 
 func TestVideoGrant(t *testing.T) {
 	t.Parallel()
-	vdGrnt := NewVideoGrant(PROFILE_SID)
+	vdGrnt := NewVideoGrant(keyRoomSid)
 
 	if vdGrnt.Key() != videoGrant {
 		t.Errorf("key expected to be %s, got %s\n", videoGrant, vdGrnt.Key())
 	}
 
-	if vdGrnt.ToPayload()[keyConfProfSid] != PROFILE_SID {
-		t.Errorf("%s expected to be %s, got %s\n", keyConfProfSid, PROFILE_SID, vdGrnt.ToPayload()[keyConfProfSid])
+	if vdGrnt.ToPayload()[keyRoomSid] != keyRoomSid {
+		t.Errorf("%s expected to be %s, got %s\n", keyRoomSid, ROOM_SID, vdGrnt.ToPayload()[keyRoomSid])
 	}
 }
