@@ -12,7 +12,7 @@ const (
 	keyDepRoleSide     = "deployment_role_sid"
 	keyPushCredSid     = "push_credential_sid"
 	keyVoiceOutgoing   = "outgoing"
-	keyConfProfSid     = "configuration_profile_sid"
+	keyConfProfSid     = "room"
 	keyAppSid          = "application_sid"
 	keyVoiceParams     = "params"
 )
