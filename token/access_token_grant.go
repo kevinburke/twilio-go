@@ -13,6 +13,7 @@ const (
 	keyPushCredSid     = "push_credential_sid"
 	keyVoiceOutgoing   = "outgoing"
 	keyConfProfSid     = "configuration_profile_sid"
+	keyRoom            = "room"
 	keyAppSid          = "application_sid"
 	keyVoiceParams     = "params"
 )
@@ -128,6 +129,7 @@ func (gr *VoiceGrant) Key() string {
 // VideoGrant is for Twilio Programmable Video access
 type VideoGrant struct {
 	configurationProfileSid string
+	room                    string
 }
 
 func NewVideoGrant(sid string) *VideoGrant {
@@ -135,12 +137,21 @@ func NewVideoGrant(sid string) *VideoGrant {
 }
 
 func (gr *VideoGrant) ToPayload() map[string]interface{} {
-	if len(gr.configurationProfileSid) > 0 {
-		return map[string]interface{}{
-			keyConfProfSid: gr.configurationProfileSid,
-		}
+	payload := make(map[string]interface{})
+
+	if gr.configurationProfileSid != "" {
+		payload[keyConfProfSid] = gr.configurationProfileSid
 	}
-	return make(map[string]interface{})
+
+	if gr.room != "" {
+		payload[keyRoom] = gr.room
+	}
+
+	return payload
+}
+
+func (gr *VideoGrant) SetRoom(name string) {
+	gr.room = name
 }
 
 func (gr *VideoGrant) Key() string {
