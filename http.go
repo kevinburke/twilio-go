@@ -323,7 +323,6 @@ func NewClient(accountSid string, authToken string, httpClient *http.Client) *Cl
 			client:   c,
 			pathPart: "Local",
 		},
-
 		Mobile: &AvailableNumberBase{
 			client:   c,
 			pathPart: "Mobile",
@@ -332,6 +331,9 @@ func NewClient(accountSid string, authToken string, httpClient *http.Client) *Cl
 		TollFree: &AvailableNumberBase{
 			client:   c,
 			pathPart: "TollFree",
+		},
+		SupportedCountries: &SupportedCountriesService{
+			client: c,
 		},
 	}
 

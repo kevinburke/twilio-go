@@ -13,9 +13,10 @@ type AvailableNumberBase struct {
 }
 
 type AvailableNumberService struct {
-	Local    *AvailableNumberBase
-	Mobile   *AvailableNumberBase
-	TollFree *AvailableNumberBase
+	Local              *AvailableNumberBase
+	Mobile             *AvailableNumberBase
+	TollFree           *AvailableNumberBase
+	SupportedCountries *SupportedCountriesService
 }
 
 // The subresources of the AvailableNumbers resource let you search for local, toll-free and
@@ -56,4 +57,49 @@ func (s *AvailableNumberBase) GetPage(ctx context.Context, isoCountry string, fi
 	}
 
 	return sr, nil
+}
+
+type SupportedCountriesService struct {
+	client *Client
+}
+
+type SupportedCountry struct {
+	// The ISO Country code to lookup phone numbers for.
+	CountryCode string `json:"country_code"`
+	Country     string `json:"country"`
+	Uri         string `json:"uri"`
+
+	// If true, all phone numbers available in this country are new to the Twilio platform.
+	// If false, all numbers are not in the Twilio Phone Number Beta program.
+	Beta        bool `json:"beta"`
+	Subresource struct {
+		Local    *string `json:"local"`
+		TollFree *string `json:"toll_free"`
+		Mobile   *string `json:"mobile"`
+	} `json:"subresource_uris"`
+}
+
+type SupportedCountries struct {
+	Uri       string              `json:"uri"`
+	Countries []*SupportedCountry `json:"countries"`
+}
+
+// Get returns supported countries
+// Beta if true, only include countries where phone numbers new to the Twilio platform are available.
+// If false, do not include new inventory.
+//
+// See https://www.twilio.com/docs/phone-numbers/api/available-phone-numbers#countries
+func (s *SupportedCountriesService) Get(ctx context.Context, beta bool) (*SupportedCountries, error) {
+	sc := new(SupportedCountries)
+	path := availableNumbersPath
+	data := url.Values{}
+	if beta {
+		data.Set("Beta", "1")
+	}
+	err := s.client.ListResource(ctx, path, data, sc)
+	if err != nil {
+		return nil, err
+	}
+
+	return sc, nil
 }

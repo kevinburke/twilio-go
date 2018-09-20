@@ -2,6 +2,7 @@ package twilio
 
 import (
 	"context"
+	"fmt"
 	"net/url"
 	"testing"
 )
@@ -33,5 +34,20 @@ func TestSearchAvailablePhoneNumbers(t *testing.T) {
 
 	if res.Numbers[0].PhoneNumber != "+15712000596" {
 		t.Errorf("unexpected phone number: %s", res.Numbers[0].PhoneNumber)
+	}
+}
+
+func TestSupportedCountries(t *testing.T) {
+	t.Parallel()
+	client, server := getServer(supportedCountries)
+	defer server.Close()
+
+	res, err := client.AvailableNumbers.SupportedCountries.Get(context.Background(), false)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	for _, country := range res.Countries {
+		fmt.Println(country.Country, country.CountryCode)
 	}
 }
