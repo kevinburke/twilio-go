@@ -73,9 +73,9 @@ type SupportedCountry struct {
 	// If false, all numbers are not in the Twilio Phone Number Beta program.
 	Beta        bool `json:"beta"`
 	Subresource struct {
-		Local    *string `json:"local"`
-		TollFree *string `json:"toll_free"`
-		Mobile   *string `json:"mobile"`
+		Local    string `json:"local"`
+		TollFree string `json:"toll_free"`
+		Mobile   string `json:"mobile"`
 	} `json:"subresource_uris"`
 }
 
@@ -84,8 +84,8 @@ type SupportedCountries struct {
 	Countries []*SupportedCountry `json:"countries"`
 }
 
-// Get returns supported countries
-// Beta if true, only include countries where phone numbers new to the Twilio platform are available.
+// Get returns supported countries.
+// If beta is true, only include countries where phone numbers new to the Twilio platform are available.
 // If false, do not include new inventory.
 //
 // See https://www.twilio.com/docs/phone-numbers/api/available-phone-numbers#countries
@@ -94,7 +94,7 @@ func (s *SupportedCountriesService) Get(ctx context.Context, beta bool) (*Suppor
 	path := availableNumbersPath
 	data := url.Values{}
 	if beta {
-		data.Set("Beta", "1")
+		data.Set("Beta", "true")
 	}
 	err := s.client.ListResource(ctx, path, data, sc)
 	if err != nil {

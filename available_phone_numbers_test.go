@@ -2,7 +2,6 @@ package twilio
 
 import (
 	"context"
-	"fmt"
 	"net/url"
 	"testing"
 )
@@ -47,7 +46,15 @@ func TestSupportedCountries(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	for _, country := range res.Countries {
-		fmt.Println(country.Country, country.CountryCode)
+	if len(res.Countries) != 2 {
+		t.Errorf("expected 2 countries, got %d", len(res.Countries))
+	}
+
+	if res.Countries[0].Country != "South Africa" {
+		t.Errorf("unexpected country: %s", res.Countries[0].Country)
+	}
+
+	if res.Countries[1].Country != "Peru" {
+		t.Errorf("unexpected country: %s", res.Countries[0].Country)
 	}
 }
