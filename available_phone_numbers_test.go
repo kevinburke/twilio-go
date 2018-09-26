@@ -35,3 +35,26 @@ func TestSearchAvailablePhoneNumbers(t *testing.T) {
 		t.Errorf("unexpected phone number: %s", res.Numbers[0].PhoneNumber)
 	}
 }
+
+func TestSupportedCountries(t *testing.T) {
+	t.Parallel()
+	client, server := getServer(supportedCountries)
+	defer server.Close()
+
+	res, err := client.AvailableNumbers.SupportedCountries.Get(context.Background(), false)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if len(res.Countries) != 2 {
+		t.Errorf("expected 2 countries, got %d", len(res.Countries))
+	}
+
+	if res.Countries[0].Country != "South Africa" {
+		t.Errorf("unexpected country: %s", res.Countries[0].Country)
+	}
+
+	if res.Countries[1].Country != "Peru" {
+		t.Errorf("unexpected country: %s", res.Countries[0].Country)
+	}
+}

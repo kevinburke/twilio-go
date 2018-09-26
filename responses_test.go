@@ -2668,6 +2668,31 @@ var availablePhoneNumbers = []byte(`
 }
 `)
 
+var supportedCountries = []byte(`
+{
+  "uri": "/2010-04-01/Accounts/ACd05ccdab3d3a79ea461fd212ee6975af/AvailablePhoneNumbers.json",
+  "countries": [
+    {
+      "country_code": "ZA",
+      "country": "South Africa",
+      "uri": "/2010-04-01/Accounts/ACd05ccdab3d3a79ea461fd212ee6975af/AvailablePhoneNumbers/ZA.json",
+      "beta": false,
+      "subresource_uris": {
+        "local": "/2010-04-01/Accounts/ACd05ccdab3d3a79ea461fd212ee6975af/AvailablePhoneNumbers/ZA/Local.json",
+        "toll_free": "/2010-04-01/Accounts/ACd05ccdab3d3a79ea461fd212ee6975af/AvailablePhoneNumbers/ZA/TollFree.json"
+      }
+    },
+    {
+      "country_code": "PE",
+      "country": "Peru",
+      "uri": "/2010-04-01/Accounts/ACd05ccdab3d3a79ea461fd212ee6975af/AvailablePhoneNumbers/PE.json",
+      "beta": false,
+      "subresource_uris": {
+        "local": "/2010-04-01/Accounts/ACd05ccdab3d3a79ea461fd212ee6975af/AvailablePhoneNumbers/PE/Local.json"
+      }
+    }]
+}`)
+
 var simGetResponse = []byte(`
 {
     "account_sid": "AC58f1e8f2b1c6b88ca90a012a4be0c279",
