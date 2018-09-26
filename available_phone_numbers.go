@@ -67,16 +67,12 @@ type SupportedCountry struct {
 	// The ISO Country code to lookup phone numbers for.
 	CountryCode string `json:"country_code"`
 	Country     string `json:"country"`
-	Uri         string `json:"uri"`
+	URI         string `json:"uri"`
 
 	// If true, all phone numbers available in this country are new to the Twilio platform.
 	// If false, all numbers are not in the Twilio Phone Number Beta program.
-	Beta        bool `json:"beta"`
-	Subresource struct {
-		Local    string `json:"local"`
-		TollFree string `json:"toll_free"`
-		Mobile   string `json:"mobile"`
-	} `json:"subresource_uris"`
+	Beta            bool              `json:"beta"`
+	SubresourceURIs map[string]string `json:"subresource_uris"`
 }
 
 type SupportedCountries struct {
