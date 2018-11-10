@@ -236,12 +236,15 @@ func NewTaskRouterClient(accountSid string, authToken string, httpClient *http.C
 	if httpClient == nil {
 		httpClient = &http.Client{Timeout: defaultTimeout}
 	}
-
 	c := newNewClient(accountSid, authToken, TaskRouterBaseUrl, httpClient)
-	c.FullPath = func(pathPart string) string {
-		return "/" + c.APIVersion + "/Workspaces/WS8b69875da105e635f055ab29ac039380/" + pathPart
-	}
 	c.APIVersion = TaskRouterVersion
+	c.Workspace = func(sid string) *WorkspaceService {
+		return &WorkspaceService{
+			Activities: &ActivityService{
+				workspaceSid: sid,
+			},
+		}
+	}
 	return c
 }
 
