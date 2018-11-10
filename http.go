@@ -242,6 +242,7 @@ func NewTaskRouterClient(accountSid string, authToken string, httpClient *http.C
 		return &WorkspaceService{
 			Activities: &ActivityService{
 				workspaceSid: sid,
+				client:       c,
 			},
 		}
 	}
