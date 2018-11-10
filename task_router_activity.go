@@ -40,7 +40,8 @@ func (r *ActivityService) Get(ctx context.Context, sid string) (*Activity, error
 
 func (r *ActivityService) Create(ctx context.Context, data url.Values) (*Activity, error) {
 	activity := new(Activity)
-	err := r.client.CreateResource(ctx, activityPathPart, data, activity)
+	// TODO repeat for the other resources
+	err := r.client.CreateResource(ctx, "/Workspaces/"+r.workspaceSid+"/"+activityPathPart, data, activity)
 	return activity, err
 }
 

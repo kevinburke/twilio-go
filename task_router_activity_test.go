@@ -14,7 +14,7 @@ func TestGetActivity(t *testing.T) {
 	sid := "WAc74e6c39eb3080f8211d049a8b95611c"
 	name := "NewAvailableActivity"
 
-	activity, err := client.TaskRouter.Activities.Get(context.Background(), sid)
+	activity, err := client.TaskRouter.Workspace("WS58f1e8f2b1c6b88ca90a012a4be0c279").Activities.Get(context.Background(), sid)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -36,7 +36,7 @@ func TestCreateActivity(t *testing.T) {
 	newname := "Some Activity"
 	data.Set("FriendlyName", newname)
 
-	acct, err := envClient.TaskRouter.Activities.Create(context.Background(), data)
+	acct, err := envClient.TaskRouter.Workspace("WS58f1e8f2b1c6b88ca90a012a4be0c279").Activities.Create(context.Background(), data)
 	if err != nil {
 		t.Fatal(err)
 	}
