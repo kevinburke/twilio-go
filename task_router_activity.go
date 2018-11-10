@@ -5,10 +5,15 @@ import (
 	"net/url"
 )
 
+type WorkspaceService struct {
+	Activities *ActivityService
+}
+
 const activityPathPart = "Activities"
 
-type TaskRouterActivityService struct {
-	client *Client
+type ActivityService struct {
+	client       *Client
+	workspaceSid string
 }
 
 type Activity struct {
@@ -27,30 +32,30 @@ type ActivityPage struct {
 	Activities []*Activity `json:"activities"`
 }
 
-func (r *TaskRouterActivityService) Get(ctx context.Context, sid string) (*Activity, error) {
+func (r *ActivityService) Get(ctx context.Context, sid string) (*Activity, error) {
 	activity := new(Activity)
 	err := r.client.GetResource(ctx, activityPathPart, sid, activity)
 	return activity, err
 }
 
-func (r *TaskRouterActivityService) Create(ctx context.Context, data url.Values) (*Activity, error) {
+func (r *ActivityService) Create(ctx context.Context, data url.Values) (*Activity, error) {
 	activity := new(Activity)
 	err := r.client.CreateResource(ctx, activityPathPart, data, activity)
 	return activity, err
 }
 
-func (r *TaskRouterActivityService) Delete(ctx context.Context, sid string) error {
+func (r *ActivityService) Delete(ctx context.Context, sid string) error {
 	return r.client.DeleteResource(ctx, activityPathPart, sid)
 }
 
-func (ipn *TaskRouterActivityService) Update(ctx context.Context, sid string, data url.Values) (*Activity, error) {
+func (ipn *ActivityService) Update(ctx context.Context, sid string, data url.Values) (*Activity, error) {
 	activity := new(Activity)
 	err := ipn.client.UpdateResource(ctx, activityPathPart, sid, data, activity)
 	return activity, err
 }
 
 // GetPage retrieves an ActivityPage, filtered by the given data.
-func (ins *TaskRouterActivityService) GetPage(ctx context.Context, data url.Values) (*ActivityPage, error) {
+func (ins *ActivityService) GetPage(ctx context.Context, data url.Values) (*ActivityPage, error) {
 	iter := ins.GetPageIterator(data)
 	return iter.Next(ctx)
 }
@@ -60,7 +65,7 @@ type ActivityPageIterator struct {
 }
 
 // GetPageIterator returns an iterator which can be used to retrieve pages.
-func (c *TaskRouterActivityService) GetPageIterator(data url.Values) *ActivityPageIterator {
+func (c *ActivityService) GetPageIterator(data url.Values) *ActivityPageIterator {
 	iter := NewPageIterator(c.client, data, numbersPathPart)
 	return &ActivityPageIterator{
 		p: iter,

@@ -124,7 +124,8 @@ type Client struct {
 	Rooms           *RoomService
 	VideoRecordings *VideoRecordingService
 
-	Activities         *TaskRouterActivityService
+	// NewTaskRouterClient initializes these services
+	Workspace func(sid string) *WorkspaceService
 }
 
 const defaultTimeout = 30*time.Second + 500*time.Millisecond
@@ -230,6 +231,7 @@ func NewMonitorClient(accountSid string, authToken string, httpClient *http.Clie
 	return c
 }
 
+// NewTaskRouterClient returns a Client for use with the Twilio TaskRouter API.
 func NewTaskRouterClient(accountSid string, authToken string, httpClient *http.Client) *Client {
 	if httpClient == nil {
 		httpClient = &http.Client{Timeout: defaultTimeout}
@@ -240,8 +242,6 @@ func NewTaskRouterClient(accountSid string, authToken string, httpClient *http.C
 		return "/" + c.APIVersion + "/Workspaces/WS8b69875da105e635f055ab29ac039380/" + pathPart
 	}
 	c.APIVersion = TaskRouterVersion
-	c.Activities = &TaskRouterActivityService{client: c}
-
 	return c
 }
 
