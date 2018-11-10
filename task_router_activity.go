@@ -34,24 +34,23 @@ type ActivityPage struct {
 
 func (r *ActivityService) Get(ctx context.Context, sid string) (*Activity, error) {
 	activity := new(Activity)
-	err := r.client.GetResource(ctx, activityPathPart, sid, activity)
+	err := r.client.GetResource(ctx, "/Workspaces/"+r.workspaceSid+"/"+activityPathPart, sid, activity)
 	return activity, err
 }
 
 func (r *ActivityService) Create(ctx context.Context, data url.Values) (*Activity, error) {
 	activity := new(Activity)
-	// TODO repeat for the other resources
 	err := r.client.CreateResource(ctx, "/Workspaces/"+r.workspaceSid+"/"+activityPathPart, data, activity)
 	return activity, err
 }
 
 func (r *ActivityService) Delete(ctx context.Context, sid string) error {
-	return r.client.DeleteResource(ctx, activityPathPart, sid)
+	return r.client.DeleteResource(ctx, "/Workspaces/"+r.workspaceSid+"/"+activityPathPart, sid)
 }
 
 func (ipn *ActivityService) Update(ctx context.Context, sid string, data url.Values) (*Activity, error) {
 	activity := new(Activity)
-	err := ipn.client.UpdateResource(ctx, activityPathPart, sid, data, activity)
+	err := ipn.client.UpdateResource(ctx, "/Workspaces/"+ipn.workspaceSid+"/"+activityPathPart, sid, data, activity)
 	return activity, err
 }
 
@@ -67,7 +66,7 @@ type ActivityPageIterator struct {
 
 // GetPageIterator returns an iterator which can be used to retrieve pages.
 func (c *ActivityService) GetPageIterator(data url.Values) *ActivityPageIterator {
-	iter := NewPageIterator(c.client, data, numbersPathPart)
+	iter := NewPageIterator(c.client, data, "/Workspaces/"+c.workspaceSid+"/"+activityPathPart)
 	return &ActivityPageIterator{
 		p: iter,
 	}
