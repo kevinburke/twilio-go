@@ -5,10 +5,6 @@ import (
 	"net/url"
 )
 
-type WorkspaceService struct {
-	Activities *ActivityService
-}
-
 const activityPathPart = "Activities"
 
 type ActivityService struct {

@@ -63,6 +63,11 @@ var TaskRouterBaseUrl = "https://taskrouter.twilio.com"
 
 const TaskRouterVersion = "v1"
 
+type WorkspaceService struct {
+	Activities *ActivityService
+	Queues     *TaskRouterQueueService
+}
+
 type Client struct {
 	*rest.Client
 	Monitor    *Client
@@ -241,6 +246,10 @@ func NewTaskRouterClient(accountSid string, authToken string, httpClient *http.C
 	c.Workspace = func(sid string) *WorkspaceService {
 		return &WorkspaceService{
 			Activities: &ActivityService{
+				workspaceSid: sid,
+				client:       c,
+			},
+			Queues: &TaskRouterQueueService{
 				workspaceSid: sid,
 				client:       c,
 			},
