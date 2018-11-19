@@ -8,7 +8,7 @@ import (
 	"github.com/kevinburke/twilio-go/testdata"
 )
 
-func TestGetTaskRouterQueue(t *testing.T) {
+func TestGetTaskQueue(t *testing.T) {
 	t.Parallel()
 	client, server := getServer(taskRouterTaskQueueResponse)
 	defer server.Close()
@@ -28,9 +28,9 @@ func TestGetTaskRouterQueue(t *testing.T) {
 	}
 }
 
-func TestCreateTaskRouterQueue(t *testing.T) {
+func TestCreateTaskQueue(t *testing.T) {
 	t.Parallel()
-	client, server := getServer(testdata.TaskRouterQueueCreateResponse)
+	client, server := getServer(testdata.TaskQueueCreateResponse)
 	defer server.Close()
 
 	data := url.Values{}

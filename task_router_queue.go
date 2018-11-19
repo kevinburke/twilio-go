@@ -5,14 +5,14 @@ import (
 	"net/url"
 )
 
-const taskRouterQueuePathPart = "TaskQueues"
+const TaskQueuePathPart = "TaskQueues"
 
-type TaskRouterQueueService struct {
+type TaskQueueService struct {
 	client       *Client
 	workspaceSid string
 }
 
-type TaskRouterQueue struct {
+type TaskQueue struct {
 	Sid                     string     `json:"sid"`
 	AccountSid              string     `json:"account_sid"`
 	FriendlyName            string     `json:"friendly_name"`
@@ -29,55 +29,55 @@ type TaskRouterQueue struct {
 	MaxReservedWorkers      int        `json:"max_reserved_workers"`
 }
 
-type TaskRouterQueuePage struct {
+type TaskQueuePage struct {
 	Page
-	TaskRouterQueues []*TaskRouterQueue `json:"task_queues"`
+	TaskQueues []*TaskQueue `json:"task_queues"`
 }
 
-func (r *TaskRouterQueueService) Get(ctx context.Context, sid string) (*TaskRouterQueue, error) {
-	queue := new(TaskRouterQueue)
-	err := r.client.GetResource(ctx, "Workspaces/"+r.workspaceSid+"/"+taskRouterQueuePathPart, sid, queue)
+func (r *TaskQueueService) Get(ctx context.Context, sid string) (*TaskQueue, error) {
+	queue := new(TaskQueue)
+	err := r.client.GetResource(ctx, "Workspaces/"+r.workspaceSid+"/"+TaskQueuePathPart, sid, queue)
 	return queue, err
 }
 
-func (r *TaskRouterQueueService) Create(ctx context.Context, data url.Values) (*TaskRouterQueue, error) {
-	queue := new(TaskRouterQueue)
-	err := r.client.CreateResource(ctx, "Workspaces/"+r.workspaceSid+"/"+taskRouterQueuePathPart, data, queue)
+func (r *TaskQueueService) Create(ctx context.Context, data url.Values) (*TaskQueue, error) {
+	queue := new(TaskQueue)
+	err := r.client.CreateResource(ctx, "Workspaces/"+r.workspaceSid+"/"+TaskQueuePathPart, data, queue)
 	return queue, err
 }
 
-func (r *TaskRouterQueueService) Delete(ctx context.Context, sid string) error {
-	return r.client.DeleteResource(ctx, "Workspaces/"+r.workspaceSid+"/"+taskRouterQueuePathPart, sid)
+func (r *TaskQueueService) Delete(ctx context.Context, sid string) error {
+	return r.client.DeleteResource(ctx, "Workspaces/"+r.workspaceSid+"/"+TaskQueuePathPart, sid)
 }
 
-func (ipn *TaskRouterQueueService) Update(ctx context.Context, sid string, data url.Values) (*TaskRouterQueue, error) {
-	queue := new(TaskRouterQueue)
-	err := ipn.client.UpdateResource(ctx, "Workspaces/"+ipn.workspaceSid+"/"+taskRouterQueuePathPart, sid, data, queue)
+func (ipn *TaskQueueService) Update(ctx context.Context, sid string, data url.Values) (*TaskQueue, error) {
+	queue := new(TaskQueue)
+	err := ipn.client.UpdateResource(ctx, "Workspaces/"+ipn.workspaceSid+"/"+TaskQueuePathPart, sid, data, queue)
 	return queue, err
 }
 
-// GetPage retrieves an TaskRouterQueuePage, filtered by the given data.
-func (ins *TaskRouterQueueService) GetPage(ctx context.Context, data url.Values) (*TaskRouterQueuePage, error) {
+// GetPage retrieves an TaskQueuePage, filtered by the given data.
+func (ins *TaskQueueService) GetPage(ctx context.Context, data url.Values) (*TaskQueuePage, error) {
 	iter := ins.GetPageIterator(data)
 	return iter.Next(ctx)
 }
 
-type TaskRouterQueuePageIterator struct {
+type TaskQueuePageIterator struct {
 	p *PageIterator
 }
 
 // GetPageIterator returns an iterator which can be used to retrieve pages.
-func (c *TaskRouterQueueService) GetPageIterator(data url.Values) *TaskRouterQueuePageIterator {
-	iter := NewPageIterator(c.client, data, "Workspaces/"+c.workspaceSid+"/"+taskRouterQueuePathPart)
-	return &TaskRouterQueuePageIterator{
+func (c *TaskQueueService) GetPageIterator(data url.Values) *TaskQueuePageIterator {
+	iter := NewPageIterator(c.client, data, "Workspaces/"+c.workspaceSid+"/"+TaskQueuePathPart)
+	return &TaskQueuePageIterator{
 		p: iter,
 	}
 }
 
 // Next returns the next page of resources. If there are no more resources,
 // NoMoreResults is returned.
-func (c *TaskRouterQueuePageIterator) Next(ctx context.Context) (*TaskRouterQueuePage, error) {
-	cp := new(TaskRouterQueuePage)
+func (c *TaskQueuePageIterator) Next(ctx context.Context) (*TaskQueuePage, error) {
+	cp := new(TaskQueuePage)
 	err := c.p.Next(ctx, cp)
 	if err != nil {
 		return nil, err

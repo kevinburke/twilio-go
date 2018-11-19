@@ -65,7 +65,7 @@ const TaskRouterVersion = "v1"
 
 type WorkspaceService struct {
 	Activities *ActivityService
-	Queues     *TaskRouterQueueService
+	Queues     *TaskQueueService
 }
 
 type Client struct {
@@ -249,7 +249,10 @@ func NewTaskRouterClient(accountSid string, authToken string, httpClient *http.C
 				workspaceSid: sid,
 				client:       c,
 			},
-			Queues: &TaskRouterQueueService{
+			Queues: &TaskQueueService{
+				workspaceSid: sid,
+				client:       c,
+			},
 				workspaceSid: sid,
 				client:       c,
 			},

@@ -16,7 +16,7 @@ var TaskRouterCreateResponse = []byte(`
 }
 `)
 
-var TaskRouterQueueCreateResponse = []byte(`
+var TaskQueueCreateResponse = []byte(`
 {
     "account_sid": "AC58f1e8f2b1c6b88ca90a012a4be0c279",
     "assignment_activity_name": "817ca1c5-3a05-11e5-9292-98e0d9a1eb73",
