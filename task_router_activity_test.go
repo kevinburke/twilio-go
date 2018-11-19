@@ -10,7 +10,7 @@ import (
 
 func TestGetActivity(t *testing.T) {
 	t.Parallel()
-	client, server := getServer(taskRouterActivityResponse)
+	client, server := getServer(testdata.TaskRouterActivityResponse)
 	defer server.Close()
 
 	workspaceSid := "WS58f1e8f2b1c6b88ca90a012a4be0c279"
@@ -39,7 +39,7 @@ func TestGetActivity(t *testing.T) {
 
 func TestCreateActivity(t *testing.T) {
 	t.Parallel()
-	client, server := getServer(testdata.TaskRouterCreateResponse)
+	client, server := getServer(testdata.TaskRouterActivityCreateResponse)
 	defer server.Close()
 
 	data := url.Values{}

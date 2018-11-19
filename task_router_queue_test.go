@@ -10,7 +10,7 @@ import (
 
 func TestGetTaskQueue(t *testing.T) {
 	t.Parallel()
-	client, server := getServer(taskRouterTaskQueueResponse)
+	client, server := getServer(testdata.TaskQueueResponse)
 	defer server.Close()
 
 	sid := "WQ63868a235fc1cf3987e6a2b67346273f"
