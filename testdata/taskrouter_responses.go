@@ -89,7 +89,7 @@ var WorkflowResponse = []byte(`
 {
     "account_sid": "AC58f1e8f2b1c6b88ca90a012a4be0c279",
     "assignment_callback_url": "http://example.com",
-    "configuration": "task-routing:\n  - filter: \n      - 1 == 1\n    target:\n      - queue: WQ63868a235fc1cf3987e6a2b67346273f\n        set-priority: 0\n",
+    "configuration": "{\"task_routing\":{\"default_filter\":{\"queue\":\"WQ0c1274082082355320d8a41f94eb57aa\"}}}",
     "date_created": "2014-05-14T10:50:02Z",
     "date_updated": "2014-05-14T23:26:06Z",
     "document_content_type": "application/json",
@@ -111,39 +111,7 @@ var WorkflowCreateResponse = []byte(`
 {
   "account_sid": "AC58f1e8f2b1c6b88ca90a012a4be0c279",
   "assignment_callback_url": "http://example.com",
-  "configuration": {
-    "task_routing": {
-      "filters": [
-        {
-          "expression": "type=='sales'",
-          "targets": [
-            {
-              "queue": "WQ58f1e8f2b1c6b88ca90a012a4be0c279"
-            }
-          ]
-        },
-        {
-          "expression": "type=='marketing'",
-          "targets": [
-            {
-              "queue": "WQ58f1e8f2b1c6b88ca90a012a4be0c279"
-            }
-          ]
-        },
-        {
-          "expression": "type=='support'",
-          "targets": [
-            {
-              "queue": "WQ58f1e8f2b1c6b88ca90a012a4be0c279"
-            }
-          ]
-        }
-      ],
-      "default_filter": {
-        "queue": "WQ58f1e8f2b1c6b88ca90a012a4be0c279"
-      }
-    }
-  },
+  "configuration": "{\"task_routing\":{\"default_filter\":{\"queue\":\"WQ0c1274082082355320d8a41f94eb57aa\"}}}",
   "date_created": "2014-05-14T10:50:02Z",
   "date_updated": "2014-05-14T23:26:06Z",
   "document_content_type": "application/json",
