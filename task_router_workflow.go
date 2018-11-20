@@ -32,22 +32,35 @@ type WorkflowPage struct {
 	Workflows []*Workflow `json:"workers"`
 }
 
+// Get retrieves a Workflow by its sid.
+//
+// See https://www.twilio.com/docs/taskrouter/api/workflows#action-get for more.
 func (r *WorkflowService) Get(ctx context.Context, sid string) (*Workflow, error) {
 	workflow := new(Workflow)
 	err := r.client.GetResource(ctx, "Workspaces/"+r.workspaceSid+"/"+WorkflowPathPart, sid, workflow)
 	return workflow, err
 }
 
+// Create creates a new Workflow.
+//
+// For a list of valid parameters see
+// https://www.twilio.com/docs/taskrouter/api/workflows#action-create.
 func (r *WorkflowService) Create(ctx context.Context, data url.Values) (*Workflow, error) {
 	workflow := new(Workflow)
 	err := r.client.CreateResource(ctx, "Workspaces/"+r.workspaceSid+"/"+WorkflowPathPart, data, workflow)
 	return workflow, err
 }
 
+// Delete deletes a Workflow.
+//
+// See https://www.twilio.com/docs/taskrouter/api/workflows#action-delete for more.
 func (r *WorkflowService) Delete(ctx context.Context, sid string) error {
 	return r.client.DeleteResource(ctx, "Workspaces/"+r.workspaceSid+"/"+WorkflowPathPart, sid)
 }
 
+// List all Workflows.
+//
+// See https://www.twilio.com/docs/taskrouter/api/workflows#action-list for more.
 func (ipn *WorkflowService) Update(ctx context.Context, sid string, data url.Values) (*Workflow, error) {
 	workflow := new(Workflow)
 	err := ipn.client.UpdateResource(ctx, "Workspaces/"+ipn.workspaceSid+"/"+WorkflowPathPart, sid, data, workflow)
