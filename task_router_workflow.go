@@ -2,6 +2,7 @@ package twilio
 
 import (
 	"context"
+	"encoding/json"
 	"net/url"
 )
 
@@ -13,17 +14,17 @@ type WorkflowService struct {
 }
 
 type Workflow struct {
-	Sid                           string     `json:"sid"`
-	AccountSid                    string     `json:"account_sid"`
-	FriendlyName                  string     `json:"friendly_name"`
-	Configuration                 string     `json:"configuration"`
-	AssignmentCallbackURL         string     `json:"assignment_callback_url"`
-	FallbackAssignmentCallbackURL string     `json:"fallback_assignment_callback_url"`
-	TaskReservationTimeout        int        `json:"task_reservation_timeout"`
-	DateCreated                   TwilioTime `json:"date_created"`
-	DateUpdated                   TwilioTime `json:"date_updated"`
-	URL                           string     `json:"url"`
-	WorkspaceSid                  string     `json:"workspace_sid"`
+	Sid                           string          `json:"sid"`
+	AccountSid                    string          `json:"account_sid"`
+	FriendlyName                  string          `json:"friendly_name"`
+	Configuration                 json.RawMessage `json:"configuration"`
+	AssignmentCallbackURL         string          `json:"assignment_callback_url"`
+	FallbackAssignmentCallbackURL string          `json:"fallback_assignment_callback_url"`
+	TaskReservationTimeout        int             `json:"task_reservation_timeout"`
+	DateCreated                   TwilioTime      `json:"date_created"`
+	DateUpdated                   TwilioTime      `json:"date_updated"`
+	URL                           string          `json:"url"`
+	WorkspaceSid                  string          `json:"workspace_sid"`
 }
 
 type WorkflowPage struct {

@@ -37,6 +37,7 @@ func TestCreateWorkflow(t *testing.T) {
 	data := url.Values{}
 	newname := "Sales, Marketing, Support Workflow"
 	data.Set("FriendlyName", newname)
+	data.Set("Configuration", "{\"task_routing\":{\"default_filter\":{\"queue\":\"WQ0c1274082082355320d8a41f94eb57aa\"}}}")
 	workspaceSid := "WS7a2aa7d8acc191786ad3c647c5fc3110"
 
 	workflow, err := client.TaskRouter.Workspace(workspaceSid).Workflows.Create(context.Background(), data)
