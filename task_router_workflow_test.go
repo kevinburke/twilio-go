@@ -2,6 +2,7 @@ package twilio
 
 import (
 	"context"
+	"encoding/json"
 	"net/url"
 	"testing"
 
@@ -26,6 +27,25 @@ func TestGetWorkflow(t *testing.T) {
 
 	if workflow.TaskReservationTimeout != taskReservationTimeout {
 		t.Errorf("task router workflow: got sid %q, want %q", workflow.TaskReservationTimeout, taskReservationTimeout)
+	}
+}
+func TestDecodeWorkflow(t *testing.T) {
+	t.Parallel()
+	msg := new(Workflow)
+	configuration := []byte(`{"task_routing":{"default_filter":{"queue":"WQ0c1274082082355320d8a41f94eb57aa"}}}`)
+
+	if err := json.Unmarshal(testdata.WorkflowResponse, &msg); err != nil {
+		t.Fatal(err)
+	}
+
+	sid := "WW63868a235fc1cf3987e6a2b67346273f"
+	cfg := Workflow{Sid: sid, Configuration: configuration}
+	if err := json.Unmarshal(cfg.Configuration, &msg); err != nil {
+		t.Fatal(err)
+	}
+
+	if cfg.Sid != sid {
+		t.Errorf("Sid not correct")
 	}
 }
 
