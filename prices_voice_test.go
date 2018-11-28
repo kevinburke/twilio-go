@@ -48,16 +48,26 @@ func TestGetVoicePriceUS(t *testing.T) {
 		t.Error("Expected inbound price to contain a price for local calls")
 	}
 
-	outboundPrefixPriceMap := make(map[string]bool)
+	outboundDestinationPrefixPriceMap := make(map[string]bool)
+	outboundOriginationPrefixPriceMap := make(map[string]bool)
 	for _, outPrice := range voicePrice.OutboundPrefixPrices {
-		for _, prefix := range outPrice.Prefixes {
-			outboundPrefixPriceMap[prefix] = true
+		for _, prefix := range outPrice.DestinationPrefixes {
+			outboundDestinationPrefixPriceMap[prefix] = true
+		}
+		for _, prefix := range outPrice.OriginationPrefixes {
+			outboundOriginationPrefixPriceMap[prefix] = true
 		}
 	}
-	// outboundPrefixPriceMap => map[1907:true 1844:true 1866:true 1877:true 1:true 1808:true 1800:true 1855:true 1888:true]
-	_, ok = outboundPrefixPriceMap["1"]
+	// outboundDestinationPrefixPriceMap => map[1907:true 1844:true 1866:true 1877:true 1:true 1808:true 1800:true 1855:true 1888:true]
+	// outboundOriginationPrefixPriceMap => map[ALL:true]
+	_, ok = outboundDestinationPrefixPriceMap["1"]
 	if ok == false {
-		t.Error("Expected outbound price to contain a price for the prefix 1")
+		t.Error("Expected outbound price to contain a price for the destination prefix 1")
+	}
+
+	_, ok = outboundOriginationPrefixPriceMap["ALL"]
+	if ok == false {
+		t.Error("Expected outbound price to contain a price for the origination prefix ALL")
 	}
 }
 
@@ -102,15 +112,24 @@ func TestGetVoicePriceGB(t *testing.T) {
 		t.Error("Expected inbound price to contain a price for local calls")
 	}
 
-	outboundPrefixPriceMap := make(map[string]bool)
+	outboundDestinationPrefixPriceMap := make(map[string]bool)
+	outboundOriginationPrefixPriceMap := make(map[string]bool)
 	for _, outPrice := range voicePrice.OutboundPrefixPrices {
-		for _, prefix := range outPrice.Prefixes {
-			outboundPrefixPriceMap[prefix] = true
+		for _, prefix := range outPrice.DestinationPrefixes {
+			outboundDestinationPrefixPriceMap[prefix] = true
+		}
+		for _, prefix := range outPrice.OriginationPrefixes {
+			outboundOriginationPrefixPriceMap[prefix] = true
 		}
 	}
-	_, ok = outboundPrefixPriceMap["44"]
+	_, ok = outboundDestinationPrefixPriceMap["44"]
 	if ok == false {
 		t.Error("Expected outbound price to contain a price for the prefix 44")
+	}
+
+	_, ok = outboundOriginationPrefixPriceMap["ALL"]
+	if ok == false {
+		t.Error("Expected outbound price to contain a price for the origination prefix ALL")
 	}
 }
 
@@ -123,15 +142,20 @@ func TestGetVoicePriceNumber(t *testing.T) {
 	expectedCountryName := "United States"
 	expectedPriceUnit := "USD"
 
-	voicePriceNum, err := client.Pricing.Voice.Numbers.Get(context.Background(), from)
+	data := url.Values{}
+	data.Set("OriginationNumber", from)
+	voicePriceNum, err := client.Pricing.Voice.Numbers.Get(context.Background(), to, data)
 	if err != nil {
 		t.Fatal(err)
 	}
 	if voicePriceNum == nil {
 		t.Error("expected voice price to be returned")
 	}
-	if voicePriceNum.Number != from {
-		t.Errorf("Expected voice price number to be %s, but got %s\n", from, voicePriceNum.Number)
+	if voicePriceNum.OriginationNumber != from {
+		t.Errorf("Expected voice price number to be %s, but got %s\n", from, voicePriceNum.OriginationNumber)
+	}
+	if voicePriceNum.DestinationNumber != to {
+		t.Errorf("Expected voice price number to be %s, but got %s\n", to, voicePriceNum.DestinationNumber)
 	}
 	if voicePriceNum.Country != expectedCountryName {
 		t.Errorf("Expected voice price country to be %s, but got %s\n", expectedCountryName, voicePriceNum.Country)
@@ -145,8 +169,11 @@ func TestGetVoicePriceNumber(t *testing.T) {
 	if voicePriceNum.InboundCallPrice.BasePrice != "" {
 		t.Error("Expected voice price to not contain an InboundCallPrice")
 	}
-	if voicePriceNum.OutboundCallPrice.BasePrice == "" {
-		t.Error("Expected voice price to contain an OutboundPrefixPrice")
+	if len(voicePriceNum.OutboundCallPrices) != 1 {
+		t.Error("Expected voice price to contain an OutboundPrefixPrices")
+	}
+	if voicePriceNum.OutboundCallPrices[0].BasePrice == "" {
+		t.Error("Expected outbound call prices to contain an BasePrice")
 	}
 }
 

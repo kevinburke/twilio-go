@@ -3,6 +3,7 @@ package twilio
 import (
 	"context"
 	"net/url"
+	"strings"
 )
 
 const voicePathPart = "Voice"
@@ -21,10 +22,11 @@ type NumberVoicePriceService struct {
 }
 
 type PrefixPrice struct {
-	BasePrice    string   `json:"base_price"`
-	CurrentPrice string   `json:"current_price"`
-	FriendlyName string   `json:"friendly_name"`
-	Prefixes     []string `json:"prefixes"`
+	BasePrice           string   `json:"base_price"`
+	CurrentPrice        string   `json:"current_price"`
+	FriendlyName        string   `json:"friendly_name"`
+	DestinationPrefixes []string `json:"destination_prefixes"`
+	OriginationPrefixes []string `json:"origination_prefixes"`
 }
 
 type InboundPrice struct {
@@ -34,8 +36,9 @@ type InboundPrice struct {
 }
 
 type OutboundCallPrice struct {
-	BasePrice    string `json:"base_price"`
-	CurrentPrice string `json:"current_price"`
+	BasePrice           string   `json:"base_price"`
+	CurrentPrice        string   `json:"current_price"`
+	OriginationPrefixes []string `json:"origination_prefixes"`
 }
 
 type VoicePrice struct {
@@ -48,15 +51,18 @@ type VoicePrice struct {
 }
 
 type VoiceNumberPrice struct {
-	Country           string            `json:"country"`
-	IsoCountry        string            `json:"iso_country"`
-	Number            string            `json:"number"`
-	InboundCallPrice  InboundPrice      `json:"inbound_call_price"`
-	OutboundCallPrice OutboundCallPrice `json:"outbound_call_price"`
-	PriceUnit         string            `json:"price_unit"`
-	URL               string            `json:"url"`
+	Country            string              `json:"country"`
+	IsoCountry         string              `json:"iso_country"`
+	DestinationNumber  string              `json:"destination_number"`
+	OriginationNumber  string              `json:"origination_number"`
+	InboundCallPrice   InboundPrice        `json:"inbound_call_price"`
+	OutboundCallPrices []OutboundCallPrice `json:"outbound_call_prices"`
+	PriceUnit          string              `json:"price_unit"`
+
+	URL string `json:"url"`
 }
 
+// https://www.twilio.com/docs/voice/pricing#pricing-voice-country-instance-resource
 // returns the call price by country
 func (cvps *CountryVoicePriceService) Get(ctx context.Context, isoCountry string) (*VoicePrice, error) {
 	voicePrice := new(VoicePrice)
@@ -64,10 +70,12 @@ func (cvps *CountryVoicePriceService) Get(ctx context.Context, isoCountry string
 	return voicePrice, err
 }
 
-// returns the call price by number
-func (nvps *NumberVoicePriceService) Get(ctx context.Context, number string) (*VoiceNumberPrice, error) {
+// https://www.twilio.com/docs/voice/pricing#list-uri-by-origination-number
+// returns the call price by number or numbers pair
+func (nvps *NumberVoicePriceService) Get(ctx context.Context, destinationNumber string, data url.Values) (*VoiceNumberPrice, error) {
 	voiceNumPrice := new(VoiceNumberPrice)
-	err := nvps.client.GetResource(ctx, voicePathPart+"/Numbers", number, voiceNumPrice)
+	pathPart := strings.Join([]string{voicePathPart, "Numbers", destinationNumber}, "/")
+	err := nvps.client.ListResource(ctx, pathPart, data, voiceNumPrice)
 	return voiceNumPrice, err
 }
 

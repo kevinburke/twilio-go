@@ -31,7 +31,7 @@ const MonitorVersion = "v1"
 var PricingBaseURL = "https://pricing.twilio.com"
 
 // Version of the Twilio Pricing API.
-const PricingVersion = "v1"
+const PricingVersion = "v2"
 
 var FaxBaseURL = "https://fax.twilio.com"
 

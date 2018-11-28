@@ -1,5 +1,19 @@
 # Changes
 
+## 2.0
+Pricing API updated to v2.
+
+Structs:  
+* `Prefixes` field in `PrefixPrice` struct changed to `DestinationPrefixes`.  
+* `OriginationPrefixes` field added to `PrefixPrice` struct.  
+* `OutboundCallPrice` field in `VoiceNumberPrice` struct changed to `OutboundCallPrices` array.  
+* `OriginationPrefixes` field added to `OutboundCallPrice` struct.  
+
+Methods:
+* `NumberVoicePriceService.Get` has 2 parameters now: `destinationNumber` string and `data` url.Values.  
+`destinationNumber` is same as `number` before.  
+`data` should contains additional parameters like `OriginationNumber`.  
+
 ## 1.8
 
 Add Task Router Workers API.

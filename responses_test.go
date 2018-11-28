@@ -580,27 +580,47 @@ var accountCreateResponse = []byte(`
 `)
 
 var voicePriceUS = []byte(`{
-    "country": "United States",
-    "iso_country": "US",
-    "outbound_prefix_prices": [
+    "inbound_call_prices":[
         {
-            "prefixes": [
+            "number_type":"local",
+            "base_price":"0.0085",
+            "current_price":"0.0085"
+        },
+        {
+            "number_type":"toll free",
+            "base_price":"0.022",
+            "current_price":"0.022"
+        }
+    ],
+    "country":"United States",
+    "price_unit":"USD",
+    "iso_country":"US",
+    "url":"https://pricing.twilio.com/v2/Voice/Countries/US",
+    "outbound_prefix_prices":[
+        {
+            "destination_prefixes":[
                 "1907"
             ],
-            "friendly_name": "Programmable Outbound Minute - United States - Alaska",
-            "base_price": "0.090",
-            "current_price": "0.090"
+            "origination_prefixes":[
+                "ALL"
+            ],
+            "friendly_name":"Programmable Outbound Minute - United States - Alaska",
+            "base_price":"0.090",
+            "current_price":"0.090"
         },
         {
-            "prefixes": [
+            "destination_prefixes":[
                 "1808"
             ],
-            "friendly_name": "Programmable Outbound Minute - United States - Hawaii",
-            "base_price": "0.015",
-            "current_price": "0.015"
+            "origination_prefixes":[
+                "ALL"
+            ],
+            "friendly_name":"Programmable Outbound Minute - United States - Hawaii",
+            "base_price":"0.013",
+            "current_price":"0.013"
         },
         {
-            "prefixes": [
+            "destination_prefixes":[
                 "1800",
                 "1844",
                 "1855",
@@ -608,91 +628,180 @@ var voicePriceUS = []byte(`{
                 "1877",
                 "1888"
             ],
-            "friendly_name": "Programmable Outbound Minute - United States - Toll Free",
-            "base_price": "0.015",
-            "current_price": "0.015"
+            "origination_prefixes":[
+                "ALL"
+            ],
+            "friendly_name":"Programmable Outbound Minute - United States & Canada - Toll Free",
+            "base_price":"0.013",
+            "current_price":"0.013"
         },
         {
-            "prefixes": [
+            "destination_prefixes":[
                 "1"
             ],
-            "friendly_name": "Programmable Outbound Minute - United States & Canada",
-            "base_price": "0.015",
-            "current_price": "0.015"
+            "origination_prefixes":[
+                "ALL"
+            ],
+            "friendly_name":"Programmable Outbound Minute - United States & Canada",
+            "base_price":"0.013",
+            "current_price":"0.013"
         }
-    ],
-    "inbound_call_prices": [
-        {
-            "number_type": "local",
-            "base_price": "0.0075",
-            "current_price": "0.0075"
-        },
-        {
-            "number_type": "toll free",
-            "base_price": "0.0275",
-            "current_price": "0.0275"
-        }
-    ],
-    "price_unit": "USD",
-    "url": "https://pricing.twilio.com/v1/Voice/Countries/US"
+    ]
 }`)
 
 var voicePricesGB = []byte(`{
-    "country": "United Kingdom",
-    "iso_country": "GB",
-    "outbound_prefix_prices": [
+    "inbound_call_prices":[
         {
-            "prefixes": [
-                "44",
-                "44203",
-                "44207",
-                "44208"
-            ],
-            "friendly_name": "Programmable Outbound Minute - United Kingdom",
-            "base_price": "0.0175",
-            "current_price": "0.0175"
+            "number_type":"local",
+            "base_price":"0.010",
+            "current_price":"0.010"
         },
         {
-            "prefixes": [
-                "447",
+            "number_type":"mobile",
+            "base_price":"0.010",
+            "current_price":"0.010"
+        },
+        {
+            "number_type":"national",
+            "base_price":"0.010",
+            "current_price":"0.010"
+        },
+        {
+            "number_type":"toll free",
+            "base_price":"0.0575",
+            "current_price":"0.0575"
+        }
+    ],
+    "country":"United Kingdom",
+    "price_unit":"USD",
+    "iso_country":"GB",
+    "url":"https://pricing.twilio.com/v2/Voice/Countries/GB",
+    "outbound_prefix_prices":[
+        {
+            "destination_prefixes":[
                 "4470",
+                "4474179",
+                "4475890",
+                "4476433",
+                "4478933"
+            ],
+            "origination_prefixes":[
+                "ALL"
+            ],
+            "friendly_name":"Programmable Outbound Minute - United Kingdom - Personal",
+            "base_price":"0.45",
+            "current_price":"0.45"
+        },
+        {
+            "destination_prefixes":[
+                "447",
+                "447404",
+                "447405",
+                "4474065",
+                "4474172",
+                "4474173",
+                "4474174",
+                "4474175",
+                "4474181",
+                "4474183",
+                "4474184",
+                "4474185",
+                "4474186",
+                "447424",
+                "447438",
+                "4474400",
+                "4474401",
+                "4474402",
+                "4474403",
+                "4474404",
+                "4474405",
+                "4474406",
+                "4474407",
                 "4474408",
-                "44870",
-                "44871",
-                "44872",
-                "44873"
+                "4474409",
+                "4474414",
+                "447448",
+                "4474512",
+                "447459",
+                "447466",
+                "4475206",
+                "4475377",
+                "4475593",
+                "4475595",
+                "4475718",
+                "4475899",
+                "4477000",
+                "4477003",
+                "4477007",
+                "4477008",
+                "447781",
+                "4478221",
+                "4478297",
+                "4478298",
+                "4478299",
+                "4478360",
+                "4478361",
+                "4478369",
+                "4478722",
+                "4478727",
+                "4478744",
+                "4478939",
+                "4479782",
+                "4479783"
             ],
-            "friendly_name": "Programmable Outbound Minute - United Kingdom - Other",
-            "base_price": "0.32",
-            "current_price": "0.32"
+            "origination_prefixes":[
+                "ALL"
+            ],
+            "friendly_name":"Programmable Outbound Minute - United Kingdom - Mobile - Other",
+            "base_price":"0.32",
+            "current_price":"0.32"
         },
         {
-            "prefixes": [
-                "443",
-                "445",
-                "44551107"
-            ],
-            "friendly_name": "Programmable Outbound Minute - United Kingdom - Other - Service ",
-            "base_price": "0.045",
-            "current_price": "0.045"
-        },
-        {
-            "prefixes": [
-                "44843",
-                "44844",
-                "44845"
-            ],
-            "friendly_name": "Programmable Outbound Minute - United Kingdom - Other - Local",
-            "base_price": "0.25",
-            "current_price": "0.25"
-        },
-        {
-            "prefixes": [
+            "destination_prefixes":[
                 "447106",
                 "447107",
+                "447300",
+                "447301",
+                "447302",
+                "447303",
+                "447304",
                 "447340",
                 "447341",
                 "447342",
+                "447375",
+                "447376",
+                "447377",
+                "4473781",
+                "4473782",
+                "4473783",
+                "4473784",
+                "4473785",
+                "4473786",
+                "4473787",
+                "4473788",
+                "4473789",
+                "447379",
+                "4473801",
+                "4473802",
+                "4473803",
+                "4473804",
+                "4473805",
+                "4473806",
+                "4473807",
+                "4473808",
+                "4473809",
+                "447381",
+                "447382",
+                "447387",
+                "447388",
+                "4473890",
+                "4473891",
+                "447391",
+                "447392",
+                "447393",
+                "447394",
+                "447395",
+                "447396",
                 "4473970",
                 "4473971",
                 "4473972",
@@ -737,6 +846,7 @@ var voicePricesGB = []byte(`{
                 "447435",
                 "447436",
                 "447437",
+                "4474416",
                 "447442",
                 "447443",
                 "447444",
@@ -991,6 +1101,7 @@ var voicePricesGB = []byte(`{
                 "447819",
                 "447820",
                 "447821",
+                "4478228",
                 "447823",
                 "447824",
                 "447825",
@@ -1192,47 +1303,93 @@ var voicePricesGB = []byte(`{
                 "447990",
                 "447999"
             ],
-            "friendly_name": "Programmable Outbound Minute - United Kingdom - Mobile",
-            "base_price": "0.040",
-            "current_price": "0.040"
-        }
-    ],
-    "inbound_call_prices": [
-        {
-            "number_type": "local",
-            "base_price": "0.0075",
-            "current_price": "0.0075"
+            "origination_prefixes":[
+                "ALL"
+            ],
+            "friendly_name":"Programmable Outbound Minute - United Kingdom - Mobile",
+            "base_price":"0.035",
+            "current_price":"0.035"
         },
         {
-            "number_type": "national",
-            "base_price": "0.0075",
-            "current_price": "0.0075"
+            "destination_prefixes":[
+                "445",
+                "44551107",
+                "4455114",
+                "445516",
+                "44555500",
+                "4455551",
+                "4455553",
+                "4455554",
+                "4455555",
+                "44558866",
+                "4455888",
+                "4456"
+            ],
+            "origination_prefixes":[
+                "ALL"
+            ],
+            "friendly_name":"Programmable Outbound Minute - United Kingdom - Special Services - Other",
+            "base_price":"0.035",
+            "current_price":"0.035"
         },
         {
-            "number_type": "toll free",
-            "base_price": "0.0575",
-            "current_price": "0.0575"
+            "destination_prefixes":[
+                "44843",
+                "44844",
+                "44845",
+                "44870",
+                "44871",
+                "44872",
+                "44873"
+            ],
+            "origination_prefixes":[
+                "ALL"
+            ],
+            "friendly_name":"Programmable Outbound Minute - United Kingdom - Special Services",
+            "base_price":"0.25",
+            "current_price":"0.25"
+        },
+        {
+            "destination_prefixes":[
+                "44",
+                "44203",
+                "44207",
+                "44208",
+                "443",
+                "44800",
+                "44808"
+            ],
+            "origination_prefixes":[
+                "ALL"
+            ],
+            "friendly_name":"Programmable Outbound Minute - United Kingdom",
+            "base_price":"0.0175",
+            "current_price":"0.0175"
         }
-    ],
-    "price_unit": "USD",
-    "url": "https://pricing.twilio.com/v1/Voice/Countries/GB"
+    ]
 }`)
 
 var voicePriceNumberUS = []byte(`{
-    "number": "+19253920364",
-    "country": "United States",
-    "iso_country": "US",
-    "outbound_call_price": {
-        "base_price": "0.015",
-        "current_price": "0.015"
-    },
-    "inbound_call_price": {
-        "number_type": null,
-        "base_price": null,
-        "current_price": null
-    },
-    "price_unit": "USD",
-    "url": "https://pricing.twilio.com/v1/Voice/Numbers/+19253920364"
+    "price_unit":"USD",
+    "url":"https://pricing.twilio.com/v2/Voice/Numbers/+19253920364",
+    "country":"United States",
+    "destination_number":"+19253920364",
+    "iso_country":"US",
+    "origination_number":"+19253920364",
+    "outbound_call_prices":[
+        {
+            "base_price":"0.013",
+            "current_price":"0.013",
+            "origination_prefixes":[
+                "ALL"
+            ]
+        }
+    ],
+    "inbound_call_price":{
+        "number_type":null,
+        "base_price":null,
+        "current_price":null
+    }
 }`)
 
 var messagePriceGB = []byte(`{
