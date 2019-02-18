@@ -175,6 +175,9 @@ func TestDecode(t *testing.T) {
 	if msg.FriendlyPrice() != "$0.0075" {
 		t.Errorf("wrong friendly price %v, want %v", msg.FriendlyPrice(), "$0.00750")
 	}
+	if msg.NumSegments != 1 {
+		t.Errorf("wrong num segment %d, want %d", msg.NumSegments, 1)
+	}
 }
 
 func TestStatusFriendly(t *testing.T) {

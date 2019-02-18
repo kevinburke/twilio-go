@@ -1,6 +1,7 @@
 package twilio
 
 import (
+	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -70,11 +71,7 @@ type Segments uintStr
 type NumMedia uintStr
 
 func (seg *uintStr) UnmarshalJSON(b []byte) error {
-	s := new(string)
-	if err := json.Unmarshal(b, s); err != nil {
-		return err
-	}
-	u, err := strconv.ParseUint(*s, 10, 64)
+	u, err := strconv.ParseUint(string(bytes.Trim(b, `"`)), 10, 64)
 	if err != nil {
 		return err
 	}

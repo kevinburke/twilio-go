@@ -291,7 +291,7 @@ var getMessageResponse = []byte(`
     "from": "+19253920364",
     "messaging_service_sid": null,
     "num_media": "0",
-    "num_segments": "1",
+    "num_segments": 1,
     "price": "-0.00750",
     "price_unit": "USD",
     "sid": "SM26b3b00f8def53be77c5697183bfe95e",
