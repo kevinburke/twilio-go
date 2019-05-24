@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	types "github.com/kevinburke/go-types"
+	types "github.com/kgolding/go-types"
 )
 
 const alertPathPart = "Alerts"

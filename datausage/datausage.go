@@ -9,7 +9,7 @@ import (
 
 	"golang.org/x/sync/errgroup"
 
-	types "github.com/kevinburke/go-types"
+	types "github.com/kgolding/go-types"
 	twilio "github.com/kevinburke/twilio-go"
 )
 

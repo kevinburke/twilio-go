@@ -51,7 +51,7 @@ import (
 	"sync"
 	"time"
 
-	types "github.com/kevinburke/go-types"
+	types "github.com/kgolding/go-types"
 	"github.com/kevinburke/handlers"
 	"github.com/kevinburke/rest"
 	twilio "github.com/kevinburke/twilio-go"

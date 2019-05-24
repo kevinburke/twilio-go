@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	types "github.com/kevinburke/go-types"
+	types "github.com/kgolding/go-types"
 )
 
 type Page struct {

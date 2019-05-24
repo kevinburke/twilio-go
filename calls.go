@@ -7,7 +7,7 @@ import (
 	"net/url"
 	"time"
 
-	types "github.com/kevinburke/go-types"
+	types "github.com/kgolding/go-types"
 )
 
 const callsPathPart = "Calls"
