@@ -152,6 +152,13 @@ func (m *MessageService) GetPage(ctx context.Context, data url.Values) (*Message
 	return iter.Next(ctx)
 }
 
+// Delete the Message with the given sid. If the Message has already been
+// deleted, or does not exist, Delete returns nil. If another error or a
+// timeout occurs, the error is returned.
+func (m *MessageService) Delete(ctx context.Context, sid string) error {
+	return m.client.DeleteResource(ctx, messagesPathPart, sid)
+}
+
 // GetMessagesInRange gets an Iterator containing calls in the range [start,
 // end), optionally further filtered by data. GetMessagesInRange panics if
 // start is not before end. Any date filters provided in data will be ignored.
