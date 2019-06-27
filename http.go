@@ -54,6 +54,10 @@ const NotifyVersion = "v1"
 const LookupBaseURL = "https://lookups.twilio.com"
 const LookupVersion = "v1"
 
+// Verify service
+const VerifyBaseURL = "https://verify.twilio.com"
+const VerifyVersion = "v2"
+
 // Video service
 var VideoBaseUrl = "https://video.twilio.com"
 
@@ -71,6 +75,7 @@ type Client struct {
 	Wireless   *Client
 	Notify     *Client
 	Lookup     *Client
+	Verify     *Client
 	Video      *Client
 	TaskRouter *Client
 
@@ -119,6 +124,9 @@ type Client struct {
 
 	// NewLookupClient initializes these services
 	LookupPhoneNumbers *LookupPhoneNumbersService
+
+	// NewVerifyClient initializes these services
+	VerifyPhoneNumbers *VerifyPhoneNumberService
 
 	// NewVideoClient initializes these services
 	Rooms           *RoomService
@@ -293,6 +301,14 @@ func NewLookupClient(accountSid string, authToken string, httpClient *http.Clien
 	return c
 }
 
+// NewVerifyClient returns a new Client to use the verify API
+func NewVerifyClient(accountSid string, authToken string, httpClient *http.Client) *Client {
+	c := newNewClient(accountSid, authToken, VerifyBaseURL, httpClient)
+	c.APIVersion = VerifyVersion
+	c.VerifyPhoneNumbers = &VerifyPhoneNumberService{client: c}
+	return c
+}
+
 // NewVideoClient returns a new Client to use the video API
 func NewVideoClient(accountSid string, authToken string, httpClient *http.Client) *Client {
 	c := newNewClient(accountSid, authToken, VideoBaseUrl, httpClient)
@@ -326,6 +342,7 @@ func NewClient(accountSid string, authToken string, httpClient *http.Client) *Cl
 	c.Wireless = NewWirelessClient(accountSid, authToken, httpClient)
 	c.Notify = NewNotifyClient(accountSid, authToken, httpClient)
 	c.Lookup = NewLookupClient(accountSid, authToken, httpClient)
+	c.Verify = NewVerifyClient(accountSid, authToken, httpClient)
 	c.Video = NewVideoClient(accountSid, authToken, httpClient)
 	c.TaskRouter = NewTaskRouterClient(accountSid, authToken, httpClient)
 
