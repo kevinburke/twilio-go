@@ -72,6 +72,7 @@ func getServer(response []byte) (*Client, *Server) {
 	client.Wireless.Base = s.URL
 	client.Notify.Base = s.URL
 	client.Lookup.Base = s.URL
+	client.Verify.Base = s.URL
 	client.Video.Base = s.URL
 	client.TaskRouter.Base = s.URL
 	return client, s
@@ -2916,6 +2917,48 @@ var phoneLookupResponse = []byte(`
         "name": "Pacific Bell"
     }
 }	
+`)
+
+var verifyResponse = []byte(`
+{
+	"sid": "VEca86cf94c7d4f89e0bd45bfa7d9b9e7d",
+	"service_sid": "VA9e0bd45bfa7d9b9e7dca86cf94c7d4f8",
+	"account_sid": "ACd3736b6e17b7a9d23c49f7aa749a93cf",
+	"to": "+14159373912",
+	"channel": "sms",
+	"status": "pending",
+	"valid": false,
+	"lookup": {
+		"carrier": {
+			"error_code": null,
+			"name": "Carrier Name",
+			"mobile_country_code": "310",
+			"mobile_network_code": "150",
+			"type": "mobile"
+		}
+	},
+	"amount": null,
+	"payee": null,
+	"date_created": "2015-07-30T20:00:00Z",
+	"date_updated": "2015-07-30T20:00:00Z",
+	"url": "https://verify.twilio.com/v2/Services/VA9e0bd45bfa7d9b9e7dca86cf94c7d4f8/Verifications/VEca86cf94c7d4f89e0bd45bfa7d9b9e7d"
+}
+`)
+
+var verifyCheckResponse = []byte(`
+{
+	"sid": "VEca86cf94c7d4f89e0bd45bfa7d9b9e7d",
+	"service_sid": "VA9e0bd45bfa7d9b9e7dca86cf94c7d4f8",
+	"account_sid": "ACd3736b6e17b7a9d23c49f7aa749a93cf",
+	"to": "+14159373912",
+	"channel": "sms",
+	"status": "approved",
+	"valid": true,
+	"amount": null,
+	"payee": null,
+	"date_created": "2015-07-30T20:00:00Z",
+	"date_updated": "2015-07-30T20:00:00Z"
+}
 `)
 
 var roomResponse = []byte(`
