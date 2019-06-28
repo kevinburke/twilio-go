@@ -16,7 +16,7 @@ func TestVerifyPhoneNumbersCreate(t *testing.T) {
 	data := url.Values{}
 	data.Add("to", "+14159373912")
 	data.Add("channel", "sms")
-	verify, err := client.Verify.VerifyPhoneNumbers.Create(ctx, "VA9e0bd45bfa7d9b9e7dca86cf94c7d4f8", data)
+	verify, err := client.Verify.Verifications.Create(ctx, "VA9e0bd45bfa7d9b9e7dca86cf94c7d4f8", data)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -41,7 +41,7 @@ func TestVerifyPhoneNumbersGet(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	verify, err := client.Verify.VerifyPhoneNumbers.Get(ctx, "VA9e0bd45bfa7d9b9e7dca86cf94c7d4f8", "+14159373912")
+	verify, err := client.Verify.Verifications.Get(ctx, "VA9e0bd45bfa7d9b9e7dca86cf94c7d4f8", "+14159373912")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -69,7 +69,7 @@ func TestVerifyPhoneNumbersCheck(t *testing.T) {
 	data := url.Values{}
 	data.Add("code", "1234")
 	data.Add("to", "+14159373912")
-	verify, err := client.Verify.VerifyPhoneNumbers.Check(ctx, "VA9e0bd45bfa7d9b9e7dca86cf94c7d4f8", data)
+	verify, err := client.Verify.Verifications.Check(ctx, "VA9e0bd45bfa7d9b9e7dca86cf94c7d4f8", data)
 	if err != nil {
 		t.Fatal(err)
 	}

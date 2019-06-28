@@ -126,7 +126,7 @@ type Client struct {
 	LookupPhoneNumbers *LookupPhoneNumbersService
 
 	// NewVerifyClient initializes these services
-	VerifyPhoneNumbers *VerifyPhoneNumberService
+	Verifications *VerifyPhoneNumberService
 
 	// NewVideoClient initializes these services
 	Rooms           *RoomService
@@ -305,7 +305,7 @@ func NewLookupClient(accountSid string, authToken string, httpClient *http.Clien
 func NewVerifyClient(accountSid string, authToken string, httpClient *http.Client) *Client {
 	c := newNewClient(accountSid, authToken, VerifyBaseURL, httpClient)
 	c.APIVersion = VerifyVersion
-	c.VerifyPhoneNumbers = &VerifyPhoneNumberService{client: c}
+	c.Verifications = &VerifyPhoneNumberService{client: c}
 	return c
 }
 
