@@ -3,6 +3,8 @@ package twilio
 import (
 	"context"
 	"net/url"
+
+	"github.com/kevinburke/go-types"
 )
 
 const servicesPathPart = "Services"
@@ -14,33 +16,33 @@ type VerifyPhoneNumberService struct {
 }
 
 type VerifyPhoneNumber struct {
-	Sid         string      `json:"sid"`
-	ServiceSid  string      `json:"service_sid"`
-	AccountSid  string      `json:"account_sid"`
-	To          PhoneNumber `json:"to"`
-	Channel     string      `json:"channel"`
-	Status      string      `json:"status"`
-	Valid       bool        `json:"valid"`
-	Lookup      PhoneLookup `json:"lookup"`
-	Amount      string      `json:"amount"`
-	Payee       string      `json:"payee"`
-	DateCreated TwilioTime  `json:"date_created"`
-	DateUpdated TwilioTime  `json:"date_updated"`
-	URL         string      `json:"url"`
+	Sid         string           `json:"sid"`
+	ServiceSid  string           `json:"service_sid"`
+	AccountSid  string           `json:"account_sid"`
+	To          PhoneNumber      `json:"to"`
+	Channel     string           `json:"channel"`
+	Status      string           `json:"status"`
+	Valid       bool             `json:"valid"`
+	Lookup      PhoneLookup      `json:"lookup"`
+	Amount      types.NullString `json:"amount"`
+	Payee       types.NullString `json:"payee"`
+	DateCreated TwilioTime       `json:"date_created"`
+	DateUpdated TwilioTime       `json:"date_updated"`
+	URL         string           `json:"url"`
 }
 
 type CheckPhoneNumber struct {
-	Sid         string     `json:"sid"`
-	ServiceSid  string     `json:"service_sid"`
-	AccountSid  string     `json:"account_sid"`
-	To          string     `json:"to"`
-	Channel     string     `json:"channel"`
-	Status      string     `json:"status"`
-	Valid       bool       `json:"valid"`
-	Amount      string     `json:"amount"`
-	Payee       string     `json:"payee"`
-	DateCreated TwilioTime `json:"date_created"`
-	DateUpdated TwilioTime `json:"date_updated"`
+	Sid         string           `json:"sid"`
+	ServiceSid  string           `json:"service_sid"`
+	AccountSid  string           `json:"account_sid"`
+	To          string           `json:"to"`
+	Channel     string           `json:"channel"`
+	Status      string           `json:"status"`
+	Valid       bool             `json:"valid"`
+	Amount      types.NullString `json:"amount"`
+	Payee       types.NullString `json:"payee"`
+	DateCreated TwilioTime       `json:"date_created"`
+	DateUpdated TwilioTime       `json:"date_updated"`
 }
 
 // Create calls the Verify API to start a new verification.
