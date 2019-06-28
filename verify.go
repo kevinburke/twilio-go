@@ -17,7 +17,7 @@ type VerifyPhoneNumber struct {
 	Sid         string      `json:"sid"`
 	ServiceSid  string      `json:"service_sid"`
 	AccountSid  string      `json:"account_sid"`
-	To          string      `json:"to"`
+	To          PhoneNumber `json:"to"`
 	Channel     string      `json:"channel"`
 	Status      string      `json:"status"`
 	Valid       bool        `json:"valid"`
