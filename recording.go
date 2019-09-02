@@ -53,6 +53,17 @@ type RecordingPage struct {
 	Recordings []*Recording
 }
 
+func (r *RecordingService) Create(ctx context.Context, data url.Values, call_sid string) (*Recording, error) {
+	recording := new(Recording)
+	path := "Calls/" + call_sid + "/" + recordingsPathPart
+
+	err := r.client.CreateResource(ctx, path, data, recording)
+	if err != nil {
+		return nil, err
+	}
+	return recording, err
+}
+
 func (r *RecordingService) Get(ctx context.Context, sid string) (*Recording, error) {
 	recording := new(Recording)
 	err := r.client.GetResource(ctx, recordingsPathPart, sid, recording)
