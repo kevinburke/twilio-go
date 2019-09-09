@@ -24,7 +24,7 @@ fetch all Media for a Message concurrently.
 
 - Usable, [one sentence descriptions of Alerts][alert-descriptions].
 
-[alert-descriptions]: https://godoc.org/github.com/kevinburke/twilio-go#Alert.Description
+[alert-descriptions]: https://godoc.org/github.com/appian/twilio-go#Alert.Description
 
 Here are some example use cases:
 
@@ -61,7 +61,7 @@ for {
 ```
 
 A [complete documentation reference can be found at
-godoc.org](https://godoc.org/github.com/kevinburke/twilio-go).
+godoc.org](https://godoc.org/github.com/appian/twilio-go).
 
 ## In Production
 

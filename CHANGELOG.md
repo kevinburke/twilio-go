@@ -108,7 +108,7 @@ contributing the patch.
 Support the Twilio Fax API.
 
 - Rename imports from github.com/saintpete/twilio-go to
-  github.com/kevinburke/twilio-go.
+  github.com/appian/twilio-go.
 
 ## 0.58
 

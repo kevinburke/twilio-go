@@ -1,5 +1,5 @@
 language: go
-go_import_path: github.com/kevinburke/twilio-go
+go_import_path: github.com/appian/twilio-go
 
 os: linux
 dist: trusty

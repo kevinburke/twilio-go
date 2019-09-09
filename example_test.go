@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/kevinburke/rest"
-	twilio "github.com/kevinburke/twilio-go"
+	twilio "github.com/appian/twilio-go"
 )
 
 var callURL, _ = url.Parse("https://kev.inburke.com/zombo/zombocom.mp3")

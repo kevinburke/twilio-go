@@ -6,7 +6,7 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/kevinburke/twilio-go/testdata"
+	"github.com/appian/twilio-go/testdata"
 )
 
 func TestGetWorker(t *testing.T) {

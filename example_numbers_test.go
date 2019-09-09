@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/url"
 
-	twilio "github.com/kevinburke/twilio-go"
+	twilio "github.com/appian/twilio-go"
 )
 
 func Example_buyNumber() {
