@@ -67,17 +67,22 @@ var TaskRouterBaseUrl = "https://taskrouter.twilio.com"
 
 const TaskRouterVersion = "v1"
 
+var WorkspaceBaseUrl = "https://taskrouter.twilio.com"
+
+const WorkspaceVersion = "v1"
+
 type Client struct {
 	*rest.Client
-	Monitor    *Client
-	Pricing    *Client
-	Fax        *Client
-	Wireless   *Client
-	Notify     *Client
-	Lookup     *Client
-	Verify     *Client
-	Video      *Client
-	TaskRouter *Client
+	Monitor         *Client
+	Pricing         *Client
+	Fax             *Client
+	Wireless        *Client
+	Notify          *Client
+	Lookup          *Client
+	Verify          *Client
+	Video           *Client
+	TaskRouter      *Client
+	WorkspaceClient *Client
 
 	// FullPath takes a path part (e.g. "Messages") and
 	// returns the full API path, including the version (e.g.
@@ -134,6 +139,9 @@ type Client struct {
 
 	// NewTaskRouterClient initializes these services
 	Workspace func(sid string) *WorkspaceService
+
+	// NewWorkspaceClient initializes these services
+	WorkspaceCreator *WorkspaceCreator
 }
 
 const defaultTimeout = 30*time.Second + 500*time.Millisecond
@@ -269,6 +277,16 @@ func NewTaskRouterClient(accountSid string, authToken string, httpClient *http.C
 	return c
 }
 
+// Client for Workspace CRUD
+func NewWorkspaceClient(accountSid string, authToken string, httpClient *http.Client) *Client {
+	if httpClient == nil {
+		httpClient = &http.Client{Timeout: defaultTimeout}
+	}
+	c := newNewClient(accountSid, authToken, WorkspaceBaseUrl, httpClient)
+	c.APIVersion = WorkspaceVersion
+	return c
+}
+
 // NewPricingClient returns a new Client to use the pricing API
 func NewPricingClient(accountSid string, authToken string, httpClient *http.Client) *Client {
 	c := newNewClient(accountSid, authToken, PricingBaseURL, httpClient)
@@ -345,6 +363,7 @@ func NewClient(accountSid string, authToken string, httpClient *http.Client) *Cl
 	c.Verify = NewVerifyClient(accountSid, authToken, httpClient)
 	c.Video = NewVideoClient(accountSid, authToken, httpClient)
 	c.TaskRouter = NewTaskRouterClient(accountSid, authToken, httpClient)
+	c.WorkspaceClient = NewWorkspaceClient(accountSid, authToken, httpClient)
 
 	c.Accounts = &AccountService{client: c}
 	c.Applications = &ApplicationService{client: c}
@@ -357,6 +376,7 @@ func NewClient(accountSid string, authToken string, httpClient *http.Client) *Cl
 	c.Queues = &QueueService{client: c}
 	c.Recordings = &RecordingService{client: c}
 	c.Transcriptions = &TranscriptionService{client: c}
+	c.WorkspaceCreator = &WorkspaceCreator{client: c}
 
 	c.IncomingNumbers = &IncomingNumberService{
 		NumberPurchasingService: &NumberPurchasingService{
