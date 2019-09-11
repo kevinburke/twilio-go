@@ -5,6 +5,8 @@ import (
 	"net/url"
 )
 
+const messagingServicePathPart = "Services"
+
 type ServiceResource struct {
 	client   *Client
 	pathPart string
@@ -51,7 +53,7 @@ type MessagingServicePage struct {
 // https://www.twilio.com/docs/sms/services/api#create-a-service-resource
 func (s *ServiceResource) Create(ctx context.Context, data url.Values) (*MessagingService, error) {
 	messagingService := new(MessagingService)
-	err := s.client.CreateResource(ctx, "", data, messagingService)
+	err := s.client.CreateResource(ctx, messagingServicePathPart, data, messagingService)
 	return messagingService, err
 }
 
@@ -60,7 +62,7 @@ func (s *ServiceResource) Create(ctx context.Context, data url.Values) (*Messagi
 // https://www.twilio.com/docs/sms/services/api#fetch-a-service-resource
 func (s *ServiceResource) Fetch(ctx context.Context, sid string) (*MessagingService, error) {
 	messagingService := new(MessagingService)
-	err := s.client.GetResource(ctx, "", sid, messagingService)
+	err := s.client.GetResource(ctx, messagingServicePathPart, sid, messagingService)
 	return messagingService, err
 }
 
@@ -69,7 +71,7 @@ func (s *ServiceResource) Fetch(ctx context.Context, sid string) (*MessagingServ
 // https://www.twilio.com/docs/sms/services/api#update-a-service-resource
 func (s *ServiceResource) Update(ctx context.Context, sid string, data url.Values) (*MessagingService, error) {
 	messagingService := new(MessagingService)
-	err := s.client.UpdateResource(ctx, "", sid, data, messagingService)
+	err := s.client.UpdateResource(ctx, messagingServicePathPart, sid, data, messagingService)
 	return messagingService, err
 }
 
@@ -77,7 +79,7 @@ func (s *ServiceResource) Update(ctx context.Context, sid string, data url.Value
 //
 // https://www.twilio.com/docs/sms/services/api#delete-a-service-resource
 func (s *ServiceResource) Delete(ctx context.Context, sid string, data url.Values) error {
-	return s.client.DeleteResource(ctx, "", sid)
+	return s.client.DeleteResource(ctx, messagingServicePathPart, sid)
 }
 
 // GetPage retrieves an IncomingPhoneNumberPage, filtered by the given data.
@@ -92,7 +94,7 @@ type MessagingServiceIterator struct {
 
 // GetPageIterator returns an iterator which can be used to retrieve pages.
 func (c *ServiceResource) GetPageIterator(data url.Values) *MessagingServiceIterator {
-	iter := NewPageIterator(c.client, data, "")
+	iter := NewPageIterator(c.client, data, messagingServicePathPart)
 	return &MessagingServiceIterator{
 		p: iter,
 	}

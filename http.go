@@ -358,6 +358,7 @@ func NewClient(accountSid string, authToken string, httpClient *http.Client) *Cl
 	c.Verify = NewVerifyClient(accountSid, authToken, httpClient)
 	c.Video = NewVideoClient(accountSid, authToken, httpClient)
 	c.TaskRouter = NewTaskRouterClient(accountSid, authToken, httpClient)
+	c.Resource = NewServiceResource(accountSid, authToken, httpClient)
 
 	c.Accounts = &AccountService{client: c}
 	c.Applications = &ApplicationService{client: c}
@@ -405,7 +406,6 @@ func NewClient(accountSid string, authToken string, httpClient *http.Client) *Cl
 			client: c,
 		},
 	}
-	c.Resource = NewServiceResource(accountSid, authToken, httpClient)
 	return c
 }
 
