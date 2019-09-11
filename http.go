@@ -73,6 +73,10 @@ var InsightsBaseUrl = "https://insights.twilio.com"
 
 const InsightsVersion = "v1"
 
+// Service Resource
+const ServiceResourceBaseUrl = "https://messaging.twilio.com"
+const ServiceResourceVersion = "v1"
+
 type Client struct {
 	*restclient.Client
 	Monitor    *Client
@@ -85,6 +89,7 @@ type Client struct {
 	Video      *Client
 	TaskRouter *Client
 	Insights   *Client
+	Resource   *Client
 
 	// FullPath takes a path part (e.g. "Messages") and
 	// returns the full API path, including the version (e.g.
@@ -144,6 +149,8 @@ type Client struct {
 
 	// NewInsightsClient initializes these services
 	VoiceInsights func(sid string) *VoiceInsightsService
+
+	MessagingService *ServiceResource
 }
 
 const defaultTimeout = 30*time.Second + 500*time.Millisecond
@@ -350,6 +357,14 @@ func NewVideoClient(accountSid string, authToken string, httpClient *http.Client
 	return c
 }
 
+// NewServiceResource returns a new Client to use Service Resource API
+func NewServiceResource(accountSid string, authToken string, httpClient *http.Client) *Client {
+	c := newNewClient(accountSid, authToken, ServiceResourceBaseUrl, httpClient)
+	c.APIVersion = ServiceResourceVersion
+	c.MessagingService = &ServiceResource{client: c}
+	return c
+}
+
 // NewClient creates a Client for interacting with the Twilio API. This is the
 // main entrypoint for API interactions; view the methods on the subresources
 // for more information.
@@ -425,7 +440,7 @@ func NewClient(accountSid string, authToken string, httpClient *http.Client) *Cl
 			client: c,
 		},
 	}
-
+	c.Resource = NewServiceResource(accountSid, authToken, httpClient)
 	return c
 }
 
