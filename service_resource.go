@@ -36,7 +36,7 @@ type MessagingService struct {
 	MMSConverter          bool                   `json:"mms_converter"`
 	FallbackToLongCode    bool                   `json:"fallback_to_long_code"`
 	ScanMessageContent    string                 `json:"scan_message_content"`
-	AreaCodeGeomatch      string                 `json:"area_code_geomatch"`
+	AreaCodeGeomatch      bool                 `json:"area_code_geomatch"`
 	ValidityPeriod        int                    `json:"validity_period"`
 	SynchronousValidation bool                   `json:"synchronous_validation"`
 	Links                 *MessagingServiceLinks `json:"links"`
