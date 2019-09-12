@@ -151,6 +151,8 @@ type Client struct {
 	VoiceInsights func(sid string) *VoiceInsightsService
 
 	MessagingService *ServiceResource
+
+	ServiceResourceService *ServiceResourceService
 }
 
 const defaultTimeout = 30*time.Second + 500*time.Millisecond
@@ -362,6 +364,11 @@ func NewServiceResource(accountSid string, authToken string, httpClient *http.Cl
 	c := newNewClient(accountSid, authToken, ServiceResourceBaseUrl, httpClient)
 	c.APIVersion = ServiceResourceVersion
 	c.MessagingService = &ServiceResource{client: c}
+	c.ServiceResourceService = &ServiceResourceService{
+		MessagingService: &MessagingService{c},
+		PhoneNumber:      &PhoneNumberService{c},
+		AlphaSender:      &AlphaSenderService{c},
+	}
 	return c
 }
 
