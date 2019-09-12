@@ -140,7 +140,7 @@ type Client struct {
 	// NewTaskRouterClient initializes these services
 	Workspace func(sid string) *WorkspaceService
 
-	MessagingService *ServiceResource
+	ServiceResourceService *ServiceResourceService
 }
 
 const defaultTimeout = 30*time.Second + 500*time.Millisecond
@@ -328,7 +328,11 @@ func NewVideoClient(accountSid string, authToken string, httpClient *http.Client
 func NewServiceResource(accountSid string, authToken string, httpClient *http.Client) *Client {
 	c := newNewClient(accountSid, authToken, ServiceResourceBaseUrl, httpClient)
 	c.APIVersion = ServiceResourceVersion
-	c.MessagingService = &ServiceResource{client:c}
+	c.ServiceResourceService = &ServiceResourceService{
+		MessagingService: &MessagingService{c},
+		PhoneNumber:      &PhoneNumberService{c},
+		AlphaSender:      &AlphaSenderService{c},
+	}
 	return c
 }
 // NewClient creates a Client for interacting with the Twilio API. This is the
