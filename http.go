@@ -324,6 +324,7 @@ func NewVideoClient(accountSid string, authToken string, httpClient *http.Client
 	c.VideoRecordings = &VideoRecordingService{client: c}
 	return c
 }
+
 // NewServiceResource returns a new Client to use Service Resource API
 func NewServiceResource(accountSid string, authToken string, httpClient *http.Client) *Client {
 	c := newNewClient(accountSid, authToken, ServiceResourceBaseUrl, httpClient)
@@ -332,9 +333,11 @@ func NewServiceResource(accountSid string, authToken string, httpClient *http.Cl
 		MessagingService: &MessagingService{c},
 		PhoneNumber:      &PhoneNumberService{c},
 		AlphaSender:      &AlphaSenderService{c},
+		ShortCode:        &ShortCodeService{c},
 	}
 	return c
 }
+
 // NewClient creates a Client for interacting with the Twilio API. This is the
 // main entrypoint for API interactions; view the methods on the subresources
 // for more information.
