@@ -75,6 +75,7 @@ func getServer(response []byte) (*Client, *Server) {
 	client.Verify.Base = s.URL
 	client.Video.Base = s.URL
 	client.TaskRouter.Base = s.URL
+	client.Resource.Base = s.URL
 	return client, s
 }
 
@@ -90,6 +91,7 @@ func getServerCode(response []byte, code int) (*Client, *Server) {
 	client.Lookup.Base = s.URL
 	client.Video.Base = s.URL
 	client.TaskRouter.Base = s.URL
+	client.Resource.Base = s.URL
 	return client, s
 }
 
