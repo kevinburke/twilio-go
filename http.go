@@ -368,6 +368,7 @@ func NewServiceResource(accountSid string, authToken string, httpClient *http.Cl
 		MessagingService: &MessagingService{c},
 		PhoneNumber:      &PhoneNumberService{c},
 		AlphaSender:      &AlphaSenderService{c},
+		ShortCode:        &ShortCodeService{c},
 	}
 	return c
 }
