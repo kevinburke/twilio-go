@@ -136,6 +136,21 @@ func (c *CallService) MakeCall(from string, to string, u *url.URL) (*Call, error
 	return c.Create(context.Background(), data)
 }
 
+// MakeCallWithEvents starts a new Call from the given phone number and allows to set
+// the status callback.
+func (c *CallService) MakeCallWithEvents(from string, to string, u *url.URL, statusCallback *url.URL, statusCallbackMethod string) (*Call, error) {
+	if statusCallbackMethod == "" {
+		statusCallbackMethod = "POST"
+	}
+	data := url.Values{}
+	data.Set("From", from)
+	data.Set("To", to)
+	data.Set("Url", u.String())
+	data.Set("StatusCallback", statusCallback.String())
+	data.Set("StatusCallbackMethod", statusCallbackMethod)
+	return c.Create(context.Background(), data)
+}
+
 func (c *CallService) GetPage(ctx context.Context, data url.Values) (*CallPage, error) {
 	iter := c.GetPageIterator(data)
 	return iter.Next(ctx)
