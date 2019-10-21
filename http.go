@@ -150,9 +150,8 @@ type Client struct {
 	// NewInsightsClient initializes these services
 	VoiceInsights func(sid string) *VoiceInsightsService
 
-	MessagingService *ServiceResource
-
-	ServiceResourceService *ServiceResourceService
+	// NewServiceResourceClient initializes these services
+	ServiceResources *ServiceResourceService
 }
 
 const defaultTimeout = 30*time.Second + 500*time.Millisecond
@@ -359,16 +358,17 @@ func NewVideoClient(accountSid string, authToken string, httpClient *http.Client
 	return c
 }
 
-// NewServiceResource returns a new Client to use Service Resource API
-func NewServiceResource(accountSid string, authToken string, httpClient *http.Client) *Client {
+// NewServiceResourceClient returns a new Client to use the Service Resource API
+//
+//https://www.twilio.com/docs/sms/services/api#messaging-services-resource
+func NewServiceResourceClient(accountSid string, authToken string, httpClient *http.Client) *Client {
 	c := newNewClient(accountSid, authToken, ServiceResourceBaseUrl, httpClient)
 	c.APIVersion = ServiceResourceVersion
-	c.MessagingService = &ServiceResource{client: c}
-	c.ServiceResourceService = &ServiceResourceService{
+	c.ServiceResources = &ServiceResourceService{
 		MessagingService: &MessagingService{c},
-		PhoneNumber:      &PhoneNumberService{c},
-		AlphaSender:      &AlphaSenderService{c},
-		ShortCode:        &ShortCodeService{c},
+		PhoneNumbers:     &PhoneNumberService{c},
+		AlphaSenders:     &AlphaSenderService{c},
+		ShortCodes:       &ShortCodeService{c},
 	}
 	return c
 }
@@ -401,7 +401,7 @@ func NewClient(accountSid string, authToken string, httpClient *http.Client) *Cl
 	c.Video = NewVideoClient(accountSid, authToken, httpClient)
 	c.TaskRouter = NewTaskRouterClient(accountSid, authToken, httpClient)
 	c.Insights = NewInsightsClient(accountSid, authToken, httpClient)
-	c.Resource = NewServiceResource(accountSid, authToken, httpClient)
+	c.Resource = NewServiceResourceClient(accountSid, authToken, httpClient)
 
 	c.Accounts = &AccountService{client: c}
 	c.Applications = &ApplicationService{client: c}

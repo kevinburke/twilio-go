@@ -9,7 +9,7 @@ func TestFetchMessagingResource(t *testing.T) {
 	t.Parallel()
 	client, server := getServer(messagingResourceResponse)
 	defer server.Close()
-	msr, err := client.Resource.ServiceResourceService.Fetch(context.Background(), "MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+	msr, err := client.Resource.ServiceResources.Get(context.Background(), "MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -22,7 +22,7 @@ func TestFetchPhoneNumberResource(t *testing.T) {
 	t.Parallel()
 	client, server := getServer(phoneNumberResourceResponse)
 	defer server.Close()
-	pnr, err := client.Resource.ServiceResourceService.PhoneNumber.Fetch(context.Background(), "MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", "PNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+	pnr, err := client.Resource.ServiceResources.PhoneNumbers.Get(context.Background(), "MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", "PNXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -38,7 +38,7 @@ func TestFetchAlphaSenderResource(t *testing.T) {
 	t.Parallel()
 	client, server := getServer(alphaSenderResourceResponse)
 	defer server.Close()
-	asr, err := client.Resource.ServiceResourceService.AlphaSender.Fetch(context.Background(), "MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", "AIXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+	asr, err := client.Resource.ServiceResources.AlphaSenders.Get(context.Background(), "MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", "AIXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -54,7 +54,7 @@ func TestFetchShortCodeResource(t *testing.T) {
 	t.Parallel()
 	client, server := getServer(shortCodeResourceResponse)
 	defer server.Close()
-	asr, err := client.Resource.ServiceResourceService.ShortCode.Fetch(context.Background(), "MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", "SCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+	asr, err := client.Resource.ServiceResources.ShortCodes.Get(context.Background(), "MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", "SCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
 	if err != nil {
 		t.Fatal(err)
 	}

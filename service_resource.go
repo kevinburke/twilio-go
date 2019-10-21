@@ -15,9 +15,9 @@ const (
 
 type ServiceResourceService struct {
 	*MessagingService
-	PhoneNumber *PhoneNumberService
-	ShortCode   *ShortCodeService
-	AlphaSender *AlphaSenderService
+	PhoneNumbers *PhoneNumberService
+	ShortCodes   *ShortCodeService
+	AlphaSenders *AlphaSenderService
 }
 
 type MessagingService struct {
@@ -81,10 +81,10 @@ func (s *MessagingService) Create(ctx context.Context, data url.Values) (*Messag
 	return mr, err
 }
 
-// Fetch a service resource
+// Get a service resource
 //
 // https://www.twilio.com/docs/sms/services/api#fetch-a-service-resource
-func (s *MessagingService) Fetch(ctx context.Context, sid string) (*MessagingResource, error) {
+func (s *MessagingService) Get(ctx context.Context, sid string) (*MessagingResource, error) {
 	mr := new(MessagingResource)
 	err := s.client.GetResource(ctx, messagingServicePathPart, sid, mr)
 	return mr, err
@@ -163,10 +163,10 @@ func (s *PhoneNumberService) Create(ctx context.Context, serviceSID string, data
 	return pnr, err
 }
 
-// Fetch a phone number resource for messaging service
+// Get a phone number resource for messaging service
 //
 // https://www.twilio.com/docs/sms/services/api/phonenumber-resource#fetch-a-phonenumber-resource
-func (s *PhoneNumberService) Fetch(ctx context.Context, serviceSID, sid string) (*PhoneNumberResource, error) {
+func (s *PhoneNumberService) Get(ctx context.Context, serviceSID, sid string) (*PhoneNumberResource, error) {
 	pnr := new(PhoneNumberResource)
 	pathPart := fmt.Sprintf(phoneNumberServicePathTemplate, serviceSID)
 	err := s.client.GetResource(ctx, pathPart, sid, pnr)
@@ -228,7 +228,7 @@ type AlphaSenderResourcePage struct {
 	AlphaSenders []*AlphaSenderResource `json:"alpha_senders"`
 }
 
-// Create a alpha sender resource for messaging service
+// Create an alpha sender resource for messaging service
 //
 // https://www.twilio.com/docs/sms/services/api/alphasender-resource#create-an-alphasender-resource
 func (s *AlphaSenderService) Create(ctx context.Context, serviceSID string, data url.Values) (*AlphaSenderResource, error) {
@@ -238,10 +238,10 @@ func (s *AlphaSenderService) Create(ctx context.Context, serviceSID string, data
 	return asr, err
 }
 
-// Fetch a alpha sender resource for messaging service
+// Get a alpha sender resource for messaging service
 //
 // https://www.twilio.com/docs/sms/services/api/alphasender-resource#fetch-an-alphasender-resource
-func (s *AlphaSenderService) Fetch(ctx context.Context, serviceSID, sid string) (*AlphaSenderResource, error) {
+func (s *AlphaSenderService) Get(ctx context.Context, serviceSID, sid string) (*AlphaSenderResource, error) {
 	asr := new(AlphaSenderResource)
 	pathPart := fmt.Sprintf(alphaSenderServicePathTemplate, serviceSID)
 	err := s.client.GetResource(ctx, pathPart, sid, asr)
@@ -314,10 +314,10 @@ func (s *ShortCodeService) Create(ctx context.Context, serviceSID string, data u
 	return scr, err
 }
 
-// Fetch a short code resource for messaging service
+// Get a short code resource for messaging service
 //
 // https://www.twilio.com/docs/sms/services/api/shortcode-resource#fetch-a-shortcode-resource
-func (s *ShortCodeService) Fetch(ctx context.Context, serviceSID, sid string) (*ShortCodeResource, error) {
+func (s *ShortCodeService) Get(ctx context.Context, serviceSID, sid string) (*ShortCodeResource, error) {
 	scr := new(ShortCodeResource)
 	pathPart := fmt.Sprintf(shortCodeServicePathTemplate, serviceSID)
 	err := s.client.GetResource(ctx, pathPart, sid, scr)
