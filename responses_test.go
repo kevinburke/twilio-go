@@ -1,13 +1,11 @@
 package twilio
 
 import (
-	"flag"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
 	"os"
 	"sync"
-	"testing"
 )
 
 // the envClient is configured to use an Account Sid and Auth Token set in the
@@ -15,8 +13,7 @@ import (
 var envClient *Client
 
 func init() {
-	flag.Parse()
-	if !testing.Short() && os.Getenv("TWILIO_ACCOUNT_SID") == "" {
+	if os.Getenv("TWILIO_ACCOUNT_SID") == "" {
 		os.Stderr.WriteString("warning: no TWILIO_ACCOUNT_SID configured, HTTP tests will probably fail...\n\n")
 	}
 	envClient = NewClient(os.Getenv("TWILIO_ACCOUNT_SID"), os.Getenv("TWILIO_AUTH_TOKEN"), nil)
@@ -75,6 +72,7 @@ func getServer(response []byte) (*Client, *Server) {
 	client.Verify.Base = s.URL
 	client.Video.Base = s.URL
 	client.TaskRouter.Base = s.URL
+	client.Resource.Base = s.URL
 	return client, s
 }
 
@@ -90,6 +88,7 @@ func getServerCode(response []byte, code int) (*Client, *Server) {
 	client.Lookup.Base = s.URL
 	client.Video.Base = s.URL
 	client.TaskRouter.Base = s.URL
+	client.Resource.Base = s.URL
 	return client, s
 }
 
