@@ -53,6 +53,19 @@ type RecordingPage struct {
 	Recordings []*Recording
 }
 
+// Create creates a recording based on given callSid and return a Recording object
+// https://www.twilio.com/docs/voice/api/recording#create-a-recording-resource
+func (r *RecordingService) Create(ctx context.Context, callSid, data url.Values string) (*Recording, error) {
+	recording := new(Recording)
+	path := "Calls/" + callSid + "/" + recordingsPathPart
+
+	err := r.client.CreateResource(ctx, path, data, recording)
+	if err != nil {
+		return nil, err
+	}
+	return recording, err
+}
+
 func (r *RecordingService) Get(ctx context.Context, sid string) (*Recording, error) {
 	recording := new(Recording)
 	err := r.client.GetResource(ctx, recordingsPathPart, sid, recording)
