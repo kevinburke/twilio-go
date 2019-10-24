@@ -299,6 +299,20 @@ func (c *CallService) GetRecordings(ctx context.Context, callSid string, data ur
 	return c.client.Recordings.GetPage(ctx, data)
 }
 
+// CreateRecording creates a recording based on given callSid and return a Recording object
+// https://www.twilio.com/docs/voice/api/recording#create-a-recording-resource
+func (c *CallService) CreateRecording(ctx context.Context, callSid, data url.Values string) (*Recording, error) {
+	recording := new(Recording)
+	path := "Calls/" + callSid + "/Recordings"
+	
+	err := c.client.CreateResource(ctx, path, data, recording)
+	if err != nil {
+		return nil, err
+	}
+	return recording, err
+}
+
+
 // GetRecordings returns an iterator of recording pages for this Call.
 // Note there may be more than one Page of results.
 func (c *CallService) GetRecordingsIterator(callSid string, data url.Values) *RecordingPageIterator {
