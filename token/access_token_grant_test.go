@@ -106,3 +106,16 @@ func TestVideoGrant(t *testing.T) {
 		t.Errorf("%s expected to be %s, got %s\n", keyRoomSid, ROOM_SID, vdGrnt.ToPayload()[keyRoomSid])
 	}
 }
+
+func TestChatGrant(t *testing.T) {
+	t.Parallel()
+	chGrnt := NewChatGrant(SERVICE_SID)
+
+	if chGrnt.Key() != chatGrant {
+		t.Errorf("key expected to be %s, got %s\n", chatGrant, chGrnt.Key())
+	}
+
+	if chGrnt.ToPayload()[keyServiceSid] != SERVICE_SID {
+		t.Errorf("%s expected to be %s, got %s\n", keyServiceSid, SERVICE_SID, chGrnt.ToPayload()[keyServiceSid])
+	}
+}
