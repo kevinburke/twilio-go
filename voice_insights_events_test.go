@@ -8,8 +8,9 @@ import (
 
 func TestGetCallEventsPage(t *testing.T) {
 	t.Parallel()
-
 	client, s := getServer(insightsCallEventsResponse)
+	t.Cleanup(s.Close)
+
 	sid := "CA04917eab5c194f4c86207384933c0c41"
 	page, err := client.Insights.VoiceInsights(sid).Events.GetPage(context.Background(), url.Values{})
 	if err != nil {
@@ -30,6 +31,4 @@ func TestGetCallEventsPage(t *testing.T) {
 	if page.Events[0].Edge != "client_edge" {
 		t.Errorf("expected Edge to be 'client_edge', got %s", page.Events[0].Edge)
 	}
-
-	t.Cleanup(s.Close)
 }
