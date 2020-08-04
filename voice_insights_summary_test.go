@@ -7,9 +7,9 @@ import (
 
 func TestGetCallSummary(t *testing.T) {
 	t.Parallel()
+
 	client, s := getServer(insightsCallSummaryResponse)
-	defer s.Close()
-	sid := "NO00ed1fb4aa449be2434d54ec8e411abc"
+	sid := "CA04917eab5c194f4c86207384933c0c41"
 	summary, err := client.Insights.VoiceInsights(sid).Summary.Get(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -20,4 +20,6 @@ func TestGetCallSummary(t *testing.T) {
 	if summary.CallType != "carrier" {
 		t.Errorf("expected CallType to be %s, got %s", "carrier", summary.CallType)
 	}
+
+	t.Cleanup(s.Close)
 }

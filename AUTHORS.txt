@@ -3,6 +3,7 @@ Andrey Mak <andrey.mak@yahoo.com>
 Duncan Crawford <duncan@noughtsandones.co.uk>
 Elijah Oyekunle <eloyekunle@gmail.com>
 Fabrizio Moscon <mosconfabrizio@gmail.com>
+Joey Lee <jq@yeoji.com>
 Josh Hornby <hello@joshhornby.co.uk>
 Kelmer Perez <kperez@wyzant.com>
 Kevin Burke <kevin@burke.dev>

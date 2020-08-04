@@ -14,28 +14,28 @@ type CallSummaryService struct {
 }
 
 type CallSummary struct {
-	AccountSid      string            `json:"account_sid"`
-	Attributes      Attributes        `json:"attributes"`
-	CallSid         string            `json:"call_sid"`
-	CallState       Status            `json:"call_state"`
-	CallType        string            `json:"call_type"`
-	CarrierEdge     *Edge             `json:"carrier_edge,omitempty"`
-	ClientEdge      *Edge             `json:"client_edge,omitempty"`
-	ConnectDuration int               `json:"connect_duration"`
-	Duration        int               `json:"duration"`
-	EndTime         TwilioTime        `json:"end_time"`
-	From            ToFrom            `json:"from"`
-	ProcessingState string            `json:"processing_state"`
-	Properties      CallProperties    `json:"properties"`
-	SdkEdge         *SdkEdge          `json:"sdk_edge,omitempty"`
-	SipEdge         *Edge             `json:"sip_edge,omitempty"`
-	StartTime       TwilioTime        `json:"start_time"`
-	Tags            map[string]string `json:"tags"`
-	To              ToFrom            `json:"to"`
-	URL             string            `json:"url"`
+	AccountSid      string                `json:"account_sid"`
+	Attributes      CallSummaryAttributes `json:"attributes"`
+	CallSid         string                `json:"call_sid"`
+	CallState       Status                `json:"call_state"`
+	CallType        string                `json:"call_type"`
+	CarrierEdge     *Edge                 `json:"carrier_edge,omitempty"`
+	ClientEdge      *Edge                 `json:"client_edge,omitempty"`
+	ConnectDuration int                   `json:"connect_duration"`
+	Duration        int                   `json:"duration"`
+	EndTime         TwilioTime            `json:"end_time"`
+	From            CallParty             `json:"from"`
+	ProcessingState string                `json:"processing_state"`
+	Properties      CallProperties        `json:"properties"`
+	SDKEdge         *SDKEdge              `json:"sdk_edge,omitempty"`
+	SIPEdge         *Edge                 `json:"sip_edge,omitempty"`
+	StartTime       TwilioTime            `json:"start_time"`
+	Tags            map[string]string     `json:"tags"`
+	To              CallParty             `json:"to"`
+	URL             string                `json:"url"`
 }
 
-type Attributes struct {
+type CallSummaryAttributes struct {
 	ConferenceParticipant bool `json:"conference_participant"`
 }
 
@@ -75,25 +75,25 @@ type EdgeProperties struct {
 	TrunkSID            string `json:"trunk_sid"`
 }
 
-type SdkEdge struct {
+type SDKEdge struct {
 	Metrics struct {
-		Inbound  SdkEdgeSummary `json:"inbound"`
-		Outbound SdkEdgeSummary `json:"outbound"`
+		Inbound  SDKEdgeSummary `json:"inbound"`
+		Outbound SDKEdgeSummary `json:"outbound"`
 	} `json:"metrics"`
-	Properties SdkEdgeProperties `json:"properties"`
-	Events     SdkEdgeEvents     `json:"events"`
+	Properties SDKEdgeProperties `json:"properties"`
+	Events     SDKEdgeEvents     `json:"events"`
 }
 
-type SdkEdgeSummary struct {
+type SDKEdgeSummary struct {
 	EdgeSummary
-	Mos       MetricsSummary    `json:"mos"`
-	Rtt       MetricsSummary    `json:"rtt"`
-	Tags      map[string]string `json:"tags"`
-	AudioOut  MetricsSummary    `json:"audio_out"`
-	AudioIn   MetricsSummary    `json:"audio_in"`
+	MOS      MetricsSummary    `json:"mos"`
+	RTT      MetricsSummary    `json:"rtt"`
+	Tags     map[string]string `json:"tags"`
+	AudioOut MetricsSummary    `json:"audio_out"`
+	AudioIn  MetricsSummary    `json:"audio_in"`
 }
 
-type SdkEdgeProperties struct {
+type SDKEdgeProperties struct {
 	Direction string `json:"direction"`
 	Settings  struct {
 		DSCP              bool     `json:"dscp"`
@@ -103,7 +103,7 @@ type SdkEdgeProperties struct {
 	} `json:"settings"`
 }
 
-type SdkEdgeEvents struct {
+type SDKEdgeEvents struct {
 	Levels map[string]int `json:"levels"`
 	Groups map[string]int `json:"groups"`
 	Errors map[string]int `json:"errors"`
@@ -118,11 +118,11 @@ type MetricsSummary struct {
 type CallProperties struct {
 	Direction          Direction `json:"direction"`
 	DisconnectedBy     string    `json:"disconnected_by"`
-	PostDialDelay      int       `json:"pdd_ms"`
+	PostDialDelayMs    int       `json:"pdd_ms"`
 	LastSIPResponseNum int       `json:"last_sip_response_num"`
 }
 
-type ToFrom struct {
+type CallParty struct {
 	Callee             string `json:"callee"`
 	Caller             string `json:"caller"`
 	Carrier            string `json:"carrier"`
@@ -138,12 +138,18 @@ type ToFrom struct {
 	NumberPrefix string `json:"number_prefix"`
 }
 
+// Gets a call summary resource from the Voice Insights API.
+// See https://www.twilio.com/docs/voice/insights/api/call-summary-resource#get-call-summary
 func (s *CallSummaryService) Get(ctx context.Context) (*CallSummary, error) {
 	summary := new(CallSummary)
 	err := s.client.ListResource(ctx, fmt.Sprintf("Voice/%s/%s", s.callSid, SummaryPathPart), url.Values{}, summary)
 	return summary, err
 }
 
+// Gets a partial call summary resource from the Voice Insights API.
+// A completed call summary may take up to a half hour to generate,
+// but a partial summary record will be available within ten minutes of a call ending.
+// See https://www.twilio.com/docs/voice/insights/api/call-summary-resource#get-call-summary
 func (s *CallSummaryService) GetPartial(ctx context.Context) (*CallSummary, error) {
 	params := url.Values{}
 	params.Add("ProcessingState", "partial")

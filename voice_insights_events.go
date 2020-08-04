@@ -14,7 +14,7 @@ type CallEventsService struct {
 }
 
 type CallEventsPage struct {
-	Meta   Meta         `json:"meta"`
+	Meta   Meta        `json:"meta"`
 	Events []CallEvent `json:"events"`
 }
 
@@ -28,6 +28,8 @@ type CallEvent struct {
 	Timestamp  TwilioTime `json:"timestamp"`
 }
 
+// Returns a list of events for a call. For more information on valid values,
+// See https://www.twilio.com/docs/voice/insights/api/call-events-resource#get-call-events
 func (s *CallEventsService) GetPage(ctx context.Context, data url.Values) (*CallEventsPage, error) {
 	return s.GetPageIterator(data).Next(ctx)
 }

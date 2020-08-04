@@ -69,6 +69,7 @@ const TaskRouterVersion = "v1"
 
 // Voice Insights service
 var InsightsBaseUrl = "https://insights.twilio.com"
+
 const InsightsVersion = "v1"
 
 type Client struct {
@@ -82,7 +83,7 @@ type Client struct {
 	Verify     *Client
 	Video      *Client
 	TaskRouter *Client
-	Insights *Client
+	Insights   *Client
 
 	// FullPath takes a path part (e.g. "Messages") and
 	// returns the full API path, including the version (e.g.
@@ -280,19 +281,19 @@ func NewTaskRouterClient(accountSid string, authToken string, httpClient *http.C
 func NewInsightsClient(accountSid string, authToken string, httpClient *http.Client) *Client {
 	c := newNewClient(accountSid, authToken, InsightsBaseUrl, httpClient)
 	c.APIVersion = InsightsVersion
-	c.VoiceInsights = func(sid string) *VoiceInsightsService {
+	c.VoiceInsights = func(callSid string) *VoiceInsightsService {
 		return &VoiceInsightsService{
 			Summary: &CallSummaryService{
-				callSid: sid,
-				client: c,
+				callSid: callSid,
+				client:  c,
 			},
 			Metrics: &CallMetricsService{
-				callSid: sid,
-				client: c,
+				callSid: callSid,
+				client:  c,
 			},
 			Events: &CallEventsService{
-				callSid: sid,
-				client: c,
+				callSid: callSid,
+				client:  c,
 			},
 		}
 	}

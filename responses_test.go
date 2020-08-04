@@ -3060,7 +3060,7 @@ var insightsCallSummaryResponse = []byte(`
     "processing_state": "complete",
     "from": {
         "number_prefix": "1256",
-        "caller": "+1256...",
+        "caller": "+12569231992",
         "connection": "voip",
         "carrier": "Twilio",
         "location": {
@@ -3070,10 +3070,10 @@ var insightsCallSummaryResponse = []byte(`
         "country_code": "US"
     },
     "tags": null,
-    "url": "https://insights.twilio.com/v1/Voice/CA.../Summary",
+    "url": "https://insights.twilio.com/v1/Voice/CA04917eab5c194f4c86207384933c0c41/Summary",
     "client_edge": null,
     "start_time": "2020-01-09T00:32:38Z",
-    "account_sid": "AC...",
+    "account_sid": "ACabe5149d2ba84a81a7515e425abda4fd",
     "call_state": "completed",
     "to": {
         "number_prefix": "1206",
@@ -3084,9 +3084,9 @@ var insightsCallSummaryResponse = []byte(`
             "lon": -122.348976
         },
         "country_code": "US",
-        "callee": "+1206..."
+        "callee": "+12069239182"
     },
-    "call_sid": "NO00ed1fb4aa449be2434d54ec8e411abc",
+    "call_sid": "CA04917eab5c194f4c86207384933c0c41",
     "attributes": {
         "conference_participant": false
     },
@@ -3143,9 +3143,9 @@ var insightsCallEventsResponse = []byte(`
     "meta": {
         "page": 0,
         "page_size": 50,
-        "first_page_url": "https://insights.twilio.com/v1/Voice/CA.../Events?PageSize=50&Page=0",
+        "first_page_url": "https://insights.twilio.com/v1/Voice/CA04917eab5c194f4c86207384933c0c41/Events?PageSize=50&Page=0",
         "previous_page_url": null,
-        "url": "https://insights.twilio.com/v1/Voice/CA.../Events?PageSize=50&Page=0",
+        "url": "https://insights.twilio.com/v1/Voice/CA04917eab5c194f4c86207384933c0c41/Events?PageSize=50&Page=0",
         "next_page_url": null,
         "key": "events"
     },    "events": [
@@ -3159,7 +3159,7 @@ var insightsCallEventsResponse = []byte(`
                     "region": "us1"
                 }
             },
-            "account_sid": "AC...",
+            "account_sid": "ACabe5149d2ba84a81a7515e425abda4fd",
             "sdk_edge": null,
             "edge": "client_edge",
             "call_sid": "NO00ed1fb4aa449be2434d54ec8e411abc",
@@ -3178,10 +3178,10 @@ var insightsCallMetricsResponse = []byte(`
             "sip_edge": null,
             "timestamp": "2020-01-06T15:21:47.017Z",
             "client_edge": null,
-            "account_sid": "AC...",
+            "account_sid": "ACabe5149d2ba84a81a7515e425abda4fd",
             "sdk_edge": null,
             "edge": "carrier_edge",
-            "call_sid": "NO00ed1fb4aa449be2434d54ec8e411abc",
+            "call_sid": "CA04917eab5c194f4c86207384933c0c41",
             "carrier_edge": {
                 "cumulative": {
                     "jitter": {
@@ -3203,10 +3203,10 @@ var insightsCallMetricsResponse = []byte(`
             "sip_edge": null,
             "timestamp": "2020-01-06T15:21:48.006Z",
             "client_edge": null,
-            "account_sid": "AC...",
+            "account_sid": "ACabe5149d2ba84a81a7515e425abda4fd",
             "sdk_edge": null,
             "edge": "carrier_edge",
-            "call_sid": "NO00ed1fb4aa449be2434d54ec8e411abc",
+            "call_sid": "CA04917eab5c194f4c86207384933c0c41",
             "carrier_edge": {
                 "cumulative": {
                     "packets_lost": 0,
@@ -3228,10 +3228,10 @@ var insightsCallMetricsResponse = []byte(`
             "sip_edge": null,
             "timestamp": "2020-01-06T15:21:57.017Z",
             "client_edge": null,
-            "account_sid": "AC...",
+            "account_sid": "ACabe5149d2ba84a81a7515e425abda4fd",
             "sdk_edge": null,
             "edge": "carrier_edge",
-            "call_sid": "NO00ed1fb4aa449be2434d54ec8e411abc",
+            "call_sid": "CA04917eab5c194f4c86207384933c0c41",
             "carrier_edge": {
                 "cumulative": {
                     "jitter": {
@@ -3253,10 +3253,10 @@ var insightsCallMetricsResponse = []byte(`
             "sip_edge": null,
             "timestamp": "2020-01-06T15:21:58.006Z",
             "client_edge": null,
-            "account_sid": "AC...",
+            "account_sid": "ACabe5149d2ba84a81a7515e425abda4fd.",
             "sdk_edge": null,
             "edge": "carrier_edge",
-            "call_sid": "NO00ed1fb4aa449be2434d54ec8e411abc",
+            "call_sid": "CA04917eab5c194f4c86207384933c0c41",
             "carrier_edge": {
                 "cumulative": {
                     "packets_lost": 0,
@@ -3278,10 +3278,10 @@ var insightsCallMetricsResponse = []byte(`
             "sip_edge": null,
             "timestamp": "2020-01-06T15:22:07.017Z",
             "client_edge": null,
-            "account_sid": "AC...",
+            "account_sid": "ACabe5149d2ba84a81a7515e425abda4fd",
             "sdk_edge": null,
             "edge": "carrier_edge",
-            "call_sid": "NO00ed1fb4aa449be2434d54ec8e411abc",
+            "call_sid": "CA04917eab5c194f4c86207384933c0c41",
             "carrier_edge": {
                 "cumulative": {
                     "jitter": {
@@ -3303,10 +3303,10 @@ var insightsCallMetricsResponse = []byte(`
             "sip_edge": null,
             "timestamp": "2020-01-06T15:22:08.006Z",
             "client_edge": null,
-            "account_sid": "AC...",
+            "account_sid": "ACabe5149d2ba84a81a7515e425abda4fd",
             "sdk_edge": null,
             "edge": "carrier_edge",
-            "call_sid": "NO00ed1fb4aa449be2434d54ec8e411abc",
+            "call_sid": "CA04917eab5c194f4c86207384933c0c41",
             "carrier_edge": {
                 "cumulative": {
                     "packets_lost": 0,
@@ -3328,10 +3328,10 @@ var insightsCallMetricsResponse = []byte(`
             "sip_edge": null,
             "timestamp": "2020-01-06T15:22:15.977Z",
             "client_edge": null,
-            "account_sid": "AC...",
+            "account_sid": "ACabe5149d2ba84a81a7515e425abda4fd",
             "sdk_edge": null,
             "edge": "carrier_edge",
-            "call_sid": "NO00ed1fb4aa449be2434d54ec8e411abc",
+            "call_sid": "CA04917eab5c194f4c86207384933c0c41",
             "carrier_edge": {
                 "cumulative": {
                     "jitter": {
@@ -3353,10 +3353,10 @@ var insightsCallMetricsResponse = []byte(`
             "sip_edge": null,
             "timestamp": "2020-01-06T15:22:16.006Z",
             "client_edge": null,
-            "account_sid": "AC...",
+            "account_sid": "ACabe5149d2ba84a81a7515e425abda4fd",
             "sdk_edge": null,
             "edge": "carrier_edge",
-            "call_sid": "NO00ed1fb4aa449be2434d54ec8e411abc",
+            "call_sid": "CA04917eab5c194f4c86207384933c0c41",
             "carrier_edge": {
                 "cumulative": {
                     "packets_lost": 0,
@@ -3377,9 +3377,9 @@ var insightsCallMetricsResponse = []byte(`
       "meta": {
         "page": 0,
         "page_size": 50,
-        "first_page_url": "https://insights.twilio.com/v1/Voice/CA.../Metrics?PageSize=50&Page=0",
+        "first_page_url": "https://insights.twilio.com/v1/Voice/CA04917eab5c194f4c86207384933c0c41/Metrics?PageSize=50&Page=0",
         "previous_page_url": null,
-        "url": "https://insights.twilio.com/v1/Voice/CA.../Metrics?PageSize=50&Page=0",
+        "url": "https://insights.twilio.com/v1/Voice/CA04917eab5c194f4c86207384933c0c41/Metrics?PageSize=50&Page=0",
         "next_page_url": null,
         "key": "metrics"
     }

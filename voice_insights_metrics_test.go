@@ -8,9 +8,9 @@ import (
 
 func TestGetCallMetrics(t *testing.T) {
 	t.Parallel()
+
 	client, s := getServer(insightsCallMetricsResponse)
-	defer s.Close()
-	sid := "NO00ed1fb4aa449be2434d54ec8e411abc"
+	sid := "CA04917eab5c194f4c86207384933c0c41"
 	page, err := client.Insights.VoiceInsights(sid).Metrics.GetPage(context.Background(), url.Values{})
 	if err != nil {
 		t.Fatal(err)
@@ -30,4 +30,6 @@ func TestGetCallMetrics(t *testing.T) {
 	if page.Metrics[0].CarrierEdge == nil {
 		t.Error("expected Carrier Edge metrics to be available")
 	}
+
+	t.Cleanup(s.Close)
 }

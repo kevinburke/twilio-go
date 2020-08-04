@@ -25,8 +25,8 @@ type CallMetric struct {
 	ClientEdge  *EdgeMetrics `json:"client_edge,omitempty"`
 	Direction   string       `json:"direction"`
 	Edge        string       `json:"edge"`
-	SdkEdge     *EdgeMetrics `json:"sdk_edge,omitempty"`
-	SipEdge     *EdgeMetrics `json:"sip_edge,omitempty"`
+	SDKEdge     *EdgeMetrics `json:"sdk_edge,omitempty"`
+	SIPEdge     *EdgeMetrics `json:"sip_edge,omitempty"`
 	Timestamp   TwilioTime   `json:"timestamp"`
 }
 
@@ -39,7 +39,7 @@ type EdgeMetrics struct {
 	Codec      int               `json:"codec"`
 	CodecName  string            `json:"codec_name"`
 	Cumulative CumulativeMetrics `json:"cumulative"`
-	Interval   *IntervalMetrics   `json:"interval,omitempty"`
+	Interval   *IntervalMetrics  `json:"interval,omitempty"`
 	Metadata   EdgeMetadata      `json:"metadata"`
 }
 
@@ -53,11 +53,13 @@ type IntervalMetrics struct {
 	AudioOut              int     `json:"audio_out"`
 	AudioIn               int     `json:"audio_in"`
 	Jitter                int     `json:"jitter"`
-	Rtt                   int     `json:"rtt"`
+	RTT                   int     `json:"rtt"`
 	PacketsLost           int     `json:"packets_lost"`
 	PacketsLossPercentage float64 `json:"packets_loss_percentage"`
 }
 
+// Returns a list of metrics for a call. For more information on valid values,
+// See https://www.twilio.com/docs/voice/insights/api/call-metrics-resource#get-call-metrics
 func (s *CallMetricsService) GetPage(ctx context.Context, data url.Values) (*CallMetricsPage, error) {
 	return s.GetPageIterator(data).Next(ctx)
 }
