@@ -99,6 +99,7 @@ The API is unlikely to change, and currently covers these resources:
   - Workflows
 - Transcriptions
 - Wireless
+- Voice Insights
 - Access Tokens for IPMessaging, Video and Programmable Voice SDK
 
 ### Error Parsing
