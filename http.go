@@ -54,6 +54,10 @@ const NotifyVersion = "v1"
 const LookupBaseURL = "https://lookups.twilio.com"
 const LookupVersion = "v1"
 
+// Messaging Service
+const MessagingBaseURL = "https://messaging.twilio.com"
+const MessagingVersion = "v1"
+
 // Verify service
 const VerifyBaseURL = "https://verify.twilio.com"
 const VerifyVersion = "v2"
@@ -84,6 +88,7 @@ type Client struct {
 	Video      *Client
 	TaskRouter *Client
 	Insights   *Client
+	Message    *Client
 
 	// FullPath takes a path part (e.g. "Messages") and
 	// returns the full API path, including the version (e.g.
@@ -143,6 +148,9 @@ type Client struct {
 
 	// NewInsightsClient initializes these services
 	VoiceInsights func(sid string) *VoiceInsightsService
+
+	// NewMessageClient initializes these services
+	Services *ServiceService
 }
 
 const defaultTimeout = 30*time.Second + 500*time.Millisecond
@@ -332,6 +340,14 @@ func NewLookupClient(accountSid string, authToken string, httpClient *http.Clien
 	return c
 }
 
+// NewMessageClient returns a new Client to use the messaging API
+func NewMessageClient(accountSid string, authToken string, httpClient *http.Client) *Client {
+	c := newNewClient(accountSid, authToken, MessagingBaseURL, httpClient)
+	c.APIVersion = MessagingVersion
+	c.Services = &ServiceService{client: c}
+	return c
+}
+
 // NewVerifyClient returns a new Client to use the verify API
 func NewVerifyClient(accountSid string, authToken string, httpClient *http.Client) *Client {
 	c := newNewClient(accountSid, authToken, VerifyBaseURL, httpClient)
@@ -377,6 +393,7 @@ func NewClient(accountSid string, authToken string, httpClient *http.Client) *Cl
 	c.Video = NewVideoClient(accountSid, authToken, httpClient)
 	c.TaskRouter = NewTaskRouterClient(accountSid, authToken, httpClient)
 	c.Insights = NewInsightsClient(accountSid, authToken, httpClient)
+	c.Message = NewMessageClient(accountSid, authToken, httpClient)
 
 	c.Accounts = &AccountService{client: c}
 	c.Applications = &ApplicationService{client: c}
