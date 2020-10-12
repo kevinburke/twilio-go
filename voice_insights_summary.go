@@ -30,7 +30,7 @@ type CallSummary struct {
 	SDKEdge         *SDKEdge              `json:"sdk_edge,omitempty"`
 	SIPEdge         *Edge                 `json:"sip_edge,omitempty"`
 	StartTime       TwilioTime            `json:"start_time"`
-	Tags            map[string]string     `json:"tags"`
+	Tags            []string              `json:"tags"`
 	To              CallParty             `json:"to"`
 	URL             string                `json:"url"`
 }
@@ -86,11 +86,11 @@ type SDKEdge struct {
 
 type SDKEdgeSummary struct {
 	EdgeSummary
-	MOS      MetricsSummary    `json:"mos"`
-	RTT      MetricsSummary    `json:"rtt"`
-	Tags     map[string]string `json:"tags"`
-	AudioOut MetricsSummary    `json:"audio_out"`
-	AudioIn  MetricsSummary    `json:"audio_in"`
+	MOS      MetricsSummary `json:"mos"`
+	RTT      MetricsSummary `json:"rtt"`
+	Tags     []string       `json:"tags"`
+	AudioOut MetricsSummary `json:"audio_out"`
+	AudioIn  MetricsSummary `json:"audio_in"`
 }
 
 type SDKEdgeProperties struct {
