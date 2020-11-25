@@ -32,7 +32,7 @@ func ValidateIncomingRequest(host string, authToken string, req *http.Request) (
 func validateIncomingRequest(host string, authToken string, URL string, postForm url.Values, xTwilioSignature string) (err error) {
 	expectedTwilioSignature := GetExpectedTwilioSignature(host, authToken, URL, postForm)
 	if xTwilioSignature != expectedTwilioSignature {
-		err = errors.New("Bad X-Twilio-Signature")
+		err = errors.New("twilio: received X-Twilio-Signature value that does not match expected value")
 		return
 	}
 

@@ -90,10 +90,8 @@ func (a *AlertService) GetAlertsInRange(start time.Time, end time.Time, data url
 		panic("start date is after end date")
 	}
 	d := url.Values{}
-	if data != nil {
-		for k, v := range data {
-			d[k] = v
-		}
+	for k, v := range data {
+		d[k] = v
 	}
 	d.Del("Page") // just in case
 	if start != Epoch {
@@ -163,7 +161,7 @@ func (a *alertDateIterator) Next(ctx context.Context) (*AlertPage, error) {
 				// we really should not ever hit this case but if we can't parse
 				// a date, better to give you back an error than to give you back
 				// a list of alerts that may or may not be in the time range
-				return nil, fmt.Errorf("Couldn't verify the date of alert: %#v", alert)
+				return nil, fmt.Errorf("twilio: couldn't verify the date of alert: %#v", alert)
 			}
 			times[i] = alert.DateCreated.Time
 		}

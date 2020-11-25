@@ -20,7 +20,7 @@ func TestGetPhoneNumberPriceGB(t *testing.T) {
 		t.Fatal(err)
 	}
 	if numPrice == nil {
-		t.Error("expected voice price to be returned")
+		t.Fatal("expected voice price to be returned")
 	}
 	if numPrice.Country != expectedCountryName {
 		t.Errorf("Expected voice price country to be %s, but got %s\n", expectedCountryName, numPrice.Country)

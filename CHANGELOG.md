@@ -1,5 +1,25 @@
 # Changes
 
+## 2.4
+
+Add Voice Insights API (thank you @yeoji)
+
+Add more fields to Conference struct (thank you @zmei95 for the issue report).
+
+## 2.3
+
+The Twilio Calls API recently started returning calls by StartTime instead of by
+Date Created, which broke our GetCallsInRange in-memory filtering. Use StartTime
+as the sort order key if present, falling back to DateCreated. Update the tests
+to match.
+
+Add Programmable Grant chat type to the list of tokens. Thanks Kelmer Perez for
+the patch.
+
+## 2.2
+
+Implement Twilio Verify API. Thanks Elijah Oyekunle for the patch.
+
 ## 2.1
 
 - Support deleting messages via `client.Messages.Delete(sid)`.

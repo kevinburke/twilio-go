@@ -144,7 +144,7 @@ func (m *MediaService) GetImage(ctx context.Context, messageSid string, sid stri
 		return nil, err
 	}
 	if u.Scheme == "http" {
-		return nil, fmt.Errorf("Attempted to download image over insecure URL: %s", u.String())
+		return nil, fmt.Errorf("twilio: attempted to download image over insecure URL: %s", u.String())
 	}
 	req, err := http.NewRequest("GET", u.String(), nil)
 	if err != nil {

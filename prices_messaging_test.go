@@ -20,7 +20,7 @@ func TestGetMessagePrice(t *testing.T) {
 		t.Fatal(err)
 	}
 	if messagePrice == nil {
-		t.Error("expected message price to be returned")
+		t.Fatal("expected message price to be returned")
 	}
 	if messagePrice.Country != expectedCountryName {
 		t.Errorf("Expected message price country to be %s, but got %s\n", expectedCountryName, messagePrice.Country)

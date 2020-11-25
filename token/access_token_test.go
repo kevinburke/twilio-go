@@ -48,8 +48,8 @@ func TestJWT(t *testing.T) {
 
 	claims := token.Claims.(*myCustomClaims)
 
-	if &claims.StandardClaims == nil {
-		t.Error("Claim doesn't conaint a standard claims struct")
+	if claims.StandardClaims == nil {
+		t.Error("Claim doesn't contain a standard claims struct")
 	}
 
 	if claims.StandardClaims.ExpiresAt == 0 {

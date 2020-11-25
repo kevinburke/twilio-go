@@ -17,6 +17,7 @@ const (
 	keyVoiceParams     = "params"
 	// https://www.twilio.com/docs/video/tutorials/user-identity-access-tokens
 	keyRoomSid = "room"
+	chatGrant  = "chat"
 )
 
 // Grant is a Twilio SID resource that can be added to an AccessToken for extra
@@ -147,4 +148,26 @@ func (gr *VideoGrant) ToPayload() map[string]interface{} {
 
 func (gr *VideoGrant) Key() string {
 	return videoGrant
+}
+
+// ChatGrant is for Twilio Programmable Chat
+type ChatGrant struct {
+	serviceSid string
+}
+
+func NewChatGrant(sid string) *ChatGrant {
+	return &ChatGrant{serviceSid: sid}
+}
+
+func (cg *ChatGrant) ToPayload() map[string]interface{} {
+	if len(cg.serviceSid) > 0 {
+		return map[string]interface{}{
+			keyServiceSid: cg.serviceSid,
+		}
+	}
+	return make(map[string]interface{})
+}
+
+func (cg *ChatGrant) Key() string {
+	return chatGrant
 }

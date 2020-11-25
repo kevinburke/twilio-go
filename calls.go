@@ -158,10 +158,8 @@ func (c *CallService) GetCallsInRange(start time.Time, end time.Time, data url.V
 		panic("start date is after end date")
 	}
 	d := url.Values{}
-	if data != nil {
-		for k, v := range data {
-			d[k] = v
-		}
+	for k, v := range data {
+		d[k] = v
 	}
 	d.Del("StartTime")
 	d.Del("Page") // just in case
@@ -232,13 +230,19 @@ func (c *callDateIterator) Next(ctx context.Context) (*CallPage, error) {
 				// we really should not ever hit this case but if we can't parse
 				// a date, better to give you back an error than to give you back
 				// a list of calls that may or may not be in the time range
-				return nil, fmt.Errorf("Couldn't verify the date of call: %#v", call)
+				return nil, fmt.Errorf("twilio: couldn't verify the date of call: %#v", call)
 			}
-			times[i] = call.DateCreated.Time
+			// not ideal but the start time field is not guaranteed to be
+			// populated.
+			if call.StartTime.Valid {
+				times[i] = call.StartTime.Time
+			} else {
+				times[i] = call.DateCreated.Time
+			}
 		}
 		if containsResultsInRange(c.start, c.end, times) {
 			indexesToDelete := indexesOutsideRange(c.start, c.end, times)
-			// reverse order so we don't delete the wrong index
+			// iterate in descending order so we don't delete the wrong index
 			for i := len(indexesToDelete) - 1; i >= 0; i-- {
 				index := indexesToDelete[i]
 				page.Calls = append(page.Calls[:index], page.Calls[index+1:]...)

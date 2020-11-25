@@ -21,12 +21,14 @@ type Conference struct {
 	Status       Status `json:"status"`
 	FriendlyName string `json:"friendly_name"`
 	// The conference region, probably "us1"
-	Region      string     `json:"region"`
-	DateCreated TwilioTime `json:"date_created"`
-	AccountSid  string     `json:"account_sid"`
-	APIVersion  string     `json:"api_version"`
-	DateUpdated TwilioTime `json:"date_updated"`
-	URI         string     `json:"uri"`
+	Region                  string            `json:"region"`
+	DateCreated             TwilioTime        `json:"date_created"`
+	AccountSid              string            `json:"account_sid"`
+	APIVersion              string            `json:"api_version"`
+	DateUpdated             TwilioTime        `json:"date_updated"`
+	URI                     string            `json:"uri"`
+	SubresourceURIs         map[string]string `json:"subresource_uris"`
+	CallSidEndingConference types.NullString  `json:"call_sid_ending_conference"`
 }
 
 type ConferencePage struct {
@@ -61,10 +63,8 @@ func (c *ConferenceService) GetConferencesInRange(start time.Time, end time.Time
 		panic("start date is after end date")
 	}
 	d := url.Values{}
-	if data != nil {
-		for k, v := range data {
-			d[k] = v
-		}
+	for k, v := range data {
+		d[k] = v
 	}
 	d.Del("DateCreated")
 	d.Del("Page") // just in case
@@ -135,7 +135,7 @@ func (c *conferenceDateIterator) Next(ctx context.Context) (*ConferencePage, err
 				// we really should not ever hit this case but if we can't parse
 				// a date, better to give you back an error than to give you back
 				// a list of conferences that may or may not be in the time range
-				return nil, fmt.Errorf("Couldn't verify the date of conference: %#v", conference)
+				return nil, fmt.Errorf("twilio: couldn't verify the date of conference: %#v", conference)
 			}
 			times[i] = conference.DateCreated.Time
 		}

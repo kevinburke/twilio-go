@@ -20,7 +20,7 @@ func TestGetVoicePriceUS(t *testing.T) {
 		t.Fatal(err)
 	}
 	if voicePrice == nil {
-		t.Error("expected voice price to be returned")
+		t.Fatal("expected voice price to be returned")
 	}
 	if voicePrice.Country != expectedCountryName {
 		t.Errorf("Expected voice price country to be %s, but got %s\n", expectedCountryName, voicePrice.Country)
@@ -85,7 +85,7 @@ func TestGetVoicePriceGB(t *testing.T) {
 		t.Fatal(err)
 	}
 	if voicePrice == nil {
-		t.Error("expected voice price to be returned")
+		t.Fatal("expected voice price to be returned")
 	}
 	if voicePrice.Country != expectedCountryName {
 		t.Errorf("Expected voice price country to be %s, but got %s\n", expectedCountryName, voicePrice.Country)
@@ -149,7 +149,7 @@ func TestGetVoicePriceNumber(t *testing.T) {
 		t.Fatal(err)
 	}
 	if voicePriceNum == nil {
-		t.Error("expected voice price to be returned")
+		t.Fatal("expected voice price to be returned")
 	}
 	if voicePriceNum.OriginationNumber != from {
 		t.Errorf("Expected voice price number to be %s, but got %s\n", from, voicePriceNum.OriginationNumber)

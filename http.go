@@ -15,7 +15,7 @@ import (
 )
 
 // The twilio-go version. Run "make release" to bump this number.
-const Version = "2.2"
+const Version = "2.4"
 const userAgent = "twilio-go/" + Version
 
 // The base URL serving the API. Override this for testing.
@@ -67,6 +67,11 @@ var TaskRouterBaseUrl = "https://taskrouter.twilio.com"
 
 const TaskRouterVersion = "v1"
 
+// Voice Insights service
+var InsightsBaseUrl = "https://insights.twilio.com"
+
+const InsightsVersion = "v1"
+
 type Client struct {
 	*rest.Client
 	Monitor    *Client
@@ -78,6 +83,7 @@ type Client struct {
 	Verify     *Client
 	Video      *Client
 	TaskRouter *Client
+	Insights   *Client
 
 	// FullPath takes a path part (e.g. "Messages") and
 	// returns the full API path, including the version (e.g.
@@ -134,6 +140,9 @@ type Client struct {
 
 	// NewTaskRouterClient initializes these services
 	Workspace func(sid string) *WorkspaceService
+
+	// NewInsightsClient initializes these services
+	VoiceInsights func(sid string) *VoiceInsightsService
 }
 
 const defaultTimeout = 30*time.Second + 500*time.Millisecond
@@ -269,6 +278,28 @@ func NewTaskRouterClient(accountSid string, authToken string, httpClient *http.C
 	return c
 }
 
+func NewInsightsClient(accountSid string, authToken string, httpClient *http.Client) *Client {
+	c := newNewClient(accountSid, authToken, InsightsBaseUrl, httpClient)
+	c.APIVersion = InsightsVersion
+	c.VoiceInsights = func(callSid string) *VoiceInsightsService {
+		return &VoiceInsightsService{
+			Summary: &CallSummaryService{
+				callSid: callSid,
+				client:  c,
+			},
+			Metrics: &CallMetricsService{
+				callSid: callSid,
+				client:  c,
+			},
+			Events: &CallEventsService{
+				callSid: callSid,
+				client:  c,
+			},
+		}
+	}
+	return c
+}
+
 // NewPricingClient returns a new Client to use the pricing API
 func NewPricingClient(accountSid string, authToken string, httpClient *http.Client) *Client {
 	c := newNewClient(accountSid, authToken, PricingBaseURL, httpClient)
@@ -345,6 +376,7 @@ func NewClient(accountSid string, authToken string, httpClient *http.Client) *Cl
 	c.Verify = NewVerifyClient(accountSid, authToken, httpClient)
 	c.Video = NewVideoClient(accountSid, authToken, httpClient)
 	c.TaskRouter = NewTaskRouterClient(accountSid, authToken, httpClient)
+	c.Insights = NewInsightsClient(accountSid, authToken, httpClient)
 
 	c.Accounts = &AccountService{client: c}
 	c.Applications = &ApplicationService{client: c}
@@ -433,6 +465,9 @@ func (c *Client) UseSecretKey(key string) {
 	}
 	if c.Wireless != nil {
 		c.Wireless.UseSecretKey(key)
+	}
+	if c.Insights != nil {
+		c.Insights.UseSecretKey(key)
 	}
 }
 

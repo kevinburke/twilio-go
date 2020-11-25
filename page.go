@@ -32,6 +32,7 @@ type Meta struct {
 
 // NoMoreResults is returned if you reach the end of the result set while
 // paging through resources.
+//lint:ignore ST1012 preserve backwards compatibility
 var NoMoreResults = errors.New("twilio: No more results")
 
 type PageIterator struct {
@@ -43,7 +44,7 @@ type PageIterator struct {
 }
 
 func (p *PageIterator) SetNextPageURI(npuri types.NullString) {
-	if npuri.Valid == false {
+	if !npuri.Valid {
 		p.nextPageURI = npuri
 		return
 	}

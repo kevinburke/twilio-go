@@ -65,6 +65,7 @@ func getServer(response []byte) (*Client, *Server) {
 	client.Verify.Base = s.URL
 	client.Video.Base = s.URL
 	client.TaskRouter.Base = s.URL
+	client.Insights.Base = s.URL
 	return client, s
 }
 
@@ -2992,6 +2993,395 @@ var videoRecordingResponse = []byte(`
     },
     "links": {
         "media": "https://video.twilio.com/v1/Recordings/RT58f1e8f2b1c6b88ca90a012a4be0c279/Media"
+    }
+}
+`)
+
+var insightsCallSummaryResponse = []byte(`
+{
+    "sdk_edge": {
+        "metrics": {
+            "inbound": {
+                "audio_out": {
+                    "max": 5611.0,
+                    "avg": 89.2
+                },
+                "jitter": {
+                    "max": 3.0,
+                    "avg": 0.17
+                },
+                "packets_loss_percentage": 0.010012015,
+                "mos": {
+                    "max": 4.43,
+                    "avg": 4.43,
+                    "min": 4.33
+                },
+                "packets_received": 9987,
+                "rtt": {
+                    "max": 98.0,
+                    "avg": 85.8,
+                    "min": 80.0
+                },
+                "audio_in": {
+                    "max": 11268.0,
+                    "avg": 1881.28
+                },
+                "packets_lost": 1
+            },
+            "outbound": {
+                "codec": 111,
+                "packets_sent": 9997,
+                "codec_name": "opus"
+            }
+        },
+        "properties": {
+            "direction": "outbound",
+            "disconnected_by": "remote",
+            "settings": {
+                "dscp": true,
+                "ice_restart_enabled": true
+            }
+        },
+        "events": {
+            "levels": {
+                "INFO": 13,
+                "DEBUG": 6
+            },
+            "groups": {
+                "get_user_media": 1,
+                "signaling_state": 3,
+                "ice_gathering_state": 2,
+                "connection": 4,
+                "ice_connection_state": 1,
+                "network_information": 8
+            }
+        }
+    },
+    "processing_state": "complete",
+    "from": {
+        "number_prefix": "1256",
+        "caller": "+12569231992",
+        "connection": "voip",
+        "carrier": "Twilio",
+        "location": {
+            "lat": 34.418243,
+            "lon": -86.63888
+        },
+        "country_code": "US"
+    },
+    "tags": null,
+    "url": "https://insights.twilio.com/v1/Voice/CA04917eab5c194f4c86207384933c0c41/Summary",
+    "client_edge": null,
+    "start_time": "2020-01-09T00:32:38Z",
+    "account_sid": "ACabe5149d2ba84a81a7515e425abda4fd",
+    "call_state": "completed",
+    "to": {
+        "number_prefix": "1206",
+        "connection": "mobile",
+        "carrier": "T-Mobile USA, Inc.",
+        "location": {
+            "lat": 47.564026,
+            "lon": -122.348976
+        },
+        "country_code": "US",
+        "callee": "+12069239182"
+    },
+    "call_sid": "CA04917eab5c194f4c86207384933c0c41",
+    "attributes": {
+        "conference_participant": false
+    },
+    "duration": 140,
+    "sip_edge": null,
+    "connect_duration": 131,
+    "carrier_edge": {
+        "metrics": {
+            "inbound": {
+                "jitter": {
+                    "max": 0.359331,
+                    "avg": 0.054769
+                },
+                "packets_loss_percentage": 0.0,
+                "packets_received": 6861,
+                "codec": 0,
+                "codec_name": "pcmu",
+                "packets_lost": 0
+            },
+            "outbound": {
+                "packets_lost": 0,
+                "packets_loss_percentage": 0.0,
+                "packet_delay_variation": {
+                    "d50": 1
+                },
+                "packets_sent": 6513,
+                "codec": 0,
+                "codec_name": "pcmu",
+                "jitter": {
+                    "max": 4.40106,
+                    "avg": 0.1202
+                }
+            }
+        },
+        "properties": {
+            "direction": "outbound",
+            "signaling_region": "us1",
+            "media_region": "us1"
+        }
+    },
+    "properties": {
+        "last_sip_response_num": 200,
+        "direction": "outbound_api",
+        "disconnected_by": "caller",
+        "pdd_ms": 2917
+    },
+    "call_type": "carrier",
+    "end_time": "2020-01-09T00:34:49Z"
+}
+`)
+
+var insightsCallEventsResponse = []byte(`
+{
+    "meta": {
+        "page": 0,
+        "page_size": 50,
+        "first_page_url": "https://insights.twilio.com/v1/Voice/CA04917eab5c194f4c86207384933c0c41/Events?PageSize=50&Page=0",
+        "previous_page_url": null,
+        "url": "https://insights.twilio.com/v1/Voice/CA04917eab5c194f4c86207384933c0c41/Events?PageSize=50&Page=0",
+        "next_page_url": null,
+        "key": "events"
+    },    "events": [
+        {
+            "group": "connection",
+            "name": "completed",
+            "level": "INFO",
+            "timestamp": "2020-01-02T22:18:36.028Z",
+            "client_edge": {
+                "metadata": {
+                    "region": "us1"
+                }
+            },
+            "account_sid": "ACabe5149d2ba84a81a7515e425abda4fd",
+            "sdk_edge": null,
+            "edge": "client_edge",
+            "call_sid": "NO00ed1fb4aa449be2434d54ec8e411abc",
+            "sip_edge": null,
+            "carrier_edge": null
+        }
+    ]
+}
+`)
+
+var insightsCallMetricsResponse = []byte(`
+{
+   "metrics": [
+        {
+            "direction": "inbound",
+            "sip_edge": null,
+            "timestamp": "2020-01-06T15:21:47.017Z",
+            "client_edge": null,
+            "account_sid": "ACabe5149d2ba84a81a7515e425abda4fd",
+            "sdk_edge": null,
+            "edge": "carrier_edge",
+            "call_sid": "CA04917eab5c194f4c86207384933c0c41",
+            "carrier_edge": {
+                "cumulative": {
+                    "jitter": {
+                        "max": 0.010499,
+                        "avg": 0.00553242
+                    },
+                    "packets_received": 478,
+                    "packets_lost": 0
+                },
+                "codec": 0,
+                "codec_name": "pcmu",
+                "metadata": {
+                    "region": "us1"
+                }
+            }
+        },
+        {
+            "direction": "outbound",
+            "sip_edge": null,
+            "timestamp": "2020-01-06T15:21:48.006Z",
+            "client_edge": null,
+            "account_sid": "ACabe5149d2ba84a81a7515e425abda4fd",
+            "sdk_edge": null,
+            "edge": "carrier_edge",
+            "call_sid": "CA04917eab5c194f4c86207384933c0c41",
+            "carrier_edge": {
+                "cumulative": {
+                    "packets_lost": 0,
+                    "packets_sent": 477,
+                    "jitter": {
+                        "max": 0.122655,
+                        "avg": 0.0292324
+                    }
+                },
+                "codec": 0,
+                "codec_name": "pcmu",
+                "metadata": {
+                    "region": "us1"
+                }
+            }
+        },
+        {
+            "direction": "inbound",
+            "sip_edge": null,
+            "timestamp": "2020-01-06T15:21:57.017Z",
+            "client_edge": null,
+            "account_sid": "ACabe5149d2ba84a81a7515e425abda4fd",
+            "sdk_edge": null,
+            "edge": "carrier_edge",
+            "call_sid": "CA04917eab5c194f4c86207384933c0c41",
+            "carrier_edge": {
+                "cumulative": {
+                    "jitter": {
+                        "max": 0.0134316,
+                        "avg": 0.00555087
+                    },
+                    "packets_received": 978,
+                    "packets_lost": 0
+                },
+                "codec": 0,
+                "codec_name": "pcmu",
+                "metadata": {
+                    "region": "us1"
+                }
+            }
+        },
+        {
+            "direction": "outbound",
+            "sip_edge": null,
+            "timestamp": "2020-01-06T15:21:58.006Z",
+            "client_edge": null,
+            "account_sid": "ACabe5149d2ba84a81a7515e425abda4fd.",
+            "sdk_edge": null,
+            "edge": "carrier_edge",
+            "call_sid": "CA04917eab5c194f4c86207384933c0c41",
+            "carrier_edge": {
+                "cumulative": {
+                    "packets_lost": 0,
+                    "packets_sent": 977,
+                    "jitter": {
+                        "max": 0.158134,
+                        "avg": 0.0320926
+                    }
+                },
+                "codec": 0,
+                "codec_name": "pcmu",
+                "metadata": {
+                    "region": "us1"
+                }
+            }
+        },
+        {
+            "direction": "inbound",
+            "sip_edge": null,
+            "timestamp": "2020-01-06T15:22:07.017Z",
+            "client_edge": null,
+            "account_sid": "ACabe5149d2ba84a81a7515e425abda4fd",
+            "sdk_edge": null,
+            "edge": "carrier_edge",
+            "call_sid": "CA04917eab5c194f4c86207384933c0c41",
+            "carrier_edge": {
+                "cumulative": {
+                    "jitter": {
+                        "max": 0.0134316,
+                        "avg": 0.00553199
+                    },
+                    "packets_received": 1478,
+                    "packets_lost": 0
+                },
+                "codec": 0,
+                "codec_name": "pcmu",
+                "metadata": {
+                    "region": "us1"
+                }
+            }
+        },
+        {
+            "direction": "outbound",
+            "sip_edge": null,
+            "timestamp": "2020-01-06T15:22:08.006Z",
+            "client_edge": null,
+            "account_sid": "ACabe5149d2ba84a81a7515e425abda4fd",
+            "sdk_edge": null,
+            "edge": "carrier_edge",
+            "call_sid": "CA04917eab5c194f4c86207384933c0c41",
+            "carrier_edge": {
+                "cumulative": {
+                    "packets_lost": 0,
+                    "packets_sent": 1477,
+                    "jitter": {
+                        "max": 0.158134,
+                        "avg": 0.029147
+                    }
+                },
+                "codec": 0,
+                "codec_name": "pcmu",
+                "metadata": {
+                    "region": "us1"
+                }
+            }
+        },
+        {
+            "direction": "inbound",
+            "sip_edge": null,
+            "timestamp": "2020-01-06T15:22:15.977Z",
+            "client_edge": null,
+            "account_sid": "ACabe5149d2ba84a81a7515e425abda4fd",
+            "sdk_edge": null,
+            "edge": "carrier_edge",
+            "call_sid": "CA04917eab5c194f4c86207384933c0c41",
+            "carrier_edge": {
+                "cumulative": {
+                    "jitter": {
+                        "max": 0.0136974,
+                        "avg": 0.00548955
+                    },
+                    "packets_received": 1926,
+                    "packets_lost": 0
+                },
+                "codec": 0,
+                "codec_name": "pcmu",
+                "metadata": {
+                    "region": "us1"
+                }
+            }
+        },
+        {
+            "direction": "outbound",
+            "sip_edge": null,
+            "timestamp": "2020-01-06T15:22:16.006Z",
+            "client_edge": null,
+            "account_sid": "ACabe5149d2ba84a81a7515e425abda4fd",
+            "sdk_edge": null,
+            "edge": "carrier_edge",
+            "call_sid": "CA04917eab5c194f4c86207384933c0c41",
+            "carrier_edge": {
+                "cumulative": {
+                    "packets_lost": 0,
+                    "packets_sent": 1877,
+                    "jitter": {
+                        "max": 0.158134,
+                        "avg": 0.0274644
+                    }
+                },
+                "codec": 0,
+                "codec_name": "pcmu",
+                "metadata": {
+                    "region": "us1"
+                }
+            }
+        }
+    ],
+      "meta": {
+        "page": 0,
+        "page_size": 50,
+        "first_page_url": "https://insights.twilio.com/v1/Voice/CA04917eab5c194f4c86207384933c0c41/Metrics?PageSize=50&Page=0",
+        "previous_page_url": null,
+        "url": "https://insights.twilio.com/v1/Voice/CA04917eab5c194f4c86207384933c0c41/Metrics?PageSize=50&Page=0",
+        "next_page_url": null,
+        "key": "metrics"
     }
 }
 `)
