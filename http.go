@@ -72,18 +72,24 @@ var InsightsBaseUrl = "https://insights.twilio.com"
 
 const InsightsVersion = "v1"
 
+// Workspace service
+var WorkspaceBaseUrl = "https://taskrouter.twilio.com"
+
+const WorkspaceVersion = "v1"
+
 type Client struct {
 	*rest.Client
-	Monitor    *Client
-	Pricing    *Client
-	Fax        *Client
-	Wireless   *Client
-	Notify     *Client
-	Lookup     *Client
-	Verify     *Client
-	Video      *Client
-	TaskRouter *Client
-	Insights   *Client
+	Monitor         *Client
+	Pricing         *Client
+	Fax             *Client
+	Wireless        *Client
+	Notify          *Client
+	Lookup          *Client
+	Verify          *Client
+	Video           *Client
+	TaskRouter      *Client
+	Insights        *Client
+	WorkspaceClient *Client
 
 	// FullPath takes a path part (e.g. "Messages") and
 	// returns the full API path, including the version (e.g.
@@ -127,6 +133,9 @@ type Client struct {
 
 	// NewNotifyClient initializes these services
 	Credentials *NotifyCredentialsService
+
+	// NewWorkspaceClient initializes these services
+	WorkspaceCreator *WorkspaceCreator
 
 	// NewLookupClient initializes these services
 	LookupPhoneNumbers *LookupPhoneNumbersService
@@ -278,6 +287,16 @@ func NewTaskRouterClient(accountSid string, authToken string, httpClient *http.C
 	return c
 }
 
+// Client for Workspace CRUD
+func NewWorkspaceClient(accountSid string, authToken string, httpClient *http.Client) *Client {
+	if httpClient == nil {
+		httpClient = &http.Client{Timeout: defaultTimeout}
+	}
+	c := newNewClient(accountSid, authToken, WorkspaceBaseUrl, httpClient)
+	c.APIVersion = WorkspaceVersion
+	return c
+}
+
 func NewInsightsClient(accountSid string, authToken string, httpClient *http.Client) *Client {
 	c := newNewClient(accountSid, authToken, InsightsBaseUrl, httpClient)
 	c.APIVersion = InsightsVersion
@@ -377,6 +396,7 @@ func NewClient(accountSid string, authToken string, httpClient *http.Client) *Cl
 	c.Video = NewVideoClient(accountSid, authToken, httpClient)
 	c.TaskRouter = NewTaskRouterClient(accountSid, authToken, httpClient)
 	c.Insights = NewInsightsClient(accountSid, authToken, httpClient)
+	c.WorkspaceClient = NewWorkspaceClient(accountSid, authToken, httpClient)
 
 	c.Accounts = &AccountService{client: c}
 	c.Applications = &ApplicationService{client: c}
@@ -389,6 +409,7 @@ func NewClient(accountSid string, authToken string, httpClient *http.Client) *Cl
 	c.Queues = &QueueService{client: c}
 	c.Recordings = &RecordingService{client: c}
 	c.Transcriptions = &TranscriptionService{client: c}
+	c.WorkspaceCreator = &WorkspaceCreator{client: c}
 
 	c.IncomingNumbers = &IncomingNumberService{
 		NumberPurchasingService: &NumberPurchasingService{
