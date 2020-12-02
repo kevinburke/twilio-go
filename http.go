@@ -63,6 +63,11 @@ var VideoBaseUrl = "https://video.twilio.com"
 
 const VideoVersion = "v1"
 
+// Elastic trunk service
+var ElasticTrunkBaseUrl = "https://trunking.twilio.com"
+
+const ElasticTrunkVersion = "v1"
+
 var TaskRouterBaseUrl = "https://taskrouter.twilio.com"
 
 const TaskRouterVersion = "v1"
@@ -74,16 +79,17 @@ const InsightsVersion = "v1"
 
 type Client struct {
 	*rest.Client
-	Monitor    *Client
-	Pricing    *Client
-	Fax        *Client
-	Wireless   *Client
-	Notify     *Client
-	Lookup     *Client
-	Verify     *Client
-	Video      *Client
-	TaskRouter *Client
-	Insights   *Client
+	Monitor      *Client
+	Pricing      *Client
+	Fax          *Client
+	Wireless     *Client
+	Notify       *Client
+	Lookup       *Client
+	Verify       *Client
+	Video        *Client
+	ElasticTrunk *Client
+	TaskRouter   *Client
+	Insights     *Client
 
 	// FullPath takes a path part (e.g. "Messages") and
 	// returns the full API path, including the version (e.g.
@@ -137,6 +143,9 @@ type Client struct {
 	// NewVideoClient initializes these services
 	Rooms           *RoomService
 	VideoRecordings *VideoRecordingService
+
+	// NewElasticTrunkClient initializes these services
+	ElasticTrunks *ElasticTrunkService
 
 	// NewTaskRouterClient initializes these services
 	Workspace func(sid string) *WorkspaceService
@@ -349,6 +358,14 @@ func NewVideoClient(accountSid string, authToken string, httpClient *http.Client
 	return c
 }
 
+// NewElasticTrunkClient returns a new Client to use the elastic trunking API
+func NewElasticTrunkClient(accountSid string, authToken string, httpClient *http.Client) *Client {
+	c := newNewClient(accountSid, authToken, ElasticTrunkBaseUrl, httpClient)
+	c.APIVersion = ElasticTrunkVersion
+	c.ElasticTrunks = &ElasticTrunkService{client: c}
+	return c
+}
+
 // NewClient creates a Client for interacting with the Twilio API. This is the
 // main entrypoint for API interactions; view the methods on the subresources
 // for more information.
@@ -375,6 +392,7 @@ func NewClient(accountSid string, authToken string, httpClient *http.Client) *Cl
 	c.Lookup = NewLookupClient(accountSid, authToken, httpClient)
 	c.Verify = NewVerifyClient(accountSid, authToken, httpClient)
 	c.Video = NewVideoClient(accountSid, authToken, httpClient)
+	c.ElasticTrunk = NewElasticTrunkClient(accountSid, authToken, httpClient)
 	c.TaskRouter = NewTaskRouterClient(accountSid, authToken, httpClient)
 	c.Insights = NewInsightsClient(accountSid, authToken, httpClient)
 
@@ -389,6 +407,7 @@ func NewClient(accountSid string, authToken string, httpClient *http.Client) *Cl
 	c.Queues = &QueueService{client: c}
 	c.Recordings = &RecordingService{client: c}
 	c.Transcriptions = &TranscriptionService{client: c}
+	c.ElasticTrunks = &ElasticTrunkService{client: c}
 
 	c.IncomingNumbers = &IncomingNumberService{
 		NumberPurchasingService: &NumberPurchasingService{

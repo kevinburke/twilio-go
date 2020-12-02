@@ -64,6 +64,7 @@ func getServer(response []byte) (*Client, *Server) {
 	client.Lookup.Base = s.URL
 	client.Verify.Base = s.URL
 	client.Video.Base = s.URL
+	client.ElasticTrunk.Base = s.URL
 	client.TaskRouter.Base = s.URL
 	client.Insights.Base = s.URL
 	return client, s
