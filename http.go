@@ -362,7 +362,7 @@ func NewVideoClient(accountSid string, authToken string, httpClient *http.Client
 func NewElasticTrunkClient(accountSid string, authToken string, httpClient *http.Client) *Client {
 	c := newNewClient(accountSid, authToken, ElasticTrunkBaseUrl, httpClient)
 	c.APIVersion = ElasticTrunkVersion
-	c.ElasticTrunks = &ElasticTrunkService{client: c}
+	c.ElasticTrunks = &ElasticTrunkService{Trunks: &TrunkService{client: c}}
 	return c
 }
 
@@ -407,7 +407,14 @@ func NewClient(accountSid string, authToken string, httpClient *http.Client) *Cl
 	c.Queues = &QueueService{client: c}
 	c.Recordings = &RecordingService{client: c}
 	c.Transcriptions = &TranscriptionService{client: c}
-	c.ElasticTrunks = &ElasticTrunkService{client: c}
+	c.ElasticTrunks = &ElasticTrunkService{
+		OriginationUrls: &OriginationUrlService{
+			client: c,
+		},
+		Trunks: &TrunkService{
+			client: c,
+		},
+	}
 
 	c.IncomingNumbers = &IncomingNumberService{
 		NumberPurchasingService: &NumberPurchasingService{

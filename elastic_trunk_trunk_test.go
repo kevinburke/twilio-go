@@ -10,7 +10,7 @@ func TestFetchTrunkResource(t *testing.T) {
 	t.Parallel()
 	client, server := getServer(trunkResourceResponse)
 	defer server.Close()
-	etr, err := client.ElasticTrunks.Get(context.Background(), "TKXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+	etr, err := client.ElasticTrunks.Trunks.Get(context.Background(), "TKXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -27,7 +27,7 @@ func TestCreateTrunkResource(t *testing.T) {
 	values := url.Values{}
 	values.Add("friendly_name", "friendly_name")
 
-	etr, err := client.ElasticTrunks.Create(context.Background(), values)
+	etr, err := client.ElasticTrunks.Trunks.Create(context.Background(), values)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -44,7 +44,7 @@ func TestUpdateTrunkResource(t *testing.T) {
 	values := url.Values{}
 	values.Add("friendly_name", "friendly_name")
 
-	etr, err := client.ElasticTrunks.Update(context.Background(), "TKXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", values)
+	etr, err := client.ElasticTrunks.Trunks.Update(context.Background(), "TKXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", values)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -58,7 +58,7 @@ func TestDeleteTrunkResource(t *testing.T) {
 	client, server := getServer(trunkResourceResponse)
 	defer server.Close()
 
-	err := client.ElasticTrunks.Delete(context.Background(), "TKXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+	err := client.ElasticTrunks.Trunks.Delete(context.Background(), "TKXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
 	if err != nil {
 		t.Fatal(err)
 	}
