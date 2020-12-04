@@ -108,6 +108,19 @@ func (m *MessageService) SendMessage(from string, to string, body string, mediaU
 	return m.Create(context.Background(), v)
 }
 
+// SendMessageWithCallback sends an outbound Message with the given body or mediaURLs. Returns status callbacks to given url.
+func (m *MessageService) SendMessageWithCallback(from string, to string, body string, mediaURLs []*url.URL, callback string) (*Message, error) {
+	v := url.Values{}
+	v.Set("Body", body)
+	v.Set("From", from)
+	v.Set("To", to)
+	v.Set("StatusCallback", callback)
+	for _, mediaURL := range mediaURLs {
+		v.Add("MediaUrl", mediaURL.String())
+	}
+	return m.Create(context.Background(), v)
+}
+
 // MessagePageIterator lets you retrieve consecutive pages of resources.
 type MessagePageIterator interface {
 	// Next returns the next page of resources. If there are no more resources,
