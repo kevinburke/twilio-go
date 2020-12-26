@@ -6,7 +6,7 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/kevinburke/twilio-go/testdata"
+	"github.com/kevinburke/twilio-go/v3/testdata"
 )
 
 func TestGetWorkflow(t *testing.T) {

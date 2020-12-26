@@ -6,7 +6,7 @@ import (
 	"log"
 	"net/url"
 
-	twilio "github.com/kevinburke/twilio-go"
+	twilio "github.com/kevinburke/twilio-go/v3"
 )
 
 func ExampleAlertService_GetPage() {
