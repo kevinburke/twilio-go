@@ -12,16 +12,16 @@ test: lint
 	go test ./...
 
 $(BUMP_VERSION):
-	go get github.com/kevinburke/bump_version
+	cd /tmp && go get github.com/kevinburke/bump_version
 
 $(DIFFER):
-	go get github.com/kevinburke/differ
+	cd /tmp && go get github.com/kevinburke/differ
 
 $(STATICCHECK):
-	go get honnef.co/go/tools/cmd/staticcheck
+	cd /tmp && go get honnef.co/go/tools/cmd/staticcheck
 
 $(WRITE_MAILMAP):
-	go get github.com/kevinburke/write_mailmap
+	cd /tmp && go get github.com/kevinburke/write_mailmap
 
 lint: fmt | $(STATICCHECK)
 	go vet ./...
