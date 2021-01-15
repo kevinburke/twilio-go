@@ -340,3 +340,10 @@ func capitalize(s string) string {
 // types of video room
 const RoomType = "group"
 const RoomTypePeerToPeer = "peer-to-peer"
+
+// CertificateType for Trust Onboard type
+type CertificateType string
+
+// Trust Onboard certificate types
+const CertificateTypeAvailable = CertificateType("available")
+const CertificateTypeSigning = CertificateType("signing")

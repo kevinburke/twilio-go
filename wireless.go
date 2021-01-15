@@ -38,6 +38,9 @@ type Sim struct {
 	VoiceFallbackMethod    types.NullString `json:"voice_fallback_method"`
 	VoiceFallbackURL       types.NullString `json:"voice_fallback_url"`
 
+	IsNarrowbandEnabled   bool `json:"isNarrowbandEnabled"`
+	IsTrustOnboardEnabled bool `json:"isTrustOnboardEnabled"`
+
 	URL        string            `json:"url"`
 	AccountSid string            `json:"account_sid"`
 	Links      map[string]string `json:"links"`

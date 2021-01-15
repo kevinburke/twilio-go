@@ -123,8 +123,9 @@ type Client struct {
 	Faxes *FaxService
 
 	// NewWirelessClient initializes these services
-	Sims     *SimService
-	Commands *CommandService
+	Sims         *SimService
+	Commands     *CommandService
+	TrustOnBoard *TrustOnBoardService
 
 	// NewNotifyClient initializes these services
 	Credentials *NotifyCredentialsService
@@ -238,6 +239,7 @@ func NewWirelessClient(accountSid string, authToken string, httpClient *http.Cli
 	c.APIVersion = WirelessVersion
 	c.Sims = &SimService{client: c}
 	c.Commands = &CommandService{client: c}
+	c.TrustOnBoard = &TrustOnBoardService{client: c}
 	return c
 }
 
