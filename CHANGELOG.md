@@ -1,5 +1,10 @@
 # Changes
 
+## 2.5
+
+Use a new version of github.com/kevinburke/rest that reduces the number of
+imports necessary to run the library.
+
 ## 2.4
 
 Add Voice Insights API (thank you @yeoji)

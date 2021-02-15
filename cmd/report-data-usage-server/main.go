@@ -54,6 +54,7 @@ import (
 	types "github.com/kevinburke/go-types"
 	"github.com/kevinburke/handlers"
 	"github.com/kevinburke/rest"
+	"github.com/kevinburke/rest/resterror"
 	twilio "github.com/kevinburke/twilio-go/v3"
 	"github.com/kevinburke/twilio-go/v3/datausage"
 	"golang.org/x/sync/errgroup"
@@ -131,14 +132,14 @@ func main() {
 		cmd := r.PostFormValue("Command")
 		if strings.ToLower(cmd) != "usage" {
 			// TODO figure out how to multiplex with other commands here.
-			rest.BadRequest(w, r, &rest.Error{
+			rest.BadRequest(w, r, &resterror.Error{
 				Title: fmt.Sprintf("unknown command %q", cmd),
 			})
 			return
 		}
 		simSid := r.PostFormValue("SimSid")
 		if !strings.HasPrefix(simSid, "DE") {
-			rest.BadRequest(w, r, &rest.Error{
+			rest.BadRequest(w, r, &resterror.Error{
 				Title: fmt.Sprintf("unknown sim sid %q", simSid),
 			})
 			return
@@ -147,7 +148,7 @@ func main() {
 		if d := r.URL.Query().Get("days"); d != "" {
 			daysInt, err := strconv.ParseUint(d, 10, 64)
 			if err != nil {
-				rest.BadRequest(w, r, &rest.Error{
+				rest.BadRequest(w, r, &resterror.Error{
 					Title: err.Error(),
 				})
 				return

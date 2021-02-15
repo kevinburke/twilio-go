@@ -16,7 +16,7 @@ func TestGet(t *testing.T) {
 		t.Skip("skipping HTTP request in short mode")
 	}
 	t.Parallel()
-	sid := "SM26b3b00f8def53be77c5697183bfe95e"
+	sid := "SM7c734f6e057ff829bb20c7211cfb3ce1"
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
 	msg, err := envClient.Messages.Get(ctx, sid)
@@ -70,10 +70,11 @@ func TestGetMessage(t *testing.T) {
 	if testing.Short() {
 		t.Skip("skipping HTTP request in short mode")
 	}
+	t.Skip("broke because of message archiving rules")
 	t.Parallel()
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
-	msg, err := envClient.Messages.Get(ctx, "SM5a52bc49b2354703bfdea7e92b44b385")
+	msg, err := envClient.Messages.Get(ctx, "SM7c734f6e057ff829bb20c7211cfb3ce1")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -89,6 +90,7 @@ func TestIterateAll(t *testing.T) {
 	if testing.Short() {
 		t.Skip("skipping HTTP request in short mode")
 	}
+	t.Skip("broke because of message archiving rules")
 	t.Parallel()
 	iter := envClient.Messages.GetPageIterator(url.Values{"PageSize": []string{"500"}})
 	count := 0
@@ -131,6 +133,7 @@ func TestGetMediaURLs(t *testing.T) {
 		t.Skip("skipping HTTP request in short mode")
 	}
 	t.Parallel()
+	t.Skip("twilio removed access to old messages")
 	sid := os.Getenv("TWILIO_ACCOUNT_SID")
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()

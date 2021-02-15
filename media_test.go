@@ -14,6 +14,7 @@ func TestGetURL(t *testing.T) {
 		t.Skip("skipping HTTP request in short mode")
 	}
 	t.Parallel()
+	t.Skip("broken because of twilio archiving old messages")
 	sid := os.Getenv("TWILIO_ACCOUNT_SID")
 	c := NewClient(sid, os.Getenv("TWILIO_AUTH_TOKEN"), nil)
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
@@ -38,6 +39,7 @@ func TestGetImage(t *testing.T) {
 		t.Skip("skipping HTTP request in short mode")
 	}
 	t.Parallel()
+	t.Skip("broken because of twilio archiving old messages")
 	sid := os.Getenv("TWILIO_ACCOUNT_SID")
 	c := NewClient(sid, os.Getenv("TWILIO_AUTH_TOKEN"), nil)
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)

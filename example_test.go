@@ -7,7 +7,7 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/kevinburke/rest"
+	"github.com/kevinburke/rest/resterror"
 	twilio "github.com/kevinburke/twilio-go/v3"
 )
 
@@ -26,9 +26,9 @@ func Example() {
 	fmt.Println(call.Sid, call.FriendlyPrice())
 
 	_, err := client.IncomingNumbers.BuyNumber("+1badnumber")
-	// Twilio API errors are converted to rest.Error types
+	// Twilio API errors are converted to resterror.Error types
 	if err != nil {
-		restErr, ok := err.(*rest.Error)
+		restErr, ok := err.(*resterror.Error)
 		if ok {
 			fmt.Println(restErr.Title)
 			fmt.Println(restErr.Type)

@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/kevinburke/rest"
+	"github.com/kevinburke/rest/resterror"
 )
 
 func TestGetNumberPage(t *testing.T) {
@@ -35,9 +35,9 @@ func TestBuyNumber(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected to get an error, got nil")
 	}
-	rerr, ok := err.(*rest.Error)
+	rerr, ok := err.(*resterror.Error)
 	if !ok {
-		t.Fatal("couldn't cast err to a rest.Error")
+		t.Fatal("couldn't cast err to a resterror.Error")
 	}
 	expected := "+1foobar is not a valid number"
 	if rerr.Title != expected {

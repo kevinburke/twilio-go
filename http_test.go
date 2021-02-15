@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/kevinburke/rest"
+	"github.com/kevinburke/rest/resterror"
 )
 
 // invalid status here on purpose to check we use a different one.
@@ -31,9 +31,9 @@ func Test404Error(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected non-nil error, got nil")
 	}
-	rerr, ok := err.(*rest.Error)
+	rerr, ok := err.(*resterror.Error)
 	if !ok {
-		t.Fatalf("expected to convert err %v to rest.Error, couldn't", err)
+		t.Fatalf("expected to convert err %v to resterror.Error, couldn't", err)
 	}
 	if !strings.Contains(rerr.Title, "The requested resource /2010-04-01") {
 		t.Errorf("expected Title to contain 'The requested resource', got %s", rerr.Title)

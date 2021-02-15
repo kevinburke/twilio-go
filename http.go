@@ -11,11 +11,12 @@ import (
 	"strings"
 	"time"
 
-	"github.com/kevinburke/rest"
+	"github.com/kevinburke/rest/restclient"
+	"github.com/kevinburke/rest/resterror"
 )
 
 // The twilio-go version. Run "make release" to bump this number.
-const Version = "2.4"
+const Version = "2.5"
 const userAgent = "twilio-go/" + Version
 
 // The base URL serving the API. Override this for testing.
@@ -73,7 +74,7 @@ var InsightsBaseUrl = "https://insights.twilio.com"
 const InsightsVersion = "v1"
 
 type Client struct {
-	*rest.Client
+	*restclient.Client
 	Monitor    *Client
 	Pricing    *Client
 	Fax        *Client
@@ -152,7 +153,7 @@ var defaultHttpClient *http.Client
 func init() {
 	defaultHttpClient = &http.Client{
 		Timeout:   defaultTimeout,
-		Transport: rest.DefaultTransport,
+		Transport: restclient.DefaultTransport,
 	}
 }
 
@@ -182,7 +183,7 @@ func parseTwilioError(resp *http.Response) error {
 	if rerr.Message == "" {
 		return fmt.Errorf("invalid response body: %s", string(resBody))
 	}
-	return &rest.Error{
+	return &resterror.Error{
 		Title:  rerr.Message,
 		Type:   rerr.MoreInfo,
 		ID:     strconv.Itoa(rerr.Code),
@@ -195,9 +196,9 @@ func NewFaxClient(accountSid string, authToken string, httpClient *http.Client) 
 	if httpClient == nil {
 		httpClient = defaultHttpClient
 	}
-	restClient := rest.NewClient(accountSid, authToken, FaxBaseURL)
+	restClient := restclient.New(accountSid, authToken, FaxBaseURL)
 	restClient.Client = httpClient
-	restClient.UploadType = rest.FormURLEncoded
+	restClient.UploadType = restclient.FormURLEncoded
 	restClient.ErrorParser = parseTwilioError
 	c := &Client{
 		Client:     restClient,
@@ -216,9 +217,9 @@ func newNewClient(sid, token, baseURL string, client *http.Client) *Client {
 	if client == nil {
 		client = defaultHttpClient
 	}
-	restClient := rest.NewClient(sid, token, baseURL)
+	restClient := restclient.New(sid, token, baseURL)
 	restClient.Client = client
-	restClient.UploadType = rest.FormURLEncoded
+	restClient.UploadType = restclient.FormURLEncoded
 	restClient.ErrorParser = parseTwilioError
 	c := &Client{
 		Client:     restClient,
@@ -356,9 +357,9 @@ func NewClient(accountSid string, authToken string, httpClient *http.Client) *Cl
 	if httpClient == nil {
 		httpClient = defaultHttpClient
 	}
-	restClient := rest.NewClient(accountSid, authToken, BaseURL)
+	restClient := restclient.New(accountSid, authToken, BaseURL)
 	restClient.Client = httpClient
-	restClient.UploadType = rest.FormURLEncoded
+	restClient.UploadType = restclient.FormURLEncoded
 	restClient.ErrorParser = parseTwilioError
 
 	c := &Client{Client: restClient, AccountSid: accountSid, AuthToken: authToken}
@@ -494,7 +495,7 @@ func (c *Client) DeleteResource(ctx context.Context, pathPart string, sid string
 	if err == nil {
 		return nil
 	}
-	rerr, ok := err.(*rest.Error)
+	rerr, ok := err.(*resterror.Error)
 	if ok && rerr.Status == http.StatusNotFound {
 		return nil
 	}
