@@ -158,11 +158,11 @@ func (t *TwilioTime) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-func (tt *TwilioTime) MarshalJSON() ([]byte, error) {
-	if !tt.Valid {
+func (t TwilioTime) MarshalJSON() ([]byte, error) {
+	if !t.Valid {
 		return []byte("null"), nil
 	}
-	b, err := json.Marshal(tt.Time)
+	b, err := json.Marshal(t.Time)
 	if err != nil {
 		return []byte{}, err
 	}
