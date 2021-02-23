@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"math"
 	"testing"
 	"time"
 )
@@ -164,5 +165,57 @@ func TestUnmarshalHeader(t *testing.T) {
 	}
 	if vals := h.Values["CF-RAY"]; vals[1] != "two" {
 		t.Errorf("expected second header to be 'two', got %v", vals[1])
+	}
+}
+
+var marshalUnmarshalSegmentsTests = []Segments{
+	0,
+	100,
+	math.MaxUint32,
+	Segments(^uint(0)),
+}
+
+func TestMarshalUnmarshalSegments(t *testing.T) {
+	t.Parallel()
+	for _, tt := range marshalUnmarshalSegmentsTests {
+		b, err := json.Marshal(tt)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		var seg Segments
+		if err := json.Unmarshal(b, &seg); err != nil {
+			t.Fatal(err)
+		}
+
+		if tt != seg {
+			t.Fatalf("expected %d, got %d", tt, seg)
+		}
+	}
+}
+
+var marshalUnmarshalNumMediaTests = []NumMedia{
+	0,
+	100,
+	math.MaxUint32,
+	NumMedia(^uint(0)),
+}
+
+func TestMarshalUnmarshalNumMedia(t *testing.T) {
+	t.Parallel()
+	for _, tt := range marshalUnmarshalNumMediaTests {
+		b, err := json.Marshal(tt)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		var numMedia NumMedia
+		if err := json.Unmarshal(b, &numMedia); err != nil {
+			t.Fatal(err)
+		}
+
+		if tt != numMedia {
+			t.Fatalf("expected %d, got %d", tt, numMedia)
+		}
 	}
 }
