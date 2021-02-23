@@ -238,6 +238,13 @@ func (td *TwilioDuration) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
+func (td TwilioDuration) MarshalJSON() ([]byte, error) {
+	if td == 0 {
+		return []byte("null"), nil
+	}
+	return json.Marshal(fmt.Sprintf("%d", td/TwilioDuration(time.Second)))
+}
+
 func (td TwilioDuration) String() string {
 	return time.Duration(td).String()
 }
