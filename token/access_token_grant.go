@@ -12,6 +12,7 @@ const (
 	keyDepRoleSide     = "deployment_role_sid"
 	keyPushCredSid     = "push_credential_sid"
 	keyVoiceOutgoing   = "outgoing"
+	keyVoiceIncoming   = "incoming"
 	keyConfProfSid     = "configuration_profile_sid"
 	keyAppSid          = "application_sid"
 	keyVoiceParams     = "params"
@@ -93,14 +94,16 @@ type VoiceGrant struct {
 	outgoingApplicationParams map[string]interface{} // request params to pass to the application
 	endpointID                string                 // Specify an endpoint identifier for this device, which will allow the developer to direct calls to a specific endpoint when multiple devices are associated with a single identity
 	pushCredentialSid         string                 // Push Credential Sid to use when registering to receive incoming call notifications
+	incoming                  bool                   // Whether to allow incoming calls
 }
 
-func NewVoiceGrant(outAppSid string, outAppParams map[string]interface{}, endpointID string, pushCredentialSid string) *VoiceGrant {
+func NewVoiceGrant(outAppSid string, outAppParams map[string]interface{}, endpointID string, pushCredentialSid string, incoming bool) *VoiceGrant {
 	return &VoiceGrant{
 		outgoingApplicationSid:    outAppSid,
 		outgoingApplicationParams: outAppParams,
 		endpointID:                endpointID,
 		pushCredentialSid:         pushCredentialSid,
+		incoming:                  incoming,
 	}
 }
 
@@ -115,6 +118,11 @@ func (gr *VoiceGrant) ToPayload() map[string]interface{} {
 
 	grant := make(map[string]interface{})
 	grant[keyVoiceOutgoing] = outVoice
+	if gr.incoming {
+		grant[keyVoiceIncoming] = map[string]interface{}{
+			"allow": true,
+		}
+	}
 	if len(gr.endpointID) > 0 {
 		grant[keyEndpointId] = gr.endpointID
 	}

@@ -63,7 +63,7 @@ func TestVoiceGrant(t *testing.T) {
 			"created_at": time.Now(),
 		},
 	}
-	vcGrnt := NewVoiceGrant(APP_SID, params, ENDPOINT_ID, PUSH_CRED_SID)
+	vcGrnt := NewVoiceGrant(APP_SID, params, ENDPOINT_ID, PUSH_CRED_SID, false)
 
 	if vcGrnt.Key() != voiceGrant {
 		t.Errorf("key expected to be %s, got %s\n", voiceGrant, vcGrnt.Key())
