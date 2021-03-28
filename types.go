@@ -96,8 +96,8 @@ func (seg *Segments) UnmarshalJSON(b []byte) (err error) {
 }
 
 func (seg Segments) MarshalJSON() ([]byte, error) {
-	s := fmt.Sprintf("%d", seg)
-	return json.Marshal(s)
+	s := strconv.AppendUint(nil, uint64(seg), 10)
+	return json.Marshal(string(s))
 }
 
 func (n *NumMedia) UnmarshalJSON(b []byte) (err error) {
@@ -110,8 +110,8 @@ func (n *NumMedia) UnmarshalJSON(b []byte) (err error) {
 }
 
 func (n NumMedia) MarshalJSON() ([]byte, error) {
-	s := fmt.Sprintf("%d", n)
-	return json.Marshal(s)
+	s := strconv.AppendUint(nil, uint64(n), 10)
+	return json.Marshal(string(s))
 }
 
 // TwilioTime can parse a timestamp returned in the Twilio API and turn it into
@@ -242,7 +242,8 @@ func (td TwilioDuration) MarshalJSON() ([]byte, error) {
 	if td == 0 {
 		return []byte("null"), nil
 	}
-	return json.Marshal(fmt.Sprintf("%d", td/TwilioDuration(time.Second)))
+	s := strconv.AppendInt(nil, int64(td/TwilioDuration(time.Second)), 10)
+	return json.Marshal(string(s))
 }
 
 func (td TwilioDuration) String() string {
