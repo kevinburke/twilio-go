@@ -109,7 +109,7 @@ func TestVideoGrant(t *testing.T) {
 
 func TestChatGrant(t *testing.T) {
 	t.Parallel()
-	chGrnt := NewChatGrant(SERVICE_SID)
+	chGrnt := NewChatGrant(SERVICE_SID, PUSH_CRED_SID)
 
 	if chGrnt.Key() != chatGrant {
 		t.Errorf("key expected to be %s, got %s\n", chatGrant, chGrnt.Key())
@@ -117,5 +117,9 @@ func TestChatGrant(t *testing.T) {
 
 	if chGrnt.ToPayload()[keyServiceSid] != SERVICE_SID {
 		t.Errorf("%s expected to be %s, got %s\n", keyServiceSid, SERVICE_SID, chGrnt.ToPayload()[keyServiceSid])
+	}
+
+	if chGrnt.ToPayload()[keyPushCredSid] != PUSH_CRED_SID {
+		t.Errorf("%s expected to be %s, got %s\n", keyPushCredSid, PUSH_CRED_SID, chGrnt.ToPayload()[keyPushCredSid])
 	}
 }

@@ -160,14 +160,22 @@ func (gr *VideoGrant) Key() string {
 
 // ChatGrant is for Twilio Programmable Chat
 type ChatGrant struct {
-	serviceSid string
+	serviceSid        string
+	pushCredentialSid string
 }
 
-func NewChatGrant(sid string) *ChatGrant {
-	return &ChatGrant{serviceSid: sid}
+func NewChatGrant(sid, pushCredentialSid string) *ChatGrant {
+	return &ChatGrant{serviceSid: sid, pushCredentialSid: pushCredentialSid}
 }
 
 func (cg *ChatGrant) ToPayload() map[string]interface{} {
+	if len(cg.serviceSid) > 0 && len(cg.pushCredentialSid) > 0 {
+		return map[string]interface{}{
+			keyServiceSid:  cg.serviceSid,
+			keyPushCredSid: cg.pushCredentialSid,
+		}
+	}
+
 	if len(cg.serviceSid) > 0 {
 		return map[string]interface{}{
 			keyServiceSid: cg.serviceSid,
