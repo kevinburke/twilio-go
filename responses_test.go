@@ -66,6 +66,7 @@ func getServer(response []byte) (*Client, *Server) {
 	client.Video.Base = s.URL
 	client.TaskRouter.Base = s.URL
 	client.Insights.Base = s.URL
+	client.Serverless.Base = s.URL
 	return client, s
 }
 
@@ -81,6 +82,7 @@ func getServerCode(response []byte, code int) (*Client, *Server) {
 	client.Lookup.Base = s.URL
 	client.Video.Base = s.URL
 	client.TaskRouter.Base = s.URL
+	client.Serverless.Base = s.URL
 	return client, s
 }
 
@@ -2899,7 +2901,7 @@ var phoneLookupResponse = []byte(`
         "caller_name": "CCSF",
         "caller_type": "BUSINESS",
         "error_code": null
-    },    
+    },
     "carrier": {
         "type": "landline",
         "error_code": null,
@@ -2907,7 +2909,7 @@ var phoneLookupResponse = []byte(`
         "mobile_country_code": null,
         "name": "Pacific Bell"
     }
-}	
+}
 `)
 
 var verifyResponse = []byte(`

@@ -73,6 +73,11 @@ var InsightsBaseUrl = "https://insights.twilio.com"
 
 const InsightsVersion = "v1"
 
+// Serverless service
+var ServerlessBaseUrl = "https://serverless.twilio.com"
+
+const ServerlessVersion = "v1"
+
 type Client struct {
 	*restclient.Client
 	Monitor    *Client
@@ -85,6 +90,7 @@ type Client struct {
 	Video      *Client
 	TaskRouter *Client
 	Insights   *Client
+	Serverless *Client
 
 	// FullPath takes a path part (e.g. "Messages") and
 	// returns the full API path, including the version (e.g.
@@ -144,6 +150,10 @@ type Client struct {
 
 	// NewInsightsClient initializes these services
 	VoiceInsights func(sid string) *VoiceInsightsService
+
+	// NewServerlessClient initializes these services
+	Services *ServiceService
+	Service  func(sid string) *ServerlessService
 }
 
 const defaultTimeout = 30*time.Second + 500*time.Millisecond
@@ -350,6 +360,38 @@ func NewVideoClient(accountSid string, authToken string, httpClient *http.Client
 	return c
 }
 
+// NewServerlessClient returns a Client for use with the Twilio Serverless (Functions & Assets) API.
+func NewServerlessClient(accountSid string, authToken string, httpClient *http.Client) *Client {
+	if httpClient == nil {
+		httpClient = &http.Client{Timeout: defaultTimeout}
+	}
+	c := newNewClient(accountSid, authToken, ServerlessBaseUrl, httpClient)
+	c.APIVersion = ServerlessVersion
+	c.Service = func(sid string) *ServerlessService {
+		return &ServerlessService{
+			Functions: &FunctionService{
+				client:     c,
+				serviceSid: sid,
+			},
+			Function: func(functionSid string) *FunctionService {
+				return &FunctionService{
+					client:     c,
+					serviceSid: sid,
+					Versions: &FunctionVersionService{
+						client:      c,
+						serviceSid:  sid,
+						functionSid: functionSid,
+					},
+				}
+			},
+		}
+	}
+	c.Services = &ServiceService{
+		client: c,
+	}
+	return c
+}
+
 // NewClient creates a Client for interacting with the Twilio API. This is the
 // main entrypoint for API interactions; view the methods on the subresources
 // for more information.
@@ -378,6 +420,7 @@ func NewClient(accountSid string, authToken string, httpClient *http.Client) *Cl
 	c.Video = NewVideoClient(accountSid, authToken, httpClient)
 	c.TaskRouter = NewTaskRouterClient(accountSid, authToken, httpClient)
 	c.Insights = NewInsightsClient(accountSid, authToken, httpClient)
+	c.Serverless = NewServerlessClient(accountSid, authToken, httpClient)
 
 	c.Accounts = &AccountService{client: c}
 	c.Applications = &ApplicationService{client: c}

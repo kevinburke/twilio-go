@@ -101,6 +101,9 @@ The API is unlikely to change, and currently covers these resources:
 - Wireless
 - Voice Insights
 - Access Tokens for IPMessaging, Video and Programmable Voice SDK
+- Serverless
+  - Service
+  - Function
 
 ### Error Parsing
 
