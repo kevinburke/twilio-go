@@ -104,6 +104,7 @@ The API is unlikely to change, and currently covers these resources:
 - Serverless
   - Service
   - Function
+  - Function Version
 
 ### Error Parsing
 
