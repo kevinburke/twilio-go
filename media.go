@@ -60,9 +60,7 @@ func (m *MediaService) GetURL(ctx context.Context, messageSid string, sid string
 	uriEnd := strings.Join([]string{mediaPathPart(messageSid), sid}, "/")
 	path := m.client.FullPath(uriEnd)
 	// We want the media, not the .json representation
-	if strings.HasSuffix(path, ".json") {
-		path = path[:len(path)-len(".json")]
-	}
+	path = strings.TrimSuffix(path, ".json")
 	urlStr := m.client.Client.Base + path
 	count := 0
 	for {

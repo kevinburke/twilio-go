@@ -35,9 +35,9 @@ import (
 	"sync"
 	"time"
 
+	twilio "github.com/caring/twilio-go"
+	"github.com/caring/twilio-go/datausage"
 	types "github.com/kevinburke/go-types"
-	twilio "github.com/kevinburke/twilio-go"
-	"github.com/kevinburke/twilio-go/datausage"
 	"golang.org/x/sync/errgroup"
 )
 
