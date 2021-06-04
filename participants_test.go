@@ -31,7 +31,7 @@ var participantHoldInstance = []byte(`
 	"account_sid": "ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
 	"call_sid": "CAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
 	"label": null,
-	"conference_sid": "CFbbe4632a3c49700934481addd5ce1659",
+	"conference_sid": "CF169b5eebb07ec48e0f9f2ee904b385c5",
 	"date_created": "Fri, 18 Feb 2011 21:07:19 +0000",
 	"date_updated": "Fri, 18 Feb 2011 21:07:19 +0000",
 	"end_conference_on_exit": false,
@@ -71,6 +71,9 @@ func TestHoldParticipant(t *testing.T) {
 	participant, err := client.Conferences.ParticipantService(conferenceInstanceSid).HoldWithMusic(ctx, participantInstanceSid, participantInstanceHoldURL)
 	if err != nil {
 		t.Fatal(err)
+	}
+	if participant.ConferenceSid != conferenceInstanceSid {
+		t.Errorf("expected Sid to be %s, got %s", conferenceInstanceSid, participant.ConferenceSid)
 	}
 	if participant.CallSid != participantInstanceSid {
 		t.Errorf("expected Sid to be %s, got %s", participantInstanceSid, participant.CallSid)
