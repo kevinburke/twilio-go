@@ -3,7 +3,6 @@
 # would be great to make the bash location portable but not sure how
 SHELL = /bin/bash -o pipefail
 
-GOPATH := $(shell go env GOPATH)
 DIFFER := $(GOPATH)/bin/differ
 WRITE_MAILMAP := $(GOPATH)/bin/write_mailmap
 BUMP_VERSION := $(GOPATH)/bin/bump_version
