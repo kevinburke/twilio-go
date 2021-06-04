@@ -190,3 +190,7 @@ func (c *conferencePageIterator) Next(ctx context.Context) (*ConferencePage, err
 	c.p.SetNextPageURI(cp.NextPageURI)
 	return cp, nil
 }
+
+func (c *ConferenceService) ParticipantService(sid string) *ParticipantService {
+	return &ParticipantService{c.client, sid}
+}
