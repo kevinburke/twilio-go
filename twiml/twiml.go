@@ -3,6 +3,7 @@ package twiml
 import (
 	"encoding/xml"
 	"fmt"
+	"net/url"
 )
 
 // TwiML xml datagram
@@ -12,13 +13,17 @@ type TwiML struct {
 	Say     *Say     `xml:",omitempty"`
 }
 
-func (ml TwiML) String() string {
+func (ml *TwiML) String() string {
 	b, err := xml.Marshal(ml)
 	if err != nil {
 		return fmt.Sprintf("<!-- error: %v -->", err)
 	}
 
 	return string(b)
+}
+
+func (o *TwiML) ApplyValues(v url.Values) {
+	v.Add("twiml", o.String())
 }
 
 // Dial TwiML xml datagram
