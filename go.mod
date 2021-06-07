@@ -13,6 +13,7 @@ require (
 	github.com/kevinburke/go.uuid v1.2.0 // indirect
 	github.com/kevinburke/handlers v0.0.0-20210518180840-51ec5c83f704
 	github.com/kevinburke/rest v0.0.0-20210506044642-5611499aa33c
+	github.com/matryer/is v1.4.0
 	github.com/mattn/go-colorable v0.1.8 // indirect
 	github.com/mattn/go-isatty v0.0.13 // indirect
 	github.com/ttacon/builder v0.0.0-20170518171403-c099f663e1c2 // indirect

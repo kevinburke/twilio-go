@@ -7,6 +7,7 @@ import (
 	"net/url"
 	"time"
 
+	"github.com/caring/twilio-go/twiml"
 	types "github.com/kevinburke/go-types"
 )
 
@@ -134,6 +135,17 @@ func (c *CallService) MakeCall(from string, to string, u *url.URL) (*Call, error
 	data.Set("To", to)
 	data.Set("Url", u.String())
 	return c.Create(context.Background(), data)
+}
+
+// MakeCallWithTwiML starts a new Call from the given phone number to the given phone
+// number, dialing the url when the call connects. MakeCall is a wrapper around
+// Create; if you need more configuration, call that function directly.
+func (c *CallService) MakeCallWithTwiML(ctx context.Context, from string, to string, ml *twiml.TwiML) (*Call, error) {
+	data := url.Values{}
+	data.Set("From", from)
+	data.Set("To", to)
+	data.Set("twiml", ml.String())
+	return c.Create(ctx, data)
 }
 
 func (c *CallService) GetPage(ctx context.Context, data url.Values) (*CallPage, error) {
