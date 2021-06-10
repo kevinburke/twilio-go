@@ -8,7 +8,6 @@ require (
 	github.com/go-stack/stack v1.8.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/inconshreveable/log15 v0.0.0-20201112154412-8562bdadbbac // indirect
-	github.com/kevinburke/differ v0.0.0-20210601202324-818729efca6c // indirect
 	github.com/kevinburke/go-types v0.0.0-20201208005256-aee49f568a20
 	github.com/kevinburke/go.uuid v1.2.0 // indirect
 	github.com/kevinburke/handlers v0.0.0-20210518180840-51ec5c83f704

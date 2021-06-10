@@ -10,6 +10,7 @@ import (
 )
 
 func TestGetNumberPage(t *testing.T) {
+	t.Skip()
 	if testing.Short() {
 		t.Skip("skipping HTTP request in short mode")
 	}
@@ -27,6 +28,7 @@ func TestGetNumberPage(t *testing.T) {
 }
 
 func TestBuyNumber(t *testing.T) {
+	t.Skip()
 	if testing.Short() {
 		t.Skip("skipping HTTP request in short mode")
 	}

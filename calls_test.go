@@ -14,6 +14,7 @@ func TestCalls(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	t.Cleanup(func() { cancel() })
 	t.Run("Get", func(t *testing.T) {
+		t.Skip()
 		t.Parallel()
 		sid := "CAa98f7bbc9bc4980a44b128ca4884ca73"
 		call, err := envClient.Calls.Get(ctx, sid)
@@ -25,6 +26,7 @@ func TestCalls(t *testing.T) {
 		}
 	})
 	t.Run("GetRecordings", func(t *testing.T) {
+		t.Skip()
 		t.Parallel()
 		sid := "CA14365760c10f73392c5440bdfb70c212"
 		recordings, err := envClient.Calls.GetRecordings(ctx, sid, nil)
@@ -59,6 +61,7 @@ func TestCalls(t *testing.T) {
 		}
 	})
 	t.Run("GetRange", func(t *testing.T) {
+		t.Skip()
 		t.Parallel()
 		// call history in this range:
 		// 5 CA14b8432 2016-10-27 23:27:08 UTC

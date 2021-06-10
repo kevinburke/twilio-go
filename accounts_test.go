@@ -42,6 +42,7 @@ func TestAccountCreate(t *testing.T) {
 }
 
 func TestAccountUpdateLive(t *testing.T) {
+	t.Skip()
 	if testing.Short() {
 		t.Skip("skipping HTTP request in short mode")
 	}
@@ -94,6 +95,8 @@ func TestAccountGetPage(t *testing.T) {
 }
 
 func TestAccountGetPageIterator(t *testing.T) {
+	t.Skip()
+
 	if testing.Short() {
 		t.Skip("skipping HTTP request in short mode")
 	}

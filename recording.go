@@ -3,11 +3,13 @@ package twilio
 import (
 	"context"
 	"net/url"
+	"path/filepath"
 	"strings"
 )
 
 type RecordingService struct {
-	client *Client
+	client  *Client
+	SubType string
 }
 
 const recordingsPathPart = "Recordings"
@@ -86,7 +88,12 @@ type RecordingPageIterator struct {
 
 // GetPageIterator returns an iterator which can be used to retrieve pages.
 func (r *RecordingService) GetPageIterator(data url.Values) *RecordingPageIterator {
-	iter := NewPageIterator(r.client, data, recordingsPathPart)
+	part := recordingsPathPart
+	if r.SubType != "" {
+		part = filepath.Join(r.SubType, part)
+	}
+
+	iter := NewPageIterator(r.client, data, part)
 	return &RecordingPageIterator{
 		p: iter,
 	}
