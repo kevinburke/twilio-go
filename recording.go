@@ -99,6 +99,14 @@ func (r *RecordingService) GetPageIterator(data url.Values) *RecordingPageIterat
 	}
 }
 
+// GetPageIterator returns an iterator which can be used to retrieve pages.
+func (r *RecordingService) GetNextPageIterator(nextPageURI string) *RecordingPageIterator {
+	iter := NewNextPageIterator(r.client, nextPageURI)
+	return &RecordingPageIterator{
+		p: iter,
+	}
+}
+
 // Next returns the next page of resources. If there are no more resources,
 // NoMoreResults is returned.
 func (r *RecordingPageIterator) Next(ctx context.Context) (*RecordingPage, error) {
