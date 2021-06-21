@@ -11,6 +11,7 @@ type TwiML struct {
 	XMLName struct{} `xml:"Response"`
 	Dial    *Dial    `xml:",omitempty"`
 	Say     *Say     `xml:",omitempty"`
+	Play    *Play    `xml:",omitempty`
 }
 
 func (ml *TwiML) String() string {
@@ -95,4 +96,10 @@ type Conference struct {
 	RecordingStatusCallback       string `xml:"recordingStatusCallback,attr,omitempty"`
 	RecordingStatusCallbackMethod string `xml:"recordingStatusCallbackMethod,attr,omitempty"`
 	RecordingStatusCallbackEvent  string `xml:"recordingStatusCallbackEvent,attr,omitempty"`
+}
+
+// Play TwiML xml datagram
+// docs: https://www.twilio.com/docs/voice/twiml/play
+type Play struct {
+	Play string `xml:",chardata"`
 }
