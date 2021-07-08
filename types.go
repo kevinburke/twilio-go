@@ -232,6 +232,29 @@ func (td TwilioDuration) String() string {
 	return time.Duration(td).String()
 }
 
+type TwilioDurationMs time.Duration
+
+func (tdm *TwilioDurationMs) UnmarshalJSON(b []byte) error {
+	s := new(string)
+	if err := json.Unmarshal(b, s); err != nil {
+		return err
+	}
+	if *s == "null" || *s == "" {
+		*tdm = 0
+		return nil
+	}
+	i, err := strconv.ParseInt(*s, 10, 64)
+	if err != nil {
+		return err
+	}
+	*tdm = TwilioDurationMs(i) * TwilioDurationMs(time.Millisecond)
+	return nil
+}
+
+func (tdm TwilioDurationMs) String() string {
+	return time.Duration(tdm).String()
+}
+
 type AnsweredBy string
 
 const AnsweredByHuman = AnsweredBy("human")

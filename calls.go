@@ -24,6 +24,7 @@ type Call struct {
 	StartTime      TwilioTime       `json:"start_time"`
 	EndTime        TwilioTime       `json:"end_time"`
 	Duration       TwilioDuration   `json:"duration"`
+	QueueTime      TwilioDurationMs `json:"queue_time"`
 	AccountSid     string           `json:"account_sid"`
 	Annotation     json.RawMessage  `json:"annotation"`
 	AnsweredBy     NullAnsweredBy   `json:"answered_by"`
