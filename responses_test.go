@@ -3213,32 +3213,7 @@ var insightsCallEventsResponse = []byte(`
 
 var insightsCallMetricsResponse = []byte(`
 {
-   "metrics": [
-        {
-            "direction": "inbound",
-            "sip_edge": null,
-            "timestamp": "2020-01-06T15:21:47.017Z",
-            "client_edge": null,
-            "account_sid": "ACabe5149d2ba84a81a7515e425abda4fd",
-            "sdk_edge": null,
-            "edge": "carrier_edge",
-            "call_sid": "CA04917eab5c194f4c86207384933c0c41",
-            "carrier_edge": {
-                "cumulative": {
-                    "jitter": {
-                        "max": 0.010499,
-                        "avg": 0.00553242
-                    },
-                    "packets_received": 478,
-                    "packets_lost": 0
-                },
-                "codec": 0,
-                "codec_name": "pcmu",
-                "metadata": {
-                    "region": "us1"
-                }
-            }
-        },
+    "metrics": [
         {
             "direction": "outbound",
             "sip_edge": null,
@@ -3263,6 +3238,44 @@ var insightsCallMetricsResponse = []byte(`
                     "region": "us1"
                 }
             }
+        },
+        {
+            "timestamp": "2019-10-07T22:32:06Z",
+            "call_sid": "CA04917eab5c194f4c86207384933c0c41",
+            "account_sid": "ACabe5149d2ba84a81a7515e425abda4fd",
+            "edge": "sdk_edge",
+            "direction": "both",
+            "sdk_edge": {
+                "interval": {
+                    "packets_received": 50,
+                    "packets_lost": 0,
+                    "audio_in": {
+                        "value": 81.0
+                    },
+                    "audio_out": {
+                        "value": 5237.0
+                    },
+                    "jitter": {
+                        "value": 9
+                    },
+                    "mos": {
+                        "value": 4.39
+                    },
+                    "rtt": {
+                        "value": 81
+                    }
+                },
+                "cumulative": {
+                    "bytes_received": 547788,
+                    "bytes_sent": 329425,
+                    "packets_received": 3900,
+                    "packets_lost": 0,
+                    "packets_sent": 3934
+                }
+            },
+            "client_edge": null,
+            "carrier_edge": null,
+            "sip_edge": null
         },
         {
             "direction": "inbound",
@@ -3415,7 +3428,7 @@ var insightsCallMetricsResponse = []byte(`
             }
         }
     ],
-      "meta": {
+    "meta": {
         "page": 0,
         "page_size": 50,
         "first_page_url": "https://insights.twilio.com/v1/Voice/CA04917eab5c194f4c86207384933c0c41/Metrics?PageSize=50&Page=0",

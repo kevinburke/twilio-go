@@ -25,10 +25,18 @@ func TestGetCallMetrics(t *testing.T) {
 	if page.Metrics[0].CallSid != sid {
 		t.Errorf("expected CallSid to be %s, got %s", sid, page.Metrics[0].CallSid)
 	}
+
 	if page.Metrics[0].Edge != "carrier_edge" {
 		t.Errorf("expected Edge to be 'carrier_edge', got %s", page.Metrics[0].Edge)
 	}
 	if page.Metrics[0].CarrierEdge == nil {
 		t.Error("expected Carrier Edge metrics to be available")
+	}
+
+	if page.Metrics[1].Edge != "sdk_edge" {
+		t.Errorf("expected Edge to be 'sdk_edge', got %s", page.Metrics[1].Edge)
+	}
+	if page.Metrics[1].SDKEdge == nil {
+		t.Error("expected SDK Edge metrics to be available")
 	}
 }
