@@ -49,13 +49,19 @@ type CumulativeMetrics struct {
 	PacketsLost     int            `json:"packets_lost"`
 }
 
+type FloatValue struct {
+	Value float64 `json:"value"`
+}
+
 type IntervalMetrics struct {
-	AudioOut              int     `json:"audio_out"`
-	AudioIn               int     `json:"audio_in"`
-	Jitter                int     `json:"jitter"`
-	RTT                   int     `json:"rtt"`
-	PacketsLost           int     `json:"packets_lost"`
-	PacketsLossPercentage float64 `json:"packets_loss_percentage"`
+	AudioOut              FloatValue `json:"audio_out"`
+	AudioIn               FloatValue `json:"audio_in"`
+	Jitter                FloatValue `json:"jitter"`
+	MOS                   FloatValue `json:"mos"`
+	RTT                   FloatValue `json:"rtt"`
+	PacketsReceived       int        `json:"packets_received"`
+	PacketsLost           int        `json:"packets_lost"`
+	PacketsLossPercentage float64    `json:"packets_loss_percentage"`
 }
 
 // Returns a list of metrics for a call. For more information on valid values,
