@@ -10,8 +10,13 @@ import (
 const servicesPathPart = "Services"
 const verificationsPathPart = "Verifications"
 const verificationCheckPart = "VerificationCheck"
+const accessTokensPart = "AccessTokens"
 
 type VerifyPhoneNumberService struct {
+	client *Client
+}
+
+type VerifyAccessTokenService struct {
 	client *Client
 }
 
@@ -45,6 +50,10 @@ type CheckPhoneNumber struct {
 	DateUpdated TwilioTime       `json:"date_updated"`
 }
 
+type VerifyAccessToken struct {
+	Token string `json:"token"`
+}
+
 // Create calls the Verify API to start a new verification.
 // https://www.twilio.com/docs/verify/api-beta/verification-beta#start-new-verification
 func (v *VerifyPhoneNumberService) Create(ctx context.Context, verifyServiceID string, data url.Values) (*VerifyPhoneNumber, error) {
@@ -67,4 +76,12 @@ func (v *VerifyPhoneNumberService) Check(ctx context.Context, verifyServiceID st
 	check := new(CheckPhoneNumber)
 	err := v.client.CreateResource(ctx, servicesPathPart+"/"+verifyServiceID+"/"+verificationCheckPart, data, check)
 	return check, err
+}
+
+// Create calls the Verify API to create an access token
+// https://www.twilio.com/docs/verify/api/access-token#
+func (v *VerifyAccessTokenService) Create(ctx context.Context, verifyServiceID string, data url.Values) (*VerifyAccessToken, error) {
+	accessToken := new(VerifyAccessToken)
+	err := v.client.CreateResource(ctx, servicesPathPart+"/"+verifyServiceID+"/"+accessTokensPart, data, accessToken)
+	return accessToken, err
 }

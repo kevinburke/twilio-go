@@ -134,6 +134,7 @@ type Client struct {
 
 	// NewVerifyClient initializes these services
 	Verifications *VerifyPhoneNumberService
+	AccessTokens  *VerifyAccessTokenService
 
 	// NewVideoClient initializes these services
 	Rooms           *RoomService
@@ -338,6 +339,7 @@ func NewVerifyClient(accountSid string, authToken string, httpClient *http.Clien
 	c := newNewClient(accountSid, authToken, VerifyBaseURL, httpClient)
 	c.APIVersion = VerifyVersion
 	c.Verifications = &VerifyPhoneNumberService{client: c}
+	c.AccessTokens = &VerifyAccessTokenService{client: c}
 	return c
 }
 

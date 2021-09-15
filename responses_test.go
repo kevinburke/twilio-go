@@ -2952,6 +2952,12 @@ var verifyCheckResponse = []byte(`
 }
 `)
 
+var verifyAccessTokenResponse = []byte(`
+{
+    "token": "token.stub"
+}
+`)
+
 var roomResponse = []byte(`
 {
     "api_key_sid": "AC58f1e8f2b1c6b88ca90a012a4be0c279",
