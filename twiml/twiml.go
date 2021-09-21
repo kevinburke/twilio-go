@@ -11,7 +11,8 @@ type TwiML struct {
 	XMLName struct{} `xml:"Response"`
 	Dial    *Dial    `xml:",omitempty"`
 	Say     *Say     `xml:",omitempty"`
-	Play    *Play    `xml:",omitempty`
+	Play    *Play    `xml:",omitempty"`
+	Enqueue *Enqueue `xml:",omitempty"`
 }
 
 func (ml *TwiML) String() string {
@@ -102,4 +103,23 @@ type Conference struct {
 // docs: https://www.twilio.com/docs/voice/twiml/play
 type Play struct {
 	Play string `xml:",chardata"`
+}
+
+// Enqueue TwiML xml datagram
+// docs: https://www.twilio.com/docs/voice/twiml/enqueue
+type Enqueue struct {
+	Enqueue string `xml:",chardata"`
+
+	Action      string `xml:"action,attr,omitempty"`
+	Method      string `xml:"method,attr,omitempty"`
+	WaitURL     string `xml:"waitUrl,attr,omitempty"`
+	WorkflowSID string `xml:"workflowSid,attr,omitempty"`
+
+	Task *Task `xml:",omitempty"`
+}
+
+// Task TwiML xml datagram
+// docs: Task = The attributes to be set for the newly created task, formatted as JSON
+type Task struct {
+	Task string `xml:",innerxml"`
 }
