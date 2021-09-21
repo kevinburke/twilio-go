@@ -108,6 +108,18 @@ type Play struct {
 // Enqueue TwiML xml datagram
 // docs: https://www.twilio.com/docs/voice/twiml/enqueue
 type Enqueue struct {
-	Enqueue     string `xml:",chardata"`
-	WorkflowSID string `xml:"workflowSid,attr"`
+	Enqueue string `xml:",chardata"`
+
+	Action      string `xml:"action,attr,omitempty"`
+	Method      string `xml:"method,attr,omitempty"`
+	WaitURL     string `xml:"waitUrl,attr,omitempty"`
+	WorkflowSID string `xml:"workflowSid,attr,omitempty"`
+
+	Task *Task `xml:",omitempty"`
+}
+
+// Task TwiML xml datagram
+// docs: Task = The attributes to be set for the newly created task, formatted as JSON
+type Task struct {
+	Task string `xml:",innerxml"`
 }

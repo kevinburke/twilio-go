@@ -149,12 +149,24 @@ func TestConferenceTwiML(t *testing.T) {
 
 func TestEnqueueTwiML(t *testing.T) {
 	tests := []twimlTestCase{
-		{ // A Simple Enqueue
+		{ // A Simple Enqueue by workflow name
 			in: &TwiML{Enqueue: &Enqueue{
-				Enqueue:     "incoming call",
+				Enqueue: "Inbound",
+			}},
+			out: `<Response><Enqueue>Inbound</Enqueue></Response>`,
+		},
+		{ // A Simple Enqueue by workflow SID
+			in: &TwiML{Enqueue: &Enqueue{
 				WorkflowSID: "12345abcde",
 			}},
-			out: `<Response><Enqueue workflowSid="12345abcde">incoming call</Enqueue></Response>`,
+			out: `<Response><Enqueue workflowSid="12345abcde"></Enqueue></Response>`,
+		},
+		{ // Enqueue with workflow SID and pass task data as a JSON string
+			in: &TwiML{Enqueue: &Enqueue{
+				WorkflowSID: "12345abcde",
+				Task:        &Task{Task: `{"account_number": "12345abcdef"}`},
+			}},
+			out: `<Response><Enqueue workflowSid="12345abcde"><Task>{"account_number": "12345abcdef"}</Task></Enqueue></Response>`,
 		},
 	}
 
