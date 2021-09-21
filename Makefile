@@ -3,10 +3,10 @@
 # would be great to make the bash location portable but not sure how
 SHELL = /bin/bash -o pipefail
 
-DIFFER := $(GOPATH)/bin/differ
-WRITE_MAILMAP := $(GOPATH)/bin/write_mailmap
-BUMP_VERSION := $(GOPATH)/bin/bump_version
-STATICCHECK := $(GOPATH)/bin/staticcheck
+DIFFER := $(shell go env GOPATH)/bin/differ
+WRITE_MAILMAP := $(shell go env GOPATH)/bin/write_mailmap
+BUMP_VERSION := $(shell go env GOPATH)/bin/bump_version
+STATICCHECK := $(shell go env GOPATH)/bin/staticcheck
 
 test: lint
 	go test ./...
