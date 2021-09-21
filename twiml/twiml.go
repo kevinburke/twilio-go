@@ -11,7 +11,8 @@ type TwiML struct {
 	XMLName struct{} `xml:"Response"`
 	Dial    *Dial    `xml:",omitempty"`
 	Say     *Say     `xml:",omitempty"`
-	Play    *Play    `xml:",omitempty`
+	Play    *Play    `xml:",omitempty"`
+	Enqueue *Enqueue `xml:",omitempty"`
 }
 
 func (ml *TwiML) String() string {
@@ -102,4 +103,11 @@ type Conference struct {
 // docs: https://www.twilio.com/docs/voice/twiml/play
 type Play struct {
 	Play string `xml:",chardata"`
+}
+
+// Enqueue TwiML xml datagram
+// docs: https://www.twilio.com/docs/voice/twiml/enqueue
+type Enqueue struct {
+	Enqueue     string `xml:",chardata"`
+	WorkflowSID string `xml:"workflowSid,attr"`
 }

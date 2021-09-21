@@ -147,6 +147,20 @@ func TestConferenceTwiML(t *testing.T) {
 	testTwiML(t, tests)
 }
 
+func TestEnqueueTwiML(t *testing.T) {
+	tests := []twimlTestCase{
+		{ // A Simple Enqueue
+			in: &TwiML{Enqueue: &Enqueue{
+				Enqueue:     "incoming call",
+				WorkflowSID: "12345abcde",
+			}},
+			out: `<Response><Enqueue workflowSid="12345abcde">incoming call</Enqueue></Response>`,
+		},
+	}
+
+	testTwiML(t, tests)
+}
+
 func testTwiML(t *testing.T, tests []twimlTestCase) {
 	t.Helper()
 	is := is.New(t)
