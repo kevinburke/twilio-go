@@ -2958,6 +2958,41 @@ var verifyAccessTokenResponse = []byte(`
 }
 `)
 
+var verifyChallengeResponse = []byte(`
+{
+  "sid": "YC03aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "account_sid": "ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "service_sid": "VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "entity_sid": "YEXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "identity": "ff483d1ff591898a9942916050d2ca3f",
+  "factor_sid": "YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "date_created": "2015-07-30T20:00:00Z",
+  "date_updated": "2015-07-30T20:00:00Z",
+  "date_responded": "2015-07-30T20:00:00Z",
+  "expiration_date": "2015-07-30T20:00:00Z",
+  "status": "pending",
+  "responded_reason": "none",
+  "details": {
+    "message": "Hi! Mr. John Doe, would you like to sign up?",
+    "date": "2020-07-01T12:13:14Z",
+    "fields": [
+      {
+        "label": "Action",
+        "value": "Sign up in portal"
+      }
+    ]
+  },
+  "hidden_details": {
+    "ip": "127.0.0.1"
+  },
+  "factor_type": "push",
+  "url": "https://verify.twilio.com/v2/Services/VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Entities/ff483d1ff591898a9942916050d2ca3f/Challenges/YC03aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "links": {
+    "notifications": "https://verify.twilio.com/v2/Services/VAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Entities/ff483d1ff591898a9942916050d2ca3f/Challenges/YC03aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Notifications"
+  }
+}
+`)
+
 var roomResponse = []byte(`
 {
     "api_key_sid": "AC58f1e8f2b1c6b88ca90a012a4be0c279",

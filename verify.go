@@ -11,12 +11,18 @@ const servicesPathPart = "Services"
 const verificationsPathPart = "Verifications"
 const verificationCheckPart = "VerificationCheck"
 const accessTokensPart = "AccessTokens"
+const entityPathPart = "Entity"
+const challengesPart = "Challenges"
 
 type VerifyPhoneNumberService struct {
 	client *Client
 }
 
 type VerifyAccessTokenService struct {
+	client *Client
+}
+
+type VerifyChallengeService struct {
 	client *Client
 }
 
@@ -54,6 +60,30 @@ type VerifyAccessToken struct {
 	Token string `json:"token"`
 }
 
+type ChallengeLinks struct {
+	Notifications string `json:"notifications"`
+}
+
+type CreateChallenge struct {
+	Sid             string                 `json:"sid"`
+	AccountSid      string                 `json:"account_sid"`
+	ServiceSid      string                 `json:"service_sid"`
+	EntitySid       string                 `json:"entity_sid"`
+	Identity        string                 `json:"identity"`
+	FactorSid       string                 `json:"factor_sid"`
+	DateCreated     TwilioTime             `json:"date_created"`
+	DateUpdated     TwilioTime             `json:"date_updated"`
+	DateResponded   TwilioTime             `json:"date_responded"`
+	ExpirationDate  TwilioTime             `json:"expiration_date"`
+	Status          string                 `json:"status"`
+	RespondedReason string                 `json:"responded_reason"`
+	Details         map[string]interface{} `json:"details"`
+	HiddenDetails   map[string]interface{} `json:"hidden_details"`
+	FactorType      string                 `json:"factor_type"`
+	Url             string                 `json:"url"`
+	Links           ChallengeLinks         `json:"links"`
+}
+
 // Create calls the Verify API to start a new verification.
 // https://www.twilio.com/docs/verify/api-beta/verification-beta#start-new-verification
 func (v *VerifyPhoneNumberService) Create(ctx context.Context, verifyServiceID string, data url.Values) (*VerifyPhoneNumber, error) {
@@ -84,4 +114,12 @@ func (v *VerifyAccessTokenService) Create(ctx context.Context, verifyServiceID s
 	accessToken := new(VerifyAccessToken)
 	err := v.client.CreateResource(ctx, servicesPathPart+"/"+verifyServiceID+"/"+accessTokensPart, data, accessToken)
 	return accessToken, err
+}
+
+// Create calls the Verify API to create a challenge
+// https://www.twilio.com/docs/verify/api/challenge#create-a-challenge-resource
+func (v *VerifyChallengeService) Create(ctx context.Context, verifyServiceID string, identity string, data url.Values) (*CreateChallenge, error) {
+	challenge := new(CreateChallenge)
+	err := v.client.CreateResource(ctx, servicesPathPart+"/"+verifyServiceID+"/"+entityPathPart+"/"+identity+"/"+challengesPart, data, challenge)
+	return challenge, err
 }

@@ -95,13 +95,38 @@ func TestVerifyAccessTokenCreate(t *testing.T) {
 	defer cancel()
 
 	data := url.Values{}
-	data.Add("identity", "foo")
-	data.Add("factor_type", "push")
+	data.Add("Identity", "foo")
+	data.Add("FactorType", "push")
 	verify, err := client.Verify.AccessTokens.Create(ctx, "VA9e0bd45bfa7d9b9e7dca86cf94c7d4f8", data)
 	if err != nil {
 		t.Fatal(err)
 	}
 	if verify.Token != "token.stub" {
 		t.Errorf("expected Token to be %s, got %s", "token.stub", verify.Token)
+	}
+}
+
+func TestVerifyChallengeCreate(t *testing.T) {
+	t.Parallel()
+	client, s := getServer(verifyChallengeResponse)
+	defer s.Close()
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	data := url.Values{}
+	data.Add("FactorSid", "YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+	data.Add("FactorType", "push")
+	data.Add("Details.Message", "Hi! Mr. John Doe, would you like to sign up?")
+	data.Add("Details.Fields", "{\"label\": \"Action\", \"value\": \"Sign up in portal\"}")
+	data.Add("Details.Fields", "{\"label\": \"Location\", \"value\": \"California\"}")
+	challenge, err := client.Verify.Challenges.Create(ctx, "VA9e0bd45bfa7d9b9e7dca86cf94c7d4f8", "ff483d1ff591898a9942916050d2ca3f", data)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if challenge.FactorSid != "YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" {
+		t.Errorf("expected FactorSid to be %s, got %s", "YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", challenge.FactorSid)
+	}
+	if challenge.FactorType != "push" {
+		t.Errorf("expected FactorType to be %s, got %s", "push", challenge.FactorType)
 	}
 }
