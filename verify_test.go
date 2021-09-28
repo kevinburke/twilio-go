@@ -145,5 +145,8 @@ func TestVerifyChallengeCheck(t *testing.T) {
 	if challenge.Sid != "YCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" {
 		t.Errorf("expected Sid to be %s, got %s", "YCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", challenge.Sid)
 	}
+	if challenge.FactorType != "push" {
+		t.Errorf("expected FactorType to be %s, got %s", "push", challenge.FactorType)
+	}
 }
 
