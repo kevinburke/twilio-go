@@ -64,7 +64,7 @@ type ChallengeLinks struct {
 	Notifications string `json:"notifications"`
 }
 
-type CreateChallenge struct {
+type VerifyChallenge struct {
 	Sid             string                 `json:"sid"`
 	AccountSid      string                 `json:"account_sid"`
 	ServiceSid      string                 `json:"service_sid"`
@@ -118,8 +118,16 @@ func (v *VerifyAccessTokenService) Create(ctx context.Context, verifyServiceID s
 
 // Create calls the Verify API to create a challenge
 // https://www.twilio.com/docs/verify/api/challenge#create-a-challenge-resource
-func (v *VerifyChallengeService) Create(ctx context.Context, verifyServiceID string, identity string, data url.Values) (*CreateChallenge, error) {
-	challenge := new(CreateChallenge)
+func (v *VerifyChallengeService) Create(ctx context.Context, verifyServiceID string, identity string, data url.Values) (*VerifyChallenge, error) {
+	challenge := new(VerifyChallenge)
 	err := v.client.CreateResource(ctx, servicesPathPart+"/"+verifyServiceID+"/"+entitiesPathPart+"/"+identity+"/"+challengesPart, data, challenge)
+	return challenge, err
+}
+
+// Get calls the Verify API to get a challenge
+// https://www.twilio.com/docs/verify/api/challenge#fetch-a-challenge-resource
+func (v *VerifyChallengeService) Get(ctx context.Context, verifyServiceID string, identity string, sid string) (*VerifyChallenge, error) {
+	challenge := new(VerifyChallenge)
+	err := v.client.GetResource(ctx, servicesPathPart+"/"+verifyServiceID+"/"+entitiesPathPart+"/"+identity+"/"+challengesPart, sid, challenge)
 	return challenge, err
 }

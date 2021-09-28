@@ -130,3 +130,20 @@ func TestVerifyChallengeCreate(t *testing.T) {
 		t.Errorf("expected FactorType to be %s, got %s", "push", challenge.FactorType)
 	}
 }
+
+func TestVerifyChallengeCheck(t *testing.T) {
+	t.Parallel()
+	client, s := getServer(verifyResponse)
+	defer s.Close()
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	challenge, err := client.Verify.Challenges.Get(ctx, "VA9e0bd45bfa7d9b9e7dca86cf94c7d4f8", "ff483d1ff591898a9942916050d2ca3f", "YCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if challenge.Sid != "YCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" {
+		t.Errorf("expected Sid to be %s, got %s", "YCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", challenge.Sid)
+	}
+}
+
