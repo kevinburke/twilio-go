@@ -11,7 +11,7 @@ const servicesPathPart = "Services"
 const verificationsPathPart = "Verifications"
 const verificationCheckPart = "VerificationCheck"
 const accessTokensPart = "AccessTokens"
-const entityPathPart = "Entity"
+const entitiesPathPart = "Entities"
 const challengesPart = "Challenges"
 
 type VerifyPhoneNumberService struct {
@@ -120,6 +120,6 @@ func (v *VerifyAccessTokenService) Create(ctx context.Context, verifyServiceID s
 // https://www.twilio.com/docs/verify/api/challenge#create-a-challenge-resource
 func (v *VerifyChallengeService) Create(ctx context.Context, verifyServiceID string, identity string, data url.Values) (*CreateChallenge, error) {
 	challenge := new(CreateChallenge)
-	err := v.client.CreateResource(ctx, servicesPathPart+"/"+verifyServiceID+"/"+entityPathPart+"/"+identity+"/"+challengesPart, data, challenge)
+	err := v.client.CreateResource(ctx, servicesPathPart+"/"+verifyServiceID+"/"+entitiesPathPart+"/"+identity+"/"+challengesPart, data, challenge)
 	return challenge, err
 }
