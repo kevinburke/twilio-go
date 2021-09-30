@@ -123,4 +123,5 @@ type Enqueue struct {
 type Task struct {
 	Task     string `xml:",innerxml"`
 	Priority string `xml:"priority,attr"`
+	Timeout  string `xml:"timeout,attr"`
 }
