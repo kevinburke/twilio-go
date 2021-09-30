@@ -121,7 +121,7 @@ type Enqueue struct {
 // Task TwiML xml datagram
 // docs: Task = The attributes to be set for the newly created task, formatted as JSON
 type Task struct {
-	Task     string `xml:",innerxml"`
-	Priority string `xml:"priority,attr"`
-	Timeout  string `xml:"timeout,attr"`
+	Task     string `xml:",innerxml,omitempty"`
+	Priority string `xml:"priority,attr,omitempty"`
+	Timeout  string `xml:"timeout,attr,omitempty"`
 }
