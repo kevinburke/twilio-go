@@ -122,5 +122,5 @@ type Enqueue struct {
 // docs: Task = The attributes to be set for the newly created task, formatted as JSON
 type Task struct {
 	Task     string `xml:",innerxml"`
-	Priority string `xml:",innerxml"`
+	Priority string `xml:",innerxml,attr"`
 }
