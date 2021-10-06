@@ -29,8 +29,9 @@ type cToken struct {
 	Version      string                   `json:"version"`
 	FriendlyName string                   `json:"friendly_name"`
 	AccountSid   string                   `json:"account_sid"`
-	Channel      string                   `json:"channel"`
 	WorkspaceSid string                   `json:"workspace_sid"`
+	Channel      string                   `json:"channel"`
+	WorkerSid    string                   `json:"worker_sid"`
 }
 
 type Policy struct {
@@ -109,22 +110,42 @@ func DefaultEventBridgePolicies(accountSid, channelId string) []Policy {
 	}
 }
 
-func BuildWorkspacePolicy(resources []string, opts CapabilityTokenOptions) Policy {
+func BuildWorkspacePolicy(opts CapabilityTokenOptions, method string, resources []string) Policy {
+	if method == "" {
+		method = "GET"
+	}
+
 	fullResourceArray := []string{TASKROUTER_BASE_URL, opts.Version, WORKSPACES, opts.WorkspaceSid}
 	fullResourceArray = append(fullResourceArray, resources...)
 
 	url := strings.Join(fullResourceArray, "/")
 
 	return Policy{
-		URL: url,
+		URL:    url,
+		Method: method,
 	}
 }
 
-func (t *CapabilityToken) New(opts CapabilityTokenOptions) *CapabilityToken {
-	var policyMaps = make([]map[string]interface{}, len(opts.Policies))
+// NewCapabilityToken generates a new CapabilityToken with the provided CapabilityTokenOptions.
+//
+// To see more visit: https://www.twilio.com/docs/taskrouter/js-sdk/workspace/constructing-jwts
+func NewCapabilityToken(opts CapabilityTokenOptions) *CapabilityToken {
+	policies := opts.Policies
 
-	for _, policy := range opts.Policies {
-		policyMaps = append(policyMaps, policy.ToMap())
+	if opts.DefaultWorkerCapabilities {
+		policies = append(policies, DefaultWorkerPolicies(opts.WorkspaceSid, opts.WorkerSid, opts.Version)...)
+	}
+
+	if opts.DefaultEventBridgeCapabilities {
+		policies = append(policies, DefaultEventBridgePolicies(opts.AccountSid, opts.WorkerSid)...)
+	}
+
+	var policyMaps = make([]map[string]interface{}, 0)
+
+	for _, policy := range policies {
+		if policy.ToMap() != nil {
+			policyMaps = append(policyMaps, policy.ToMap())
+		}
 	}
 
 	return &CapabilityToken{
@@ -144,7 +165,7 @@ func (t *CapabilityToken) JWT() (string, error) {
 
 	stdClaims := &stdToken{
 		ExpiresAt: now.Add(t.ttl).Unix(),
-		Issuer:    t.apiKey,
+		Issuer:    t.accountSid,
 	}
 
 	t.mu.Lock()
@@ -156,8 +177,9 @@ func (t *CapabilityToken) JWT() (string, error) {
 		t.version,
 		t.workerSid,
 		t.accountSid,
-		t.workerSid,
 		t.workspaceSid,
+		t.workspaceSid,
+		t.workerSid,
 	}
 	// marshal header
 	data, err := json.Marshal(claims)
