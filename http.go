@@ -262,6 +262,10 @@ func NewTaskRouterClient(accountSid string, authToken string, httpClient *http.C
 				workspaceSid: sid,
 				client:       c,
 			},
+			Tasks: &TaskService{
+				workspaceSid: sid,
+				client:       c,
+			},
 			Queues: &TaskQueueService{
 				workspaceSid: sid,
 				client:       c,
