@@ -7,6 +7,10 @@ const (
 	conversationsGrant = "rtc"
 	voiceGrant         = "voice"
 	videoGrant         = "video"
+	taskrouterGrant    = "task_router"
+	keyWorkspaceSid    = "workspace_sid"
+	keyWorkerSid       = "worker_sid"
+	keyRole            = "role"
 	keyServiceSid      = "service_sid"
 	keyEndpointId      = "endpoint_id"
 	keyDepRoleSide     = "deployment_role_sid"
@@ -26,6 +30,39 @@ const (
 type Grant interface {
 	ToPayload() map[string]interface{}
 	Key() string
+}
+
+// TaskrouterGrant is a grant for accessing Taskrouter
+type TaskrouterGrant struct {
+	workspaceSid string
+	workerSid    string
+	role         string
+}
+
+func NewTaskRouterGrant(workspaceSid, workerSid, role string) *TaskrouterGrant {
+	return &TaskrouterGrant{
+		workspaceSid: workspaceSid,
+		workerSid:    workerSid,
+		role:         role,
+	}
+}
+
+func (gr *TaskrouterGrant) ToPayload() map[string]interface{} {
+	grant := make(map[string]interface{})
+	if len(gr.workspaceSid) > 0 {
+		grant[keyWorkspaceSid] = gr.workspaceSid
+	}
+	if len(gr.workerSid) > 0 {
+		grant[keyWorkerSid] = gr.workerSid
+	}
+	if len(gr.role) > 0 {
+		grant[keyRole] = gr.role
+	}
+	return grant
+}
+
+func (gr *TaskrouterGrant) Key() string {
+	return taskrouterGrant
 }
 
 // IPMessageGrant is a grant for accessing Twilio IP Messaging

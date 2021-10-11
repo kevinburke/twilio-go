@@ -8,11 +8,13 @@ require (
 	github.com/go-stack/stack v1.8.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/inconshreveable/log15 v0.0.0-20201112154412-8562bdadbbac // indirect
+	github.com/kevinburke/bump_version v0.0.0-20210302192000-902db8f7bcaa // indirect
 	github.com/kevinburke/differ v0.0.0-20210601202324-818729efca6c // indirect
 	github.com/kevinburke/go-types v0.0.0-20201208005256-aee49f568a20
 	github.com/kevinburke/go.uuid v1.2.0 // indirect
 	github.com/kevinburke/handlers v0.0.0-20210518180840-51ec5c83f704
 	github.com/kevinburke/rest v0.0.0-20210506044642-5611499aa33c
+	github.com/kevinburke/write_mailmap v0.0.0-20180427174204-754cdd25e871 // indirect
 	github.com/matryer/is v1.4.0
 	github.com/mattn/go-colorable v0.1.8 // indirect
 	github.com/mattn/go-isatty v0.0.13 // indirect
