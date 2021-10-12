@@ -528,6 +528,7 @@ func (c *Client) MakeRequest(ctx context.Context, method string, pathPart string
 		pathPart = pathPart + "?" + data.Encode()
 	}
 	req, err := c.NewRequest(method, pathPart, rb)
+	req.Close = true
 	if err != nil {
 		return err
 	}
