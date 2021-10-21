@@ -12,6 +12,13 @@ type TaskService struct {
 	workspaceSid string
 }
 
+type Links struct {
+	TaskQueue    string `json:"task_queue"`
+	Workflow     string `json:"workflow"`
+	Workspace    string `json:"workspace"`
+	Reservations string `json:"reservations"`
+}
+
 type Task struct {
 	Sid                   string     `json:"sid"`
 	AccountSid            string     `json:"account_sid"`
@@ -32,7 +39,7 @@ type Task struct {
 	WorkflowFriendlyName  string     `json:"workflow_friendly_name"`
 	WorkspaceSid          string     `json:"workspace_sid"`
 	URL                   string     `json:"url"`
-	Links                 string     `json:"links"`
+	Links                 Links       `json:"links"`
 }
 
 type TaskPage struct {
