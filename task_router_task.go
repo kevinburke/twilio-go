@@ -20,26 +20,26 @@ type Links struct {
 }
 
 type Task struct {
-	Sid                   string     `json:"sid"`
-	AccountSid            string     `json:"account_sid"`
-	Age                   int        `json:"age"`
-	AssignmentStatus      string     `json:"assignment_status"`
-	Attributes            string     `json:"attributes"`
-	Addons                string     `json:"addons"`
-	DateCreated           TwilioTime `json:"date_created"`
-	DateUpdated           TwilioTime `json:"date_updated"`
-	TaskQueueEnteredDate  TwilioTime `json:"task_queue_entered_date"`
-	Priority              int        `json:"priority"`
-	Reason                string     `json:"reason"`
-	TaskQueueSid          string     `json:"task_queue_sid"`
-	TaskChannelSid        string     `json:"task_channel_sid"`
-	TaskChannelUniqueName string     `json:"task_channel_unique_name"`
-	Timeout               int        `json:"timeout"`
-	WorkflowSid           string     `json:"workflow_sid"`
-	WorkflowFriendlyName  string     `json:"workflow_friendly_name"`
-	WorkspaceSid          string     `json:"workspace_sid"`
-	URL                   string     `json:"url"`
-	Links                 Links       `json:"links"`
+	Sid                   string            `json:"sid"`
+	AccountSid            string            `json:"account_sid"`
+	Age                   int               `json:"age"`
+	AssignmentStatus      string            `json:"assignment_status"`
+	Attributes            map[string]string `json:"attributes"`
+	Addons                string            `json:"addons"`
+	DateCreated           TwilioTime        `json:"date_created"`
+	DateUpdated           TwilioTime        `json:"date_updated"`
+	TaskQueueEnteredDate  TwilioTime        `json:"task_queue_entered_date"`
+	Priority              int               `json:"priority"`
+	Reason                string            `json:"reason"`
+	TaskQueueSid          string            `json:"task_queue_sid"`
+	TaskChannelSid        string            `json:"task_channel_sid"`
+	TaskChannelUniqueName string            `json:"task_channel_unique_name"`
+	Timeout               int               `json:"timeout"`
+	WorkflowSid           string            `json:"workflow_sid"`
+	WorkflowFriendlyName  string            `json:"workflow_friendly_name"`
+	WorkspaceSid          string            `json:"workspace_sid"`
+	URL                   string            `json:"url"`
+	Links                 Links             `json:"links"`
 }
 
 type TaskPage struct {
