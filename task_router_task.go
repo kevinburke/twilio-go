@@ -24,7 +24,7 @@ type Task struct {
 	AccountSid            string            `json:"account_sid"`
 	Age                   int               `json:"age"`
 	AssignmentStatus      string            `json:"assignment_status"`
-	Attributes            map[string]string `json:"attributes"`
+	Attributes            string            `json:"attributes"`
 	Addons                string            `json:"addons"`
 	DateCreated           TwilioTime        `json:"date_created"`
 	DateUpdated           TwilioTime        `json:"date_updated"`
