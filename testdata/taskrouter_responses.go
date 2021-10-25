@@ -184,7 +184,7 @@ var WorkerCreateResponse = []byte(`
   }
 }
 `)
-var WorkerCreateOrUpdateResponse = []byte(`
+var CreateTaskResponse = []byte(`
 {
   "account_sid": "ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
   "age": 25200,
