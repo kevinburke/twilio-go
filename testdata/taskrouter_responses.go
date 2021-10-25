@@ -184,3 +184,35 @@ var WorkerCreateResponse = []byte(`
   }
 }
 `)
+var WorkerCreateOrUpdateResponse = []byte(`
+{
+  "account_sid": "ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "age": 25200,
+  "assignment_status": "pending",
+  "attributes": {
+    "type": "support"
+  },
+  "date_created": "2014-05-14T18:50:02Z",
+  "date_updated": "2014-05-15T07:26:06Z",
+  "task_queue_entered_date": null,
+  "priority": 1,
+  "reason": "Test Reason",
+  "sid": "WTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "task_queue_sid": "WQXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "task_channel_sid": "TCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "task_channel_unique_name": "unique",
+  "timeout": 60,
+  "url": "https://taskrouter.twilio.com/v1/Workspaces/WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Tasks/WTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "workspace_sid": "WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "workflow_sid": "WWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "workflow_friendly_name": "Example Workflow",
+  "task_queue_friendly_name": "Example Task Queue",
+  "addons": {},
+  "links": {
+    "task_queue": "https://taskrouter.twilio.com/v1/Workspaces/WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/TaskQueues/WQXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "workflow": "https://taskrouter.twilio.com/v1/Workspaces/WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Workflows/WWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "workspace": "https://taskrouter.twilio.com/v1/Workspaces/WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "reservations": "https://taskrouter.twilio.com/v1/Workspaces/WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Tasks/WTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/Reservations"
+  }
+}
+`)
