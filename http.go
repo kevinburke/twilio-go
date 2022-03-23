@@ -56,7 +56,8 @@ const LookupBaseURL = "https://lookups.twilio.com"
 const LookupVersion = "v1"
 
 // Verify service
-const VerifyBaseURL = "https://verify.twilio.com"
+var VerifyBaseURL = "https://verify.twilio.com"
+
 const VerifyVersion = "v2"
 
 // Video service
