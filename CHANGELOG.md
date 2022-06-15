@@ -19,6 +19,8 @@ Calls now support the "queue_time" attribute, with help from a new
 IntervalMetrics response object now marshals types correctly from the Twilio API
 (the response format changed).
 
+Use Go modules to track dependencies.
+
 ## 2.5
 
 Use a new version of github.com/kevinburke/rest that reduces the number of

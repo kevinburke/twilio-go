@@ -5,8 +5,7 @@ jobs:
     strategy:
       matrix:
         go-version: [1.17.x, 1.18.x]
-        platform: [ubuntu-latest]
-    runs-on: ${{ matrix.platform }}
+    runs-on: ubuntu-latest
     steps:
     - name: Install Go
       uses: actions/setup-go@v2
@@ -19,7 +18,6 @@ jobs:
     - run: |
         echo "GOPATH=$GITHUB_WORKSPACE" >> $GITHUB_ENV
         echo "PATH=$GITHUB_WORKSPACE/bin:$PATH" >> $GITHUB_ENV
-        echo "GO111MODULE=off" >> $GITHUB_ENV
     - name: Download dependencies
       run: go get -t -v ./...
       working-directory: './src/github.com/kevinburke/twilio-go'

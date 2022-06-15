@@ -12,6 +12,8 @@ import (
 	"unicode/utf8"
 
 	"github.com/ttacon/libphonenumber"
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 )
 
 // DefaultRegion is the region used to parse phone numbers without a leading
@@ -299,7 +301,7 @@ func (s Status) Friendly() string {
 	case StatusNoAnswer:
 		return "No Answer"
 	default:
-		return strings.Title(string(s))
+		return cases.Title(language.AmericanEnglish).String(string(s))
 	}
 }
 
