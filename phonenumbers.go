@@ -90,8 +90,8 @@ func (ipn *IncomingNumberService) Get(ctx context.Context, sid string) (*Incomin
 }
 
 // Release removes an IncomingPhoneNumber from your account.
-func (ipn *IncomingNumberService) Release(ctx context.Context, sid string) error {
-	return ipn.client.DeleteResource(ctx, numbersPathPart, sid)
+func (ipn *IncomingNumberService) Release(ctx context.Context, numberSid string) error {
+	return ipn.client.DeleteResource(ctx, numbersPathPart, numberSid)
 }
 
 // Tries to update the incoming phone number's properties, and returns the updated resource representation if successful.
