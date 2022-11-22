@@ -6,18 +6,6 @@ SHELL = /bin/bash -o pipefail
 test: lint
 	go test ./...
 
-$(BUMP_VERSION):
-	go get github.com/kevinburke/bump_version@latest
-
-$(DIFFER):
-	go get github.com/kevinburke/differ@latest
-
-$(STATICCHECK):
-	go get honnef.co/go/tools/cmd/staticcheck@latest
-
-$(WRITE_MAILMAP):
-	go get github.com/kevinburke/write_mailmap@latest
-
 lint: fmt
 	go vet ./...
 	go run honnef.co/go/tools/cmd/staticcheck@latest ./...
@@ -37,14 +25,14 @@ ci: | $(DIFFER)
 	go run -v github.com/kevinburke/differ@latest $(MAKE) fmt
 	$(MAKE) lint race-test-short
 
-release: race-test-short | $(DIFFER) $(BUMP_VERSION)
+release: race-test-short
 	go run -v github.com/kevinburke/differ@latest $(MAKE) authors
 	go run -v github.com/kevinburke/differ@latest $(MAKE) fmt
 	go run -v github.com/kevinburke/bump_version@latest minor http.go
 
 force: ;
 
-AUTHORS.txt: .mailmap force | $(WRITE_MAILMAP)
-	go run -v github.com/kevinburke/write_mailmap > AUTHORS.txt
+AUTHORS.txt: .mailmap force
+	go run -v github.com/kevinburke/write_mailmap@latest > AUTHORS.txt
 
 authors: AUTHORS.txt
