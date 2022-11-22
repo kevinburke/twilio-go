@@ -21,6 +21,8 @@ IntervalMetrics response object now marshals types correctly from the Twilio API
 
 Use Go modules to track dependencies.
 
+Update source code to be formatted with Go 1.19 doc styles.
+
 ## 2.5
 
 Use a new version of github.com/kevinburke/rest that reduces the number of
