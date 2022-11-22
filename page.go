@@ -32,6 +32,7 @@ type Meta struct {
 
 // NoMoreResults is returned if you reach the end of the result set while
 // paging through resources.
+//
 //lint:ignore ST1012 preserve backwards compatibility
 var NoMoreResults = errors.New("twilio: No more results")
 

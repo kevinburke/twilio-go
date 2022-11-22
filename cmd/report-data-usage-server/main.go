@@ -11,29 +11,29 @@
 //
 // Example report format:
 //
-//     $ report-data-usage
-//     iPhone v13
-//     ----------
-//     2017-06-19: 0
-//     2017-06-20: 0
-//     2017-06-21: 11.281MB
-//     2017-06-22: 93.341MB
-//     2017-06-23: 94.422MB
-//     2017-06-24: 159.461MB
-//     2017-06-25: 50.062MB
-//     total (last 7 days): 408.568MB
+//	$ report-data-usage
+//	iPhone v13
+//	----------
+//	2017-06-19: 0
+//	2017-06-20: 0
+//	2017-06-21: 11.281MB
+//	2017-06-22: 93.341MB
+//	2017-06-23: 94.422MB
+//	2017-06-24: 159.461MB
+//	2017-06-25: 50.062MB
+//	total (last 7 days): 408.568MB
 //
 // Your Twilio credentials are loaded from the TWILIO_ACCOUNT_SID and
 // TWILIO_AUTH_TOKEN environment variables. There are several flags:
 //
-//     --days int
-//         Change the number of days to report usage for (default 7)
-//     --location string
-//         Use a different timezone for day boundaries (example "America/Los_Angeles")
-//     --sim string
-//         Only fetch usage for this sim
-//     --dry-run bool
-//         Dry run mode (don't send commands back to the device)
+//	--days int
+//	    Change the number of days to report usage for (default 7)
+//	--location string
+//	    Use a different timezone for day boundaries (example "America/Los_Angeles")
+//	--sim string
+//	    Only fetch usage for this sim
+//	--dry-run bool
+//	    Dry run mode (don't send commands back to the device)
 package main
 
 import (
