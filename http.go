@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -171,7 +171,7 @@ type twilioError struct {
 }
 
 func parseTwilioError(resp *http.Response) error {
-	resBody, err := ioutil.ReadAll(resp.Body)
+	resBody, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return err
 	}
