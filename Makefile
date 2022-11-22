@@ -37,7 +37,7 @@ ci: | $(DIFFER)
 	go run -v github.com/kevinburke/differ@latest $(MAKE) fmt
 	$(MAKE) lint race-test-short
 
-release: race-test | $(DIFFER) $(BUMP_VERSION)
+release: race-test-short | $(DIFFER) $(BUMP_VERSION)
 	go run -v github.com/kevinburke/differ@latest $(MAKE) authors
 	go run -v github.com/kevinburke/differ@latest $(MAKE) fmt
 	go run -v github.com/kevinburke/bump_version@latest minor http.go
