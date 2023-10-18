@@ -7,6 +7,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -20,26 +21,26 @@ const Version = "2.7"
 const userAgent = "twilio-go/" + Version
 
 // The base URL serving the API. Override this for testing.
-var BaseURL = "https://api.twilio.com"
+var BaseURL = getEnv("TWILIO_BASE_URL", "https://api.twilio.com")
 
 // The base URL for Twilio Monitor.
-var MonitorBaseURL = "https://monitor.twilio.com"
+var MonitorBaseURL = getEnv("TWILIO_MONITOR_BASE_URL", "https://monitor.twilio.com")
 
 // Version of the Twilio Monitor API.
-const MonitorVersion = "v1"
+var MonitorVersion = "v1"
 
 // The base URL for Twilio Pricing.
-var PricingBaseURL = "https://pricing.twilio.com"
+var PricingBaseURL = getEnv("TWILIO_PRICING_BASE_URL", "https://pricing.twilio.com")
 
 // Version of the Twilio Pricing API.
 const PricingVersion = "v2"
 
-var FaxBaseURL = "https://fax.twilio.com"
+var FaxBaseURL = getEnv("TWILIO_FAX_BASE_URL", "https://fax.twilio.com")
 
 const FaxVersion = "v1"
 
 // The base URL for Twilio Wireless.
-var WirelessBaseURL = "https://wireless.twilio.com"
+var WirelessBaseURL = getEnv("TWILIO_WIRELESS_BASE_URL", "https://wireless.twilio.com")
 
 // Version of the Twilio Wireless API.
 const WirelessVersion = "v1"
@@ -48,29 +49,29 @@ const WirelessVersion = "v1"
 // APIVersion; the resource representations may not match.
 const APIVersion = "2010-04-01"
 
-const NotifyBaseURL = "https://notify.twilio.com"
+var NotifyBaseURL = getEnv("TWILIO_NOTIFY_BASE_URL", "https://notify.twilio.com")
 const NotifyVersion = "v1"
 
 // Lookup service
-const LookupBaseURL = "https://lookups.twilio.com"
+var LookupBaseURL = getEnv("TWILIO_LOOKUPS_BASE_URL", "https://lookups.twilio.com")
 const LookupVersion = "v1"
 
 // Verify service
-var VerifyBaseURL = "https://verify.twilio.com"
+var VerifyBaseURL = getEnv("TWILIO_VERIFY_BASE_URL", "https://verify.twilio.com")
 
 const VerifyVersion = "v2"
 
 // Video service
-var VideoBaseUrl = "https://video.twilio.com"
+var VideoBaseUrl = getEnv("TWILIO_VIDEO_BASE_URL", "https://video.twilio.com")
 
 const VideoVersion = "v1"
 
-var TaskRouterBaseUrl = "https://taskrouter.twilio.com"
+var TaskRouterBaseUrl = getEnv("TWILIO_TASKROUTER_BASE_URL", "https://taskrouter.twilio.com")
 
 const TaskRouterVersion = "v1"
 
 // Voice Insights service
-var InsightsBaseUrl = "https://insights.twilio.com"
+var InsightsBaseUrl = getEnv("TWILIO_INSIGHTS_BASE_URL", "https://insights.twilio.com")
 
 const InsightsVersion = "v1"
 
@@ -543,4 +544,11 @@ func (c *Client) MakeRequest(ctx context.Context, method string, pathPart string
 		req.Header.Set("User-Agent", userAgent+" "+ua)
 	}
 	return c.Do(req, &v)
+}
+
+func getEnv(key, fallback string) string {
+	if value, ok := os.LookupEnv(key); ok {
+		return value
+	}
+	return fallback
 }
