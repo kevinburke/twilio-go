@@ -12,6 +12,7 @@ const (
 	PUSH_CRED_SID = "cde3xsw2zaq1vfr4bgtnhy6mju78ijhgtf"
 	PROFILE_SID   = "erfergrtugdifuovudsfhguidhgouidrhg"
 	ROOM_SID      = "erfergrtugdifuovudsfhguidhgouidrhd"
+	APP_SID       = "asdfghjkl"
 )
 
 func TestIPMessageGrant(t *testing.T) {

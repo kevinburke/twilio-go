@@ -1,5 +1,18 @@
 # Changes
 
+## 2.8
+
+JWT functionality has been removed. We did not want to continue to support
+functionality that may break or be compromised easily, and is difficult to use
+correctly.
+
+To achieve the same functionality, you can integrate your own JWT code, or look
+at the first draft of pull request #99.
+
+## 2.7
+
+Dependency update
+
 ## 2.6
 
 Add "incoming" option for VoiceGrant.

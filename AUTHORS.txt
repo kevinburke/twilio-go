@@ -4,6 +4,7 @@ Douglas Danger Manley <doug.manley@gmail.com>
 Duncan Crawford <duncan@noughtsandones.co.uk>
 Elijah Oyekunle <eloyekunle@gmail.com>
 Fabrizio Moscon <mosconfabrizio@gmail.com>
+Gagan Kalra <gagan.logic@gmail.com>
 Joey Lee <jq@yeoji.com>
 Jon Bretman <jon.bretman@gmail.com>
 Josh Hornby <hello@joshhornby.co.uk>
