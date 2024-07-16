@@ -4,12 +4,18 @@ import (
 	"testing"
 	"time"
 
-	jwt "github.com/dgrijalva/jwt-go"
+	jwt "github.com/golang-jwt/jwt/v4"
 )
 
 type customTestClaim struct {
 	*jwt.StandardClaims
 	Scope string `json:"scope"`
+}
+
+// Valid is a method that checks if the token is valid
+// Added this as it required by the new jwt-go library
+func (c customTestClaim) Valid() error {
+	return nil
 }
 
 func TestCapability(t *testing.T) {

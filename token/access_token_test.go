@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	jwt "github.com/dgrijalva/jwt-go"
+	jwt "github.com/golang-jwt/jwt/v4"
 )
 
 const (
@@ -18,6 +18,12 @@ const (
 type myCustomClaims struct {
 	Grants map[string]interface{} `json:"grants"`
 	*jwt.StandardClaims
+}
+
+// Valid is a method that checks if the token is valid
+// Added this as it required by the new jwt-go library
+func (c myCustomClaims) Valid() error {
+	return nil
 }
 
 func TestJWT(t *testing.T) {
