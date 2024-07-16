@@ -74,6 +74,10 @@ var InsightsBaseUrl = "https://insights.twilio.com"
 
 const InsightsVersion = "v1"
 
+// Service Resource
+const ServiceResourceBaseUrl = "https://messaging.twilio.com"
+const ServiceResourceVersion = "v1"
+
 type Client struct {
 	*restclient.Client
 	Monitor    *Client
@@ -86,6 +90,7 @@ type Client struct {
 	Video      *Client
 	TaskRouter *Client
 	Insights   *Client
+	Resource   *Client
 
 	// FullPath takes a path part (e.g. "Messages") and
 	// returns the full API path, including the version (e.g.
@@ -147,6 +152,9 @@ type Client struct {
 
 	// NewInsightsClient initializes these services
 	VoiceInsights func(sid string) *VoiceInsightsService
+
+	// NewServiceResourceClient initializes these services
+	ServiceResources *ServiceResourceService
 }
 
 const defaultTimeout = 30*time.Second + 500*time.Millisecond
@@ -355,6 +363,21 @@ func NewVideoClient(accountSid string, authToken string, httpClient *http.Client
 	return c
 }
 
+// NewServiceResourceClient returns a new Client to use the Service Resource API
+//
+//https://www.twilio.com/docs/sms/services/api#messaging-services-resource
+func NewServiceResourceClient(accountSid string, authToken string, httpClient *http.Client) *Client {
+	c := newNewClient(accountSid, authToken, ServiceResourceBaseUrl, httpClient)
+	c.APIVersion = ServiceResourceVersion
+	c.ServiceResources = &ServiceResourceService{
+		MessagingService: &MessagingService{c},
+		PhoneNumbers:     &PhoneNumberService{c},
+		AlphaSenders:     &AlphaSenderService{c},
+		ShortCodes:       &ShortCodeService{c},
+	}
+	return c
+}
+
 // NewClient creates a Client for interacting with the Twilio API. This is the
 // main entrypoint for API interactions; view the methods on the subresources
 // for more information.
@@ -383,6 +406,7 @@ func NewClient(accountSid string, authToken string, httpClient *http.Client) *Cl
 	c.Video = NewVideoClient(accountSid, authToken, httpClient)
 	c.TaskRouter = NewTaskRouterClient(accountSid, authToken, httpClient)
 	c.Insights = NewInsightsClient(accountSid, authToken, httpClient)
+	c.Resource = NewServiceResourceClient(accountSid, authToken, httpClient)
 
 	c.Accounts = &AccountService{client: c}
 	c.Applications = &ApplicationService{client: c}
@@ -430,7 +454,6 @@ func NewClient(accountSid string, authToken string, httpClient *http.Client) *Cl
 			client: c,
 		},
 	}
-
 	return c
 }
 
