@@ -3,7 +3,6 @@ module github.com/kevinburke/twilio-go
 go 1.22.0
 
 require (
-	github.com/golang-jwt/jwt/v4 v4.5.0
 	github.com/kevinburke/go-types v0.0.0-20210723172823-2deba1f80ba7
 	github.com/kevinburke/handlers v0.0.0-20231107221000-2cbf18acad0d
 	github.com/kevinburke/rest v0.0.0-20240617045629-3ed0ad3487f0
