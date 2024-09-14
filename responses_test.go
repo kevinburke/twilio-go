@@ -10,7 +10,14 @@ import (
 
 // the envClient is configured to use an Account Sid and Auth Token set in the
 // environment. all non-short tests should use the envClient
-var envClient = NewClient(os.Getenv("TWILIO_ACCOUNT_SID"), os.Getenv("TWILIO_AUTH_TOKEN"), nil)
+var envClient *Client
+
+func init() {
+	if os.Getenv("TWILIO_ACCOUNT_SID") == "" {
+		os.Stderr.WriteString("warning: no TWILIO_ACCOUNT_SID configured, HTTP tests will probably fail...\n\n")
+	}
+	envClient = NewClient(os.Getenv("TWILIO_ACCOUNT_SID"), os.Getenv("TWILIO_AUTH_TOKEN"), nil)
+}
 
 type Server struct {
 	s *httptest.Server
@@ -66,6 +73,7 @@ func getServer(response []byte) (*Client, *Server) {
 	client.Video.Base = s.URL
 	client.TaskRouter.Base = s.URL
 	client.Insights.Base = s.URL
+	client.Resource.Base = s.URL
 	return client, s
 }
 
@@ -81,6 +89,7 @@ func getServerCode(response []byte, code int) (*Client, *Server) {
 	client.Lookup.Base = s.URL
 	client.Video.Base = s.URL
 	client.TaskRouter.Base = s.URL
+	client.Resource.Base = s.URL
 	return client, s
 }
 
