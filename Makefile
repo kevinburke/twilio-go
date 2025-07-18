@@ -28,7 +28,7 @@ ci: | $(DIFFER)
 release: race-test-short
 	go run -v github.com/kevinburke/differ@latest $(MAKE) authors
 	go run -v github.com/kevinburke/differ@latest $(MAKE) fmt
-	go run -v github.com/kevinburke/bump_version@latest minor http.go
+	go run -v github.com/kevinburke/bump_version@latest --tag-prefix=v minor http.go
 
 force: ;
 
