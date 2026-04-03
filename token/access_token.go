@@ -30,7 +30,7 @@ type AccessToken struct {
 	apiSecret  []byte
 	identity   string
 	ttl        time.Duration
-	grants     map[string]interface{}
+	grants     map[string]any
 	mu         sync.Mutex
 }
 
@@ -46,7 +46,7 @@ func New(accountSid, apiKey, apiSecret, identity string, ttl time.Duration) *Acc
 		apiSecret:  []byte(apiSecret),
 		identity:   identity,
 		ttl:        ttl,
-		grants:     make(map[string]interface{}),
+		grants:     make(map[string]any),
 	}
 }
 
@@ -68,7 +68,7 @@ type stdToken struct {
 }
 
 type token struct {
-	Grants map[string]interface{} `json:"grants"`
+	Grants map[string]any `json:"grants"`
 	*stdToken
 }
 

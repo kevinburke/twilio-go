@@ -24,7 +24,7 @@ const (
 // Grant is a Twilio SID resource that can be added to an AccessToken for extra
 // services. Implement this interface to create a custom Grant.
 type Grant interface {
-	ToPayload() map[string]interface{}
+	ToPayload() map[string]any
 	Key() string
 }
 
@@ -45,8 +45,8 @@ func NewIPMessageGrant(serviceSid, endpointID, deploymentRoleSid, pushCredential
 	}
 }
 
-func (gr *IPMessageGrant) ToPayload() map[string]interface{} {
-	grant := make(map[string]interface{})
+func (gr *IPMessageGrant) ToPayload() map[string]any {
+	grant := make(map[string]any)
 	if len(gr.serviceSid) > 0 {
 		grant[keyServiceSid] = gr.serviceSid
 	}
@@ -75,13 +75,13 @@ func NewConversationsGrant(sid string) *ConversationsGrant {
 	return &ConversationsGrant{configurationProfileSid: sid}
 }
 
-func (gr *ConversationsGrant) ToPayload() map[string]interface{} {
+func (gr *ConversationsGrant) ToPayload() map[string]any {
 	if len(gr.configurationProfileSid) > 0 {
-		return map[string]interface{}{
+		return map[string]any{
 			keyConfProfSid: gr.configurationProfileSid,
 		}
 	}
-	return make(map[string]interface{})
+	return make(map[string]any)
 }
 
 func (gr *ConversationsGrant) Key() string {
@@ -90,14 +90,14 @@ func (gr *ConversationsGrant) Key() string {
 
 // VoiceGrant is a grant for accessing Twilio IP Messaging
 type VoiceGrant struct {
-	outgoingApplicationSid    string                 // application sid to call when placing outgoing call
-	outgoingApplicationParams map[string]interface{} // request params to pass to the application
-	endpointID                string                 // Specify an endpoint identifier for this device, which will allow the developer to direct calls to a specific endpoint when multiple devices are associated with a single identity
-	pushCredentialSid         string                 // Push Credential Sid to use when registering to receive incoming call notifications
-	incoming                  bool                   // Whether to allow incoming calls
+	outgoingApplicationSid    string         // application sid to call when placing outgoing call
+	outgoingApplicationParams map[string]any // request params to pass to the application
+	endpointID                string         // Specify an endpoint identifier for this device, which will allow the developer to direct calls to a specific endpoint when multiple devices are associated with a single identity
+	pushCredentialSid         string         // Push Credential Sid to use when registering to receive incoming call notifications
+	incoming                  bool           // Whether to allow incoming calls
 }
 
-func NewVoiceGrant(outAppSid string, outAppParams map[string]interface{}, endpointID string, pushCredentialSid string, incoming bool) *VoiceGrant {
+func NewVoiceGrant(outAppSid string, outAppParams map[string]any, endpointID string, pushCredentialSid string, incoming bool) *VoiceGrant {
 	return &VoiceGrant{
 		outgoingApplicationSid:    outAppSid,
 		outgoingApplicationParams: outAppParams,
@@ -107,8 +107,8 @@ func NewVoiceGrant(outAppSid string, outAppParams map[string]interface{}, endpoi
 	}
 }
 
-func (gr *VoiceGrant) ToPayload() map[string]interface{} {
-	outVoice := make(map[string]interface{})
+func (gr *VoiceGrant) ToPayload() map[string]any {
+	outVoice := make(map[string]any)
 	if len(gr.outgoingApplicationSid) > 0 {
 		outVoice[keyAppSid] = gr.outgoingApplicationSid
 	}
@@ -116,10 +116,10 @@ func (gr *VoiceGrant) ToPayload() map[string]interface{} {
 		outVoice[keyVoiceParams] = gr.outgoingApplicationParams
 	}
 
-	grant := make(map[string]interface{})
+	grant := make(map[string]any)
 	grant[keyVoiceOutgoing] = outVoice
 	if gr.incoming {
-		grant[keyVoiceIncoming] = map[string]interface{}{
+		grant[keyVoiceIncoming] = map[string]any{
 			"allow": true,
 		}
 	}
@@ -145,13 +145,13 @@ func NewVideoGrant(sid string) *VideoGrant {
 	return &VideoGrant{roomSID: sid}
 }
 
-func (gr *VideoGrant) ToPayload() map[string]interface{} {
+func (gr *VideoGrant) ToPayload() map[string]any {
 	if len(gr.roomSID) > 0 {
-		return map[string]interface{}{
+		return map[string]any{
 			keyRoomSid: gr.roomSID,
 		}
 	}
-	return make(map[string]interface{})
+	return make(map[string]any)
 }
 
 func (gr *VideoGrant) Key() string {
@@ -168,20 +168,20 @@ func NewChatGrant(sid, pushCredentialSid string) *ChatGrant {
 	return &ChatGrant{serviceSid: sid, pushCredentialSid: pushCredentialSid}
 }
 
-func (cg *ChatGrant) ToPayload() map[string]interface{} {
+func (cg *ChatGrant) ToPayload() map[string]any {
 	if len(cg.serviceSid) > 0 && len(cg.pushCredentialSid) > 0 {
-		return map[string]interface{}{
+		return map[string]any{
 			keyServiceSid:  cg.serviceSid,
 			keyPushCredSid: cg.pushCredentialSid,
 		}
 	}
 
 	if len(cg.serviceSid) > 0 {
-		return map[string]interface{}{
+		return map[string]any{
 			keyServiceSid: cg.serviceSid,
 		}
 	}
-	return make(map[string]interface{})
+	return make(map[string]any)
 }
 
 func (cg *ChatGrant) Key() string {

@@ -55,10 +55,10 @@ func TestConversationsGrant(t *testing.T) {
 
 func TestVoiceGrant(t *testing.T) {
 	t.Parallel()
-	params := map[string]interface{}{
+	params := map[string]any{
 		"extra":     "wefergdfgdf",
 		"logged_id": true,
-		"data": map[string]interface{}{
+		"data": map[string]any{
 			"id":         101212434,
 			"name":       "John",
 			"created_at": time.Now(),
@@ -75,7 +75,7 @@ func TestVoiceGrant(t *testing.T) {
 	}
 
 	payload := vcGrnt.ToPayload()
-	outgoingMap := payload[keyVoiceOutgoing].(map[string]interface{})
+	outgoingMap := payload[keyVoiceOutgoing].(map[string]any)
 	if outgoingMap[keyAppSid] != APP_SID {
 		t.Errorf("Expected payload [%s][%s] to be %s, got %s\n", keyVoiceOutgoing, keyAppSid, APP_SID, outgoingMap[keyAppSid])
 	}

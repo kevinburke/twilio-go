@@ -164,7 +164,6 @@ func main() {
 		group, errctx := errgroup.WithContext(ctx)
 		usage := make(map[string][]types.Bits)
 		for _, name := range sims {
-			name := name
 			group.Go(func() error {
 				u, err := datausage.GetUsage(errctx, c, name, start, end, 24*time.Hour)
 				if err != nil {
