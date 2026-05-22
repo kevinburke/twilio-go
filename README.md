@@ -1,5 +1,17 @@
 # twilio-go
 
+Install with:
+
+```
+go get github.com/kevinburke/twilio-go/v2
+```
+
+and import as `github.com/kevinburke/twilio-go/v2`. Note the `/v2` suffix:
+v2.11.0 renamed the module to add it (earlier v2.x tags shipped without
+the suffix and are not resolvable via `go get @latest`). See the
+[CHANGELOG](./CHANGELOG.md) for the one-line sed that updates v1 imports.
+If you need to stay on the v1 API, pin to `v1.8`.
+
 A client for accessing the Twilio API with several nice features:
 
 - Easy-to-use helpers for purchasing phone numbers and sending MMS messages
@@ -24,7 +36,7 @@ fetch all Media for a Message concurrently.
 
 - Usable, [one sentence descriptions of Alerts][alert-descriptions].
 
-[alert-descriptions]: https://godoc.org/github.com/kevinburke/twilio-go#Alert.Description
+[alert-descriptions]: https://pkg.go.dev/github.com/kevinburke/twilio-go/v2#Alert.Description
 
 Here are some example use cases:
 
@@ -61,7 +73,7 @@ for {
 ```
 
 A [complete documentation reference can be found at
-godoc.org](https://godoc.org/github.com/kevinburke/twilio-go).
+pkg.go.dev](https://pkg.go.dev/github.com/kevinburke/twilio-go/v2).
 
 ## In Production
 

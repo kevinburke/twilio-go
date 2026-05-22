@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	twilio "github.com/kevinburke/twilio-go"
+	twilio "github.com/kevinburke/twilio-go/v2"
 )
 
 func Example_wireless() {

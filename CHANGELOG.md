@@ -1,5 +1,33 @@
 # Changes
 
+## 2.11.0
+
+The module path now includes the required `/v2` major-version suffix:
+`github.com/kevinburke/twilio-go/v2`. Previous v2.x releases shipped under
+the unsuffixed path, which meant `go get github.com/kevinburke/twilio-go@latest`
+silently resolved to a v1.x tag (or a pre-v2 pseudo-version) instead of the
+2.x line. From 2.11.0 on, v2 tags are resolvable normally.
+
+To upgrade, rewrite imports to add the `/v2` suffix, for example:
+
+	import twilio "github.com/kevinburke/twilio-go"
+
+becomes
+
+	import twilio "github.com/kevinburke/twilio-go/v2"
+
+and likewise for the subpackages (`/v2/token`, `/v2/twilioclient`,
+`/v2/datausage`). No API changes; this is purely a module-path rename. A
+one-shot sed will handle most codebases:
+
+	find . -name '*.go' -exec sed -i '' \
+	    -e 's|"github.com/kevinburke/twilio-go"|"github.com/kevinburke/twilio-go/v2"|g' \
+	    -e 's|github.com/kevinburke/twilio-go/\(token\|twilioclient\|datausage\)|github.com/kevinburke/twilio-go/v2/\1|g' \
+	    {} +
+
+then `go mod tidy`. Pinned v1.x users (`v1.8` and earlier) are unaffected;
+those tags continue to resolve against the old import path.
+
 ## 2.10.0 (2026-05-22)
 
 Fix a data race in `token.AccessToken.JWT`. Although the 2.8 release removed

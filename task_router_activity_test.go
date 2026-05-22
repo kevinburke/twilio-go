@@ -5,7 +5,7 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/kevinburke/twilio-go/testdata"
+	"github.com/kevinburke/twilio-go/v2/testdata"
 )
 
 func TestGetActivity(t *testing.T) {
