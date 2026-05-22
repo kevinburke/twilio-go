@@ -110,8 +110,10 @@ func (t *AccessToken) JWT() (string, error) {
 	datab64 := make([]byte, base64.URLEncoding.EncodedLen(len(data)))
 	base64.URLEncoding.Encode(datab64, data)
 	datab64 = bytes.TrimRight(datab64, "=")
-	parts := append(headerb64, '.')
-	parts = append(parts, datab64...)
+	parts := make([]byte, len(headerb64)+1+len(datab64))
+	copy(parts, headerb64)
+	parts[len(headerb64)] = '.'
+	copy(parts[len(headerb64)+1:], datab64)
 	hasher := hmac.New(sha256.New, t.apiSecret)
 	hasher.Write(parts)
 
