@@ -1,5 +1,3 @@
-//go:build go1.7
-
 package twilio
 
 import (

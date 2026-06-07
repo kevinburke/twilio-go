@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"maps"
 	"net/url"
+	"slices"
 	"time"
 
 	types "github.com/kevinburke/go-types"
@@ -244,8 +245,7 @@ func (c *callDateIterator) Next(ctx context.Context) (*CallPage, error) {
 		if containsResultsInRange(c.start, c.end, times) {
 			indexesToDelete := indexesOutsideRange(c.start, c.end, times)
 			// iterate in descending order so we don't delete the wrong index
-			for i := len(indexesToDelete) - 1; i >= 0; i-- {
-				index := indexesToDelete[i]
+			for _, index := range slices.Backward(indexesToDelete) {
 				page.Calls = append(page.Calls[:index], page.Calls[index+1:]...)
 			}
 			c.p.SetNextPageURI(page.NextPageURI)

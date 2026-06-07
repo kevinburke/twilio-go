@@ -7,7 +7,6 @@ require (
 	github.com/kevinburke/handlers v0.47.0
 	github.com/kevinburke/rest v0.0.0-20250718180114-1a15e4f2364f
 	github.com/ttacon/libphonenumber v1.2.1
-	golang.org/x/net v0.42.0
 	golang.org/x/sync v0.16.0
 	golang.org/x/text v0.27.0
 )

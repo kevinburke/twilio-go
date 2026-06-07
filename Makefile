@@ -22,7 +22,12 @@ fmt:
 ci: | $(DIFFER)
 	# would love to run differ make authors here, but Github doesn't check out
 	# the full history
-	go run -v github.com/kevinburke/differ@latest $(MAKE) fmt
+	#
+	# each differ invocation runs the command and fails the build if it leaves
+	# a git diff, i.e. if the checked-in code is not already fixed/formatted.
+	go run -v github.com/kevinburke/differ@latest go fix ./...
+	go run -v github.com/kevinburke/differ@latest go fmt ./...
+	go run -v github.com/kevinburke/differ@latest go run golang.org/x/tools/cmd/goimports@latest -w .
 	$(MAKE) lint race-test-short
 
 release: race-test-short

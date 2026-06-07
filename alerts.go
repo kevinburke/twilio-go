@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"maps"
 	"net/url"
+	"slices"
 	"strconv"
 	"strings"
 	"time"
@@ -167,8 +168,7 @@ func (a *alertDateIterator) Next(ctx context.Context) (*AlertPage, error) {
 		if containsResultsInRange(a.start, a.end, times) {
 			indexesToDelete := indexesOutsideRange(a.start, a.end, times)
 			// reverse order so we don't delete the wrong index
-			for i := len(indexesToDelete) - 1; i >= 0; i-- {
-				index := indexesToDelete[i]
+			for _, index := range slices.Backward(indexesToDelete) {
 				page.Alerts = append(page.Alerts[:index], page.Alerts[index+1:]...)
 			}
 			a.p.SetNextPageURI(page.Meta.NextPageURL)
