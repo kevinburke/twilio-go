@@ -1,5 +1,23 @@
 # Changes
 
+## Unreleased
+
+Added support for the SIP configuration resources under the core API's `/SIP`
+path, reachable via `Client.SIP`: Credential Lists and their Credentials, SIP
+Domains, IP Access Control Lists and their IP Addresses, the Domain
+CredentialList and IpAccessControlList mappings, and the Domain Auth mappings
+for calls and registrations. Together these cover the provisioning needed to
+register a SIP endpoint to a Programmable Voice SIP Domain.
+
+A new conformance test (`sip_oai_test.go`) checks these structs against
+Twilio's official [OpenAPI definitions][twilio-oai]. It is scoped to the SIP
+resources and skips unless a twilio-oai checkout is present; set
+`TWILIO_OAI_DIR` to point at one. It verifies every SIP schema property is
+modeled by a struct field and that the spec's response examples decode with
+unknown fields disallowed.
+
+[twilio-oai]: https://github.com/twilio/twilio-oai
+
 ## 2.11.0
 
 The module path now includes the required `/v2` major-version suffix:

@@ -104,6 +104,10 @@ The API is unlikely to change, and currently covers these resources:
 - Pricing
 - Queues
 - Recordings
+- SIP
+  - Credential Lists (and Credentials)
+  - Domains (and CredentialList / IpAccessControlList / Auth mappings)
+  - IP Access Control Lists (and IP Addresses)
 - Task Router
   - Activities
   - TaskQueues

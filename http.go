@@ -111,6 +111,7 @@ type Client struct {
 	Recordings        *RecordingService
 	Transcriptions    *TranscriptionService
 	AvailableNumbers  *AvailableNumberService
+	SIP               *SIPService
 
 	// NewMonitorClient initializes these services
 	Alerts *AlertService
@@ -395,6 +396,12 @@ func NewClient(accountSid string, authToken string, httpClient *http.Client) *Cl
 	c.Queues = &QueueService{client: c}
 	c.Recordings = &RecordingService{client: c}
 	c.Transcriptions = &TranscriptionService{client: c}
+
+	c.SIP = &SIPService{
+		CredentialLists:      &SIPCredentialListService{client: c},
+		Domains:              &SIPDomainService{client: c},
+		IPAccessControlLists: &SIPIPAccessControlListService{client: c},
+	}
 
 	c.IncomingNumbers = &IncomingNumberService{
 		NumberPurchasingService: &NumberPurchasingService{
