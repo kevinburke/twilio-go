@@ -16,6 +16,60 @@ resources and skips unless a twilio-oai checkout is present; set
 modeled by a struct field and that the spec's response examples decode with
 unknown fields disallowed.
 
+Extended the [OpenAPI][twilio-oai] conformance tests beyond SIP to Messages,
+Calls, phone numbers (incoming, available, outgoing caller IDs), Recordings,
+Transcriptions, and Conferences (participants and conference recordings), with
+shared machinery in `oai_test.go`. Each resource gets three checks: schema
+coverage (every spec property is modeled by a struct field, with simple schema
+types checked against Go field types), example decoding (every response example
+decodes with unknown fields disallowed, catching missing fields and example type
+mismatches), and endpoint classification (every spec operation is triaged
+supported or unimplemented, failing if the spec gains an operation the test has
+not triaged, and documenting the gaps). The decoder
+handles both instance responses and the items of list responses, so resources
+that expose only list endpoints (such as available numbers) are covered too.
+
+The checks surfaced one bug and a number of missing fields, all fixed here:
+
+- `NullAnsweredBy` now implements `UnmarshalJSON`. Previously a non-null
+  `answered_by` value (such as `"human"` or `"machine"`) failed to decode the
+  entire `Call`, because the JSON string could not be unmarshaled into the
+  struct shape. Existing fixtures only exercised the null case, so the bug went
+  unnoticed.
+- `Call` gained `from_formatted`, `to_formatted`, `trunk_sid`, and
+  `subresource_uris`.
+- `NumberCapability` gained `fax` (shared by `IncomingPhoneNumber` and
+  `AvailableNumber`).
+- `IncomingPhoneNumber` gained `address_sid`, `bundle_sid`,
+  `emergency_address_status`, `identity_sid`, `origin`, `status`, `type`, and
+  `voice_receive_mode`.
+- `AvailableNumber` gained `locality`.
+- `Recording` gained `conference_sid`, `source`, `start_time`, `error_code`,
+  `media_url`, `encryption_details`, and `subresource_uris`.
+- `Conference` gained `reason_conference_ended`.
+- `Participant` gained `call_sid_to_coach`, `coaching`, `label`, `queue_time`,
+  and `status`.
+
+Implemented a set of endpoints the conformance tests had flagged as missing:
+
+- Messages: `MessageService.Update` and `Redact`, `MessageService.CreateFeedback`
+  (with a new `MessageFeedback` type), and `MediaService.Delete`.
+- Calls: `CallService.Delete`; call-scoped recordings (`GetCallRecordings`,
+  `CreateRecording`, `GetRecording`, `UpdateRecording`, `DeleteRecording`, with a
+  new `CallRecording` type); call events (`GetEvents`, with `CallEventLog` — named to
+  avoid colliding with the Voice Insights `CallEvent`); call notifications
+  (`GetNotifications`, `GetNotification`, with `CallNotification`); and `<Pay>`
+  payments (`CreatePayment`, `UpdatePayment`, with `Payment`).
+- Conferences: `ConferenceService.Update`; conference recordings (`GetRecordings`,
+  `GetRecording`, `UpdateRecording`, `DeleteRecording`, reusing `Recording`); and
+  the participant lifecycle via `Conferences.Participants(conferenceSid)`, which
+  turns the previously-empty `ParticipantService` into a real service with
+  `Create`, `Get`, `Update`, `Delete`, and `GetPage`.
+
+The phone-number sub-resources (typed lists, Mobile purchasing, AssignedAddOns)
+and the remaining call sub-resources (siprec, streams, realtime transcriptions,
+user-defined messages) are still unimplemented.
+
 [twilio-oai]: https://github.com/twilio/twilio-oai
 
 ## 2.11.0

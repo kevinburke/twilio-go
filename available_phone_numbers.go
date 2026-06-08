@@ -30,6 +30,7 @@ type AvailableNumber struct {
 	Latitude            string            `json:"latitude"`
 	Longitude           string            `json:"longitude"`
 	Region              string            `json:"region"`
+	Locality            string            `json:"locality"`
 	PostalCode          string            `json:"postal_code"`
 	ISOCountry          string            `json:"iso_country"`
 	Capabilities        *NumberCapability `json:"capabilities"`

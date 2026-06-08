@@ -2,6 +2,7 @@ package twilio
 
 import (
 	"context"
+	"encoding/json"
 	"net/url"
 	"testing"
 	"time"
@@ -15,7 +16,16 @@ func TestCalls(t *testing.T) {
 	t.Cleanup(func() { cancel() })
 	t.Run("Get", func(t *testing.T) {
 		t.Parallel()
-		sid := "CAa98f7bbc9bc4980a44b128ca4884ca73"
+		// Self-seeding: fetch a recent call and round-trip it, rather than
+		// hardcoding a SID that rots or pins the test to specific account data.
+		page, err := envClient.Calls.GetPage(ctx, url.Values{"PageSize": []string{"1"}})
+		if err != nil {
+			t.Fatal(err)
+		}
+		if len(page.Calls) == 0 {
+			t.Skip("no calls in account to fetch")
+		}
+		sid := page.Calls[0].Sid
 		call, err := envClient.Calls.Get(ctx, sid)
 		if err != nil {
 			t.Fatal(err)
@@ -58,49 +68,40 @@ func TestCalls(t *testing.T) {
 			t.Errorf("Wrong status: %s", call.Status)
 		}
 	})
-	t.Run("GetRange", func(t *testing.T) {
-		t.Parallel()
-		// call history in this range:
-		// 5 CA14b8432 2016-10-27 23:27:08 UTC
-		// 4 CAa5eba99 2016-10-27 23:26:38 UTC
-		// 3 CA5757109 2016-10-27 23:26:07 UTC (date created is 23:25)
-		// 2 CA6d27370 2016-10-27 02:34:21 UTC
-		// 1 CA47b862c 2016-10-27 02:34:07 UTC
-		//
-		// We want to filter for calls 2 and 3. The first page is completely
-		// discarded, the second page has 2 results
-		data := url.Values{}
-		data.Set("PageSize", "2")
-		// use fixed zone to avoid daylight savings issues.
-		nyc := time.FixedZone("America/New_York", 60*60*-4)
-		start := time.Date(2016, 10, 26, 22, 34, 15, 00, nyc)
-		end := time.Date(2016, 10, 27, 19, 26, 10, 00, nyc)
-		iter := envClient.Calls.GetCallsInRange(start, end, data)
-		count := 0
-		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-		defer cancel()
-		for {
-			count++
-			page, err := iter.Next(ctx)
-			if err == NoMoreResults {
-				break
-			}
-			if err != nil {
-				t.Fatal(err)
-			}
-			if len(page.Calls) != 2 {
-				t.Fatalf("expected 2 calls in first result set, got %d", len(page.Calls))
-			}
-			// the 19:25 call on 10-27
-			if page.Calls[0].Sid != "CA5757109d6dcbc4bebf6847f5dd45191e" {
-				t.Errorf("wrong sid for first call: want %q got %q", "CA575710", page.Calls[0].Sid[:8])
-			}
-			if page.Calls[1].Sid != "CA6d27370cbbfb605521fe8800bb73f2d2" {
-				t.Errorf("wrong sid: got %q", page.Calls[1].Sid)
-			}
+	// A former GetRange subtest pinned GetCallsInRange to a fixed 2016 call
+	// window in a since-archived account; it was removed as no longer useful.
+	// The date-range iteration logic is covered by the hermetic message-range
+	// tests. See V3.md if GetCallsInRange warrants a data-independent live test.
+}
+
+// TestCallAnsweredByUnmarshal guards against a regression where a non-null
+// answered_by string failed to decode the entire Call. The API returns
+// answered_by as null or as a string ("human", "machine", and the more
+// specific AMD values).
+func TestCallAnsweredByUnmarshal(t *testing.T) {
+	t.Parallel()
+	cases := []struct {
+		json  string
+		valid bool
+		want  AnsweredBy
+	}{
+		{`{"answered_by":"human"}`, true, AnsweredByHuman},
+		{`{"answered_by":"machine"}`, true, AnsweredByMachine},
+		{`{"answered_by":"machine_end_beep"}`, true, AnsweredBy("machine_end_beep")},
+		{`{"answered_by":null}`, false, ""},
+		{`{}`, false, ""},
+	}
+	for _, tc := range cases {
+		var call Call
+		if err := json.Unmarshal([]byte(tc.json), &call); err != nil {
+			t.Errorf("%s: unexpected error: %v", tc.json, err)
+			continue
 		}
-		if count != 2 {
-			t.Errorf("wrong count, expected exactly 2 calls to Next(), got %d", count)
+		if call.AnsweredBy.Valid != tc.valid {
+			t.Errorf("%s: Valid = %v, want %v", tc.json, call.AnsweredBy.Valid, tc.valid)
 		}
-	})
+		if call.AnsweredBy.AnsweredBy != tc.want {
+			t.Errorf("%s: AnsweredBy = %q, want %q", tc.json, call.AnsweredBy.AnsweredBy, tc.want)
+		}
+	}
 }

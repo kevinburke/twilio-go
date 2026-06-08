@@ -25,36 +25,45 @@ type NumberCapability struct {
 	MMS   bool `json:"mms"`
 	SMS   bool `json:"sms"`
 	Voice bool `json:"voice"`
+	Fax   bool `json:"fax"`
 }
 
 type IncomingPhoneNumber struct {
-	Sid                  string            `json:"sid"`
-	PhoneNumber          PhoneNumber       `json:"phone_number"`
-	FriendlyName         string            `json:"friendly_name"`
-	DateCreated          TwilioTime        `json:"date_created"`
-	AccountSid           string            `json:"account_sid"`
-	AddressRequirements  string            `json:"address_requirements"`
-	APIVersion           string            `json:"api_version"`
-	Beta                 bool              `json:"beta"`
-	Capabilities         *NumberCapability `json:"capabilities"`
-	DateUpdated          TwilioTime        `json:"date_updated"`
-	EmergencyAddressSid  types.NullString  `json:"emergency_address_sid"`
-	EmergencyStatus      string            `json:"emergency_status"`
-	SMSApplicationSid    string            `json:"sms_application_sid"`
-	SMSFallbackMethod    string            `json:"sms_fallback_method"`
-	SMSFallbackURL       string            `json:"sms_fallback_url"`
-	SMSMethod            string            `json:"sms_method"`
-	SMSURL               string            `json:"sms_url"`
-	StatusCallback       string            `json:"status_callback"`
-	StatusCallbackMethod string            `json:"status_callback_method"`
-	TrunkSid             types.NullString  `json:"trunk_sid"`
-	URI                  string            `json:"uri"`
-	VoiceApplicationSid  string            `json:"voice_application_sid"`
-	VoiceCallerIDLookup  bool              `json:"voice_caller_id_lookup"`
-	VoiceFallbackMethod  string            `json:"voice_fallback_method"`
-	VoiceFallbackURL     string            `json:"voice_fallback_url"`
-	VoiceMethod          string            `json:"voice_method"`
-	VoiceURL             string            `json:"voice_url"`
+	Sid                    string            `json:"sid"`
+	PhoneNumber            PhoneNumber       `json:"phone_number"`
+	FriendlyName           string            `json:"friendly_name"`
+	DateCreated            TwilioTime        `json:"date_created"`
+	AccountSid             string            `json:"account_sid"`
+	AddressRequirements    string            `json:"address_requirements"`
+	AddressSid             string            `json:"address_sid"`
+	APIVersion             string            `json:"api_version"`
+	Beta                   bool              `json:"beta"`
+	BundleSid              string            `json:"bundle_sid"`
+	Capabilities           *NumberCapability `json:"capabilities"`
+	DateUpdated            TwilioTime        `json:"date_updated"`
+	EmergencyAddressSid    types.NullString  `json:"emergency_address_sid"`
+	EmergencyAddressStatus string            `json:"emergency_address_status"`
+	EmergencyStatus        string            `json:"emergency_status"`
+	IdentitySid            string            `json:"identity_sid"`
+	Origin                 string            `json:"origin"`
+	Status                 string            `json:"status"`
+	Type                   string            `json:"type"`
+	VoiceReceiveMode       string            `json:"voice_receive_mode"`
+	SMSApplicationSid      string            `json:"sms_application_sid"`
+	SMSFallbackMethod      string            `json:"sms_fallback_method"`
+	SMSFallbackURL         string            `json:"sms_fallback_url"`
+	SMSMethod              string            `json:"sms_method"`
+	SMSURL                 string            `json:"sms_url"`
+	StatusCallback         string            `json:"status_callback"`
+	StatusCallbackMethod   string            `json:"status_callback_method"`
+	TrunkSid               types.NullString  `json:"trunk_sid"`
+	URI                    string            `json:"uri"`
+	VoiceApplicationSid    string            `json:"voice_application_sid"`
+	VoiceCallerIDLookup    bool              `json:"voice_caller_id_lookup"`
+	VoiceFallbackMethod    string            `json:"voice_fallback_method"`
+	VoiceFallbackURL       string            `json:"voice_fallback_url"`
+	VoiceMethod            string            `json:"voice_method"`
+	VoiceURL               string            `json:"voice_url"`
 }
 
 type IncomingPhoneNumberPage struct {

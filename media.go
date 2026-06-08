@@ -54,6 +54,13 @@ func (m *MediaService) Get(ctx context.Context, messageSid string, sid string) (
 	return me, err
 }
 
+// Delete the Media with the given sid from the message with the given
+// messageSid. If the Media has already been deleted, or does not exist, Delete
+// returns nil.
+func (m *MediaService) Delete(ctx context.Context, messageSid string, sid string) error {
+	return m.client.DeleteResource(ctx, mediaPathPart(messageSid), sid)
+}
+
 // GetURL returns a URL that can be retrieved to download the given image.
 func (m *MediaService) GetURL(ctx context.Context, messageSid string, sid string) (*url.URL, error) {
 	uriEnd := strings.Join([]string{mediaPathPart(messageSid), sid}, "/")

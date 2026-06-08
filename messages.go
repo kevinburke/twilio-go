@@ -154,11 +154,50 @@ func (m *MessageService) GetPage(ctx context.Context, data url.Values) (*Message
 	return iter.Next(ctx)
 }
 
+// Update the Message with the given sid. The most common use is redaction:
+// posting an empty Body replaces the message text with an empty string. See
+// https://www.twilio.com/docs/sms/api/message-resource#update-a-message-resource
+// for the available parameters.
+func (m *MessageService) Update(ctx context.Context, sid string, data url.Values) (*Message, error) {
+	msg := new(Message)
+	err := m.client.UpdateResource(ctx, messagesPathPart, sid, data, msg)
+	return msg, err
+}
+
+// Redact removes the body of the Message with the given sid by updating it with
+// an empty Body, while leaving the rest of the record in place.
+func (m *MessageService) Redact(ctx context.Context, sid string) (*Message, error) {
+	return m.Update(ctx, sid, url.Values{"Body": []string{""}})
+}
+
 // Delete the Message with the given sid. If the Message has already been
 // deleted, or does not exist, Delete returns nil. If another error or a
 // timeout occurs, the error is returned.
 func (m *MessageService) Delete(ctx context.Context, sid string) error {
 	return m.client.DeleteResource(ctx, messagesPathPart, sid)
+}
+
+// MessageFeedback is the delivery outcome a sender reports for a Message, used
+// to improve Twilio's message routing.
+//
+// See https://www.twilio.com/docs/sms/api/message-feedback-resource for more.
+type MessageFeedback struct {
+	AccountSid  string     `json:"account_sid"`
+	MessageSid  string     `json:"message_sid"`
+	Outcome     string     `json:"outcome"`
+	DateCreated TwilioTime `json:"date_created"`
+	DateUpdated TwilioTime `json:"date_updated"`
+	URI         string     `json:"uri"`
+}
+
+// CreateFeedback records delivery feedback for the Message with the given sid.
+// outcome is either "confirmed" (the message reached its destination, for
+// example a verification code was used) or "unconfirmed".
+func (m *MessageService) CreateFeedback(ctx context.Context, messageSid string, outcome string) (*MessageFeedback, error) {
+	feedback := new(MessageFeedback)
+	data := url.Values{"Outcome": []string{outcome}}
+	err := m.client.CreateResource(ctx, messagesPathPart+"/"+messageSid+"/Feedback", data, feedback)
+	return feedback, err
 }
 
 // GetMessagesInRange gets an Iterator containing calls in the range [start,

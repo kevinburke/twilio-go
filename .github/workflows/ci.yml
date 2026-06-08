@@ -10,6 +10,17 @@ jobs:
     - uses: actions/checkout@v4
       with:
          path: './src/github.com/kevinburke/twilio-go'
+    # The OpenAPI conformance tests (*_oai_test.go) check our structs against
+    # Twilio's official spec. They skip when the spec is absent; checking it out
+    # and pointing TWILIO_OAI_DIR at it makes them run. Pinned to a commit so CI
+    # is deterministic; bump the ref to re-check against a newer spec.
+    - name: Check out twilio-oai spec
+      uses: actions/checkout@v4
+      with:
+        repository: twilio/twilio-oai
+        ref: 1a9189c79a73781ddf45afcd0afd1f210742d68c
+        sparse-checkout: spec/json
+        path: './src/github.com/twilio/twilio-oai'
     - name: Install Go
       uses: actions/setup-go@v5
       with:
@@ -26,3 +37,5 @@ jobs:
     - name: Run tests
       run: make ci
       working-directory: './src/github.com/kevinburke/twilio-go'
+      env:
+        TWILIO_OAI_DIR: ${{ github.workspace }}/src/github.com/twilio/twilio-oai

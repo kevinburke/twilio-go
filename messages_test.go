@@ -16,9 +16,19 @@ func TestGet(t *testing.T) {
 		t.Skip("skipping HTTP request in short mode")
 	}
 	t.Parallel()
-	sid := "SM7c734f6e057ff829bb20c7211cfb3ce1"
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
+	// Self-seeding: fetch a recent message and round-trip it, rather than
+	// hardcoding a SID that rots or pins the test to a specific (possibly
+	// private) message.
+	page, err := envClient.Messages.GetPage(ctx, url.Values{"PageSize": []string{"1"}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(page.Messages) == 0 {
+		t.Skip("no messages in account to fetch")
+	}
+	sid := page.Messages[0].Sid
 	msg, err := envClient.Messages.Get(ctx, sid)
 	if err != nil {
 		t.Fatal(err)

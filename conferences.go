@@ -31,6 +31,7 @@ type Conference struct {
 	URI                     string            `json:"uri"`
 	SubresourceURIs         map[string]string `json:"subresource_uris"`
 	CallSidEndingConference types.NullString  `json:"call_sid_ending_conference"`
+	ReasonConferenceEnded   string            `json:"reason_conference_ended"`
 }
 
 type ConferencePage struct {
@@ -42,6 +43,61 @@ func (c *ConferenceService) Get(ctx context.Context, sid string) (*Conference, e
 	conference := new(Conference)
 	err := c.client.GetResource(ctx, conferencePathPart, sid, conference)
 	return conference, err
+}
+
+// Update the conference with the given sid, for example to end it
+// (Status=completed) or to play an announcement. See
+// https://www.twilio.com/docs/voice/api/conference-resource#update-a-conference-resource
+// for the available parameters.
+func (c *ConferenceService) Update(ctx context.Context, sid string, data url.Values) (*Conference, error) {
+	conference := new(Conference)
+	err := c.client.UpdateResource(ctx, conferencePathPart, sid, data, conference)
+	return conference, err
+}
+
+// Participants returns a service for managing the Participants of the
+// conference with the given sid.
+func (c *ConferenceService) Participants(conferenceSid string) *ParticipantService {
+	return &ParticipantService{client: c.client, conferenceSid: conferenceSid}
+}
+
+func conferenceRecordingsPathPart(conferenceSid string) string {
+	return conferencePathPart + "/" + conferenceSid + "/" + recordingsPathPart
+}
+
+// GetRecordings returns a single page of recordings for the conference with the
+// given conferenceSid. Conference recordings share the Recording representation.
+func (c *ConferenceService) GetRecordings(ctx context.Context, conferenceSid string, data url.Values) (*RecordingPage, error) {
+	return c.GetRecordingsIterator(conferenceSid, data).Next(ctx)
+}
+
+// GetRecordingsIterator returns an iterator over the recordings for the given
+// conference.
+func (c *ConferenceService) GetRecordingsIterator(conferenceSid string, data url.Values) *RecordingPageIterator {
+	return &RecordingPageIterator{
+		p: NewPageIterator(c.client, data, conferenceRecordingsPathPart(conferenceSid)),
+	}
+}
+
+// GetRecording returns the conference recording with the given sid.
+func (c *ConferenceService) GetRecording(ctx context.Context, conferenceSid string, sid string) (*Recording, error) {
+	recording := new(Recording)
+	err := c.client.GetResource(ctx, conferenceRecordingsPathPart(conferenceSid), sid, recording)
+	return recording, err
+}
+
+// UpdateRecording changes the state of an in-progress conference recording, for
+// example to pause, resume, or stop it. Set the Status parameter in data.
+func (c *ConferenceService) UpdateRecording(ctx context.Context, conferenceSid string, sid string, data url.Values) (*Recording, error) {
+	recording := new(Recording)
+	err := c.client.UpdateResource(ctx, conferenceRecordingsPathPart(conferenceSid), sid, data, recording)
+	return recording, err
+}
+
+// DeleteRecording deletes the conference recording with the given sid. If it
+// has already been deleted, or does not exist, DeleteRecording returns nil.
+func (c *ConferenceService) DeleteRecording(ctx context.Context, conferenceSid string, sid string) error {
+	return c.client.DeleteResource(ctx, conferenceRecordingsPathPart(conferenceSid), sid)
 }
 
 func (c *ConferenceService) GetPage(ctx context.Context, data url.Values) (*ConferencePage, error) {

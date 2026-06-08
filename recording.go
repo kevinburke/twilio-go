@@ -2,6 +2,7 @@ package twilio
 
 import (
 	"context"
+	"encoding/json"
 	"net/url"
 	"strings"
 )
@@ -13,18 +14,25 @@ type RecordingService struct {
 const recordingsPathPart = "Recordings"
 
 type Recording struct {
-	Sid         string         `json:"sid"`
-	Duration    TwilioDuration `json:"duration"`
-	CallSid     string         `json:"call_sid"`
-	Status      Status         `json:"status"`
-	Price       string         `json:"price"`
-	PriceUnit   string         `json:"price_unit"`
-	DateCreated TwilioTime     `json:"date_created"`
-	AccountSid  string         `json:"account_sid"`
-	APIVersion  string         `json:"api_version"`
-	Channels    uint           `json:"channels"`
-	DateUpdated TwilioTime     `json:"date_updated"`
-	URI         string         `json:"uri"`
+	Sid               string            `json:"sid"`
+	Duration          TwilioDuration    `json:"duration"`
+	CallSid           string            `json:"call_sid"`
+	ConferenceSid     string            `json:"conference_sid"`
+	Status            Status            `json:"status"`
+	Source            string            `json:"source"`
+	Price             string            `json:"price"`
+	PriceUnit         string            `json:"price_unit"`
+	StartTime         TwilioTime        `json:"start_time"`
+	DateCreated       TwilioTime        `json:"date_created"`
+	AccountSid        string            `json:"account_sid"`
+	APIVersion        string            `json:"api_version"`
+	Channels          uint              `json:"channels"`
+	DateUpdated       TwilioTime        `json:"date_updated"`
+	ErrorCode         int               `json:"error_code"`
+	MediaURL          string            `json:"media_url"`
+	EncryptionDetails json.RawMessage   `json:"encryption_details"`
+	SubresourceURIs   map[string]string `json:"subresource_uris"`
+	URI               string            `json:"uri"`
 }
 
 // URL returns the URL that can be used to play this recording, based on the

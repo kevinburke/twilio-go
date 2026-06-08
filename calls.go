@@ -19,30 +19,34 @@ type CallService struct {
 }
 
 type Call struct {
-	Sid       string         `json:"sid"`
-	From      PhoneNumber    `json:"from"`
-	To        PhoneNumber    `json:"to"`
-	Status    Status         `json:"status"`
-	StartTime TwilioTime     `json:"start_time"`
-	EndTime   TwilioTime     `json:"end_time"`
-	Duration  TwilioDuration `json:"duration"`
+	Sid           string         `json:"sid"`
+	From          PhoneNumber    `json:"from"`
+	FromFormatted string         `json:"from_formatted"`
+	To            PhoneNumber    `json:"to"`
+	ToFormatted   string         `json:"to_formatted"`
+	Status        Status         `json:"status"`
+	StartTime     TwilioTime     `json:"start_time"`
+	EndTime       TwilioTime     `json:"end_time"`
+	Duration      TwilioDuration `json:"duration"`
 	// The wait time in milliseconds before the call is placed.
-	QueueTime      TwilioDurationMS `json:"queue_time"`
-	AccountSid     string           `json:"account_sid"`
-	Annotation     json.RawMessage  `json:"annotation"`
-	AnsweredBy     NullAnsweredBy   `json:"answered_by"`
-	CallerName     types.NullString `json:"caller_name"`
-	DateCreated    TwilioTime       `json:"date_created"`
-	DateUpdated    TwilioTime       `json:"date_updated"`
-	Direction      Direction        `json:"direction"`
-	ForwardedFrom  PhoneNumber      `json:"forwarded_from"`
-	GroupSid       string           `json:"group_sid"`
-	ParentCallSid  string           `json:"parent_call_sid"`
-	PhoneNumberSid string           `json:"phone_number_sid"`
-	Price          string           `json:"price"`
-	PriceUnit      string           `json:"price_unit"`
-	APIVersion     string           `json:"api_version"`
-	URI            string           `json:"uri"`
+	QueueTime       TwilioDurationMS  `json:"queue_time"`
+	AccountSid      string            `json:"account_sid"`
+	Annotation      json.RawMessage   `json:"annotation"`
+	AnsweredBy      NullAnsweredBy    `json:"answered_by"`
+	CallerName      types.NullString  `json:"caller_name"`
+	DateCreated     TwilioTime        `json:"date_created"`
+	DateUpdated     TwilioTime        `json:"date_updated"`
+	Direction       Direction         `json:"direction"`
+	ForwardedFrom   PhoneNumber       `json:"forwarded_from"`
+	GroupSid        string            `json:"group_sid"`
+	ParentCallSid   string            `json:"parent_call_sid"`
+	PhoneNumberSid  string            `json:"phone_number_sid"`
+	TrunkSid        string            `json:"trunk_sid"`
+	Price           string            `json:"price"`
+	PriceUnit       string            `json:"price_unit"`
+	APIVersion      string            `json:"api_version"`
+	SubresourceURIs map[string]string `json:"subresource_uris"`
+	URI             string            `json:"uri"`
 }
 
 // Ended returns true if the Call has reached a terminal state, and false
@@ -98,6 +102,12 @@ func (c *CallService) Update(ctx context.Context, sid string, data url.Values) (
 	call := new(Call)
 	err := c.client.UpdateResource(ctx, callsPathPart, sid, data, call)
 	return call, err
+}
+
+// Delete removes the Call record with the given sid from your account. If the
+// Call has already been deleted, or does not exist, Delete returns nil.
+func (c *CallService) Delete(ctx context.Context, sid string) error {
+	return c.client.DeleteResource(ctx, callsPathPart, sid)
 }
 
 // Cancel an in-progress Call with the given sid. Cancel will not affect
@@ -292,8 +302,9 @@ func (c *callPageIterator) Next(ctx context.Context) (*CallPage, error) {
 	return cp, nil
 }
 
-// GetRecordings returns an array of recordings for this Call. Note there may
-// be more than one Page of results.
+// GetRecordings returns an array of account-level Recording values filtered to
+// this Call. Note there may be more than one Page of results. Use
+// GetCallRecordings when you need call-scoped fields such as Track.
 func (c *CallService) GetRecordings(ctx context.Context, callSid string, data url.Values) (*RecordingPage, error) {
 	if data == nil {
 		data = url.Values{}
@@ -304,8 +315,9 @@ func (c *CallService) GetRecordings(ctx context.Context, callSid string, data ur
 	return c.client.Recordings.GetPage(ctx, data)
 }
 
-// GetRecordings returns an iterator of recording pages for this Call.
-// Note there may be more than one Page of results.
+// GetRecordingsIterator returns an iterator of account-level Recording pages
+// filtered to this Call. Use GetCallRecordingsIterator when you need call-scoped
+// fields such as Track.
 func (c *CallService) GetRecordingsIterator(callSid string, data url.Values) *RecordingPageIterator {
 	if data == nil {
 		data = url.Values{}

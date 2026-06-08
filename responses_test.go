@@ -18,7 +18,10 @@ type Server struct {
 	URL string
 	// URLs of incoming requests, in order
 	URLs []*url.URL
-	mu   sync.Mutex
+	// Methods holds the HTTP method of each incoming request, in order, with
+	// indices matching URLs.
+	Methods []string
+	mu      sync.Mutex
 }
 
 func (s *Server) Close() {
@@ -38,6 +41,7 @@ func newServer(response []byte, code int) *Server {
 	s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		serv.mu.Lock()
 		serv.URLs = append(serv.URLs, r.URL)
+		serv.Methods = append(serv.Methods, r.Method)
 		serv.mu.Unlock()
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(code)

@@ -287,6 +287,26 @@ type NullAnsweredBy struct {
 	AnsweredBy AnsweredBy
 }
 
+// UnmarshalJSON decodes the answered_by field, which the API returns either as
+// null or as a string ("human", "machine", and the more specific AMD values
+// like "machine_end_beep"). Without this, a non-null answered_by fails to
+// decode into the surrounding struct, because the JSON string cannot be
+// unmarshaled into NullAnsweredBy's struct shape.
+func (n *NullAnsweredBy) UnmarshalJSON(b []byte) error {
+	s := new(string)
+	if err := json.Unmarshal(b, s); err != nil {
+		return err
+	}
+	if s == nil || *s == "" {
+		n.Valid = false
+		n.AnsweredBy = ""
+		return nil
+	}
+	n.Valid = true
+	n.AnsweredBy = AnsweredBy(*s)
+	return nil
+}
+
 // The status of a resource ("accepted", "queued", etc).
 // For more information, see
 //
