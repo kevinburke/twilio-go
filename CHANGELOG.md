@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+No changes yet.
+
+## 2.12.0 (2026-06-09)
+
 Added support for the SIP configuration resources under the core API's `/SIP`
 path, reachable via `Client.SIP`: Credential Lists and their Credentials, SIP
 Domains, IP Access Control Lists and their IP Addresses, the Domain
@@ -70,9 +74,13 @@ The phone-number sub-resources (typed lists, Mobile purchasing, AssignedAddOns)
 and the remaining call sub-resources (siprec, streams, realtime transcriptions,
 user-defined messages) are still unimplemented.
 
+The module now requires Go 1.25. CI runs against Go 1.25 and 1.26, runs the
+OpenAPI conformance tests against a pinned `twilio-oai` checkout, and fails if
+`go fix`, `go fmt`, or `goimports` leave a diff.
+
 [twilio-oai]: https://github.com/twilio/twilio-oai
 
-## 2.11.0
+## 2.11.0 (2026-05-22)
 
 The module path now includes the required `/v2` major-version suffix:
 `github.com/kevinburke/twilio-go/v2`. Previous v2.x releases shipped under
