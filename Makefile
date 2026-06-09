@@ -12,12 +12,11 @@ test: lint
 lint: fmt
 	go vet ./...
 	$(STATICCHECK) -version
-	@output="$$( $(STATICCHECK) ./... 2>&1 )"; status="$$?"; \
-	if [ -n "$$output" ]; then printf '%s\n' "$$output"; fi; \
-	if [ "$$status" -ne 0 ]; then exit "$$status"; fi; \
-	case "$$output" in \
-		*"matched no packages"*) echo "$(STATICCHECK) matched no packages" >&2; exit 1 ;; \
-	esac
+	@packages="$$(go list ./...)" || exit "$$?"; \
+	if [ -z "$$packages" ]; then echo "go list ./... matched no packages" >&2; exit 1; fi; \
+	set -- $$packages; \
+	echo "$(STATICCHECK) $$# packages"; \
+	$(STATICCHECK) "$$@"
 
 race-test: lint
 	go test -race ./...
