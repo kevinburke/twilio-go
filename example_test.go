@@ -7,7 +7,7 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/kevinburke/rest/resterror"
+	"github.com/kevinburke/rest/v2/resterror"
 	twilio "github.com/kevinburke/twilio-go/v2"
 )
 

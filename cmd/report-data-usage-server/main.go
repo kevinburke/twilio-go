@@ -53,8 +53,8 @@ import (
 
 	types "github.com/kevinburke/go-types"
 	"github.com/kevinburke/handlers"
-	"github.com/kevinburke/rest"
-	"github.com/kevinburke/rest/resterror"
+	"github.com/kevinburke/rest/v2"
+	"github.com/kevinburke/rest/v2/resterror"
 	twilio "github.com/kevinburke/twilio-go/v2"
 	"github.com/kevinburke/twilio-go/v2/datausage"
 	"golang.org/x/sync/errgroup"

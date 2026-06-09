@@ -11,8 +11,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/kevinburke/rest/restclient"
-	"github.com/kevinburke/rest/resterror"
+	"github.com/kevinburke/rest/v2/restclient"
+	"github.com/kevinburke/rest/v2/resterror"
 )
 
 // The twilio-go version. Run "make release" to bump this number.

@@ -1,5 +1,18 @@
 # Changes
 
+## 2.14.0 (2026-06-09)
+
+Upgraded to `github.com/kevinburke/rest/v2`. The `rest` module added the
+required `/v2` major-version suffix to its module path, so the imports now
+read `github.com/kevinburke/rest/v2/restclient` and
+`github.com/kevinburke/rest/v2/resterror`. There are no API changes.
+
+Upgraded `github.com/kevinburke/go-types` and `github.com/kevinburke/handlers`.
+Together these drop two stale indirect dependencies: the pre-`/v2`
+`github.com/kevinburke/rest` module (pulled in by the old `handlers`) and
+`github.com/gofrs/uuid v4.4.0+incompatible` (pulled in by the old `go-types`,
+which now uses `github.com/gofrs/uuid/v5`).
+
 ## 2.13.0 (2026-06-09)
 
 Added support for the Addresses resource, reachable via `Client.Addresses`:

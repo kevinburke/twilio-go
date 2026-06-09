@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/kevinburke/rest/resterror"
+	"github.com/kevinburke/rest/v2/resterror"
 )
 
 // invalid status here on purpose to check we use a different one.
