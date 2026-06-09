@@ -1,7 +1,6 @@
 package twilio
 
 import (
-	"context"
 	"net/url"
 	"testing"
 )
@@ -10,8 +9,7 @@ func TestLookupPhoneNumbersGet(t *testing.T) {
 	t.Parallel()
 	client, s := getServer(phoneLookupResponse)
 	defer s.Close()
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
+	ctx := t.Context()
 
 	data := url.Values{}
 	data.Add("Type", "carrier")

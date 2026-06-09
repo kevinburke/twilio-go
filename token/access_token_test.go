@@ -11,9 +11,7 @@ func TestAccessTokenJWTConcurrent(t *testing.T) {
 	t.Parallel()
 	var wg sync.WaitGroup
 	for range 20 {
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
+		wg.Go(func() {
 			at := New("AC123", "SK456", "secretkey", "test@example.com", time.Hour)
 			at.AddGrant(NewConversationsGrant("IS123"))
 			jwt, err := at.JWT()
@@ -24,7 +22,7 @@ func TestAccessTokenJWTConcurrent(t *testing.T) {
 			if parts := strings.Split(jwt, "."); len(parts) != 3 {
 				t.Errorf("JWT had %d parts, want 3", len(parts))
 			}
-		}()
+		})
 	}
 	wg.Wait()
 }

@@ -1,7 +1,6 @@
 package twilio
 
 import (
-	"context"
 	"net/url"
 	"testing"
 )
@@ -10,8 +9,7 @@ func TestVerifyPhoneNumbersCreate(t *testing.T) {
 	t.Parallel()
 	client, s := getServer(verifyResponse)
 	defer s.Close()
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
+	ctx := t.Context()
 
 	data := url.Values{}
 	data.Add("to", "+14155551234")
@@ -38,8 +36,7 @@ func TestVerifyPhoneNumbersGet(t *testing.T) {
 	t.Parallel()
 	client, s := getServer(verifyResponse)
 	defer s.Close()
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
+	ctx := t.Context()
 
 	verify, err := client.Verify.Verifications.Get(ctx, "VA9e0bd45bfa7d9b9e7dca86cf94c7d4f8", "+14155551234")
 	if err != nil {
@@ -63,8 +60,7 @@ func TestVerifyPhoneNumbersCheck(t *testing.T) {
 	t.Parallel()
 	client, s := getServer(verifyCheckResponse)
 	defer s.Close()
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
+	ctx := t.Context()
 
 	data := url.Values{}
 	data.Add("code", "1234")
@@ -91,8 +87,7 @@ func TestVerifyAccessTokenCreate(t *testing.T) {
 	t.Parallel()
 	client, s := getServer(verifyAccessTokenResponse)
 	defer s.Close()
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
+	ctx := t.Context()
 
 	data := url.Values{}
 	data.Add("Identity", "foo")
@@ -110,8 +105,7 @@ func TestVerifyChallengeCreate(t *testing.T) {
 	t.Parallel()
 	client, s := getServer(verifyChallengeResponse)
 	defer s.Close()
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
+	ctx := t.Context()
 
 	data := url.Values{}
 	data.Add("FactorSid", "YFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
@@ -135,8 +129,7 @@ func TestVerifyChallengeCheck(t *testing.T) {
 	t.Parallel()
 	client, s := getServer(verifyChallengeResponse)
 	defer s.Close()
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
+	ctx := t.Context()
 
 	challenge, err := client.Verify.Challenges.Get(ctx, "VA9e0bd45bfa7d9b9e7dca86cf94c7d4f8", "ff483d1ff591898a9942916050d2ca3f", "YCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
 	if err != nil {
