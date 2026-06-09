@@ -1,5 +1,6 @@
 Andrei Shneider <megaherz@bk.ru>
 Andrey Mak <andrey.mak@yahoo.com>
+Claude <noreply@anthropic.com>
 Douglas Danger Manley <doug.manley@gmail.com>
 Duncan Crawford <duncan@noughtsandones.co.uk>
 Elijah Oyekunle <eloyekunle@gmail.com>
@@ -23,4 +24,6 @@ Minko Gechev <mgechev@gmail.com>
 Scott Gose <gose@facetedthought.com>
 Tomasz Tomalak <tomasztomalak@o2.pl>
 WilliamNHarvey <williamnharvey@gmail.com>
+burkebot <burkebot@burke.dev>
+dependabot <dependabot@github.com>
 vmikitich <vlad.mikitich@softeq.com>
