@@ -38,4 +38,5 @@ jobs:
       run: make ci
       working-directory: './src/github.com/kevinburke/twilio-go'
       env:
+        STATICCHECK: go run honnef.co/go/tools/cmd/staticcheck@latest
         TWILIO_OAI_DIR: ${{ github.workspace }}/src/github.com/twilio/twilio-oai

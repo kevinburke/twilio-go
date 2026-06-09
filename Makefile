@@ -1,14 +1,23 @@
-.PHONY: test vet release
+.PHONY: test lint race-test race-test-short fmt ci release force authors
 
 # would be great to make the bash location portable but not sure how
 SHELL = /bin/bash -o pipefail
+
+STATICCHECK ?= staticcheck
+version ?= minor
 
 test: lint
 	go test ./...
 
 lint: fmt
 	go vet ./...
-	go run honnef.co/go/tools/cmd/staticcheck@latest ./...
+	$(STATICCHECK) -version
+	@output="$$( $(STATICCHECK) ./... 2>&1 )"; status="$$?"; \
+	if [ -n "$$output" ]; then printf '%s\n' "$$output"; fi; \
+	if [ "$$status" -ne 0 ]; then exit "$$status"; fi; \
+	case "$$output" in \
+		*"matched no packages"*) echo "$(STATICCHECK) matched no packages" >&2; exit 1 ;; \
+	esac
 
 race-test: lint
 	go test -race ./...
@@ -33,7 +42,7 @@ ci: | $(DIFFER)
 release: race-test-short
 	go run -v github.com/kevinburke/differ@latest $(MAKE) authors
 	go run -v github.com/kevinburke/differ@latest $(MAKE) fmt
-	go run -v github.com/kevinburke/bump_version@latest --tag-prefix=v minor http.go
+	go run -v github.com/kevinburke/bump_version@latest --tag-prefix=v $(version) http.go
 
 force: ;
 
