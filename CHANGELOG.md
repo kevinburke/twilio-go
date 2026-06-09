@@ -1,6 +1,6 @@
 # Changes
 
-## Unreleased
+## 2.13.0 (2026-06-09)
 
 Added support for the Addresses resource, reachable via `Client.Addresses`:
 create, fetch, update, delete, and list Address resources, plus listing the
