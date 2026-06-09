@@ -2,7 +2,9 @@
 
 ## Unreleased
 
-No changes yet.
+Added support for the Addresses resource, reachable via `Client.Addresses`:
+create, fetch, update, delete, and list Address resources, plus listing the
+Dependent Phone Numbers whose regulatory requirements an Address satisfies.
 
 ## 2.12.0 (2026-06-09)
 

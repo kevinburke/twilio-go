@@ -108,6 +108,24 @@ func TestImplementedEndpointPaths(t *testing.T) {
 			"POST", "/2010-04-01/Accounts/AC123/Calls/CA123/Payments/PK123.json",
 		},
 		{
+			"AddressUpdate",
+			func(c *Client) error { _, err := c.Addresses.Update(ctx, "AD123", empty); return err },
+			"POST", "/2010-04-01/Accounts/AC123/Addresses/AD123.json",
+		},
+		{
+			"AddressDelete",
+			func(c *Client) error { return c.Addresses.Delete(ctx, "AD123") },
+			"DELETE", "/2010-04-01/Accounts/AC123/Addresses/AD123.json",
+		},
+		{
+			"AddressGetDependentPhoneNumbers",
+			func(c *Client) error {
+				_, err := c.Addresses.GetDependentPhoneNumbers(ctx, "AD123", empty)
+				return err
+			},
+			"GET", "/2010-04-01/Accounts/AC123/Addresses/AD123/DependentPhoneNumbers.json",
+		},
+		{
 			"ConferenceUpdate",
 			func(c *Client) error { _, err := c.Conferences.Update(ctx, "CF123", empty); return err },
 			"POST", "/2010-04-01/Accounts/AC123/Conferences/CF123.json",

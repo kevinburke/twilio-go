@@ -87,8 +87,10 @@ Using twilio-go in production? [Let me know!](mailto:kevin@burke.services)
 
 ## Supported API's
 
-The API is unlikely to change, and currently covers these resources:
+The API shape (Get, GetPage, Update, Delete, etc.) is unlikely to change, and
+currently covers these resources:
 
+- Addresses (and Dependent Phone Numbers)
 - Alerts
 - Applications
 - Calls

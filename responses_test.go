@@ -430,6 +430,74 @@ var callerIDVerify = []byte(`
 }
 `)
 
+var addressInstance = []byte(`
+{
+    "account_sid": "AC58f1e8f2b1c6b88ca90a012a4be0c279",
+    "city": "SF",
+    "customer_name": "name",
+    "date_created": "Tue, 18 Aug 2015 17:07:30 +0000",
+    "date_updated": "Tue, 18 Aug 2015 17:07:30 +0000",
+    "emergency_enabled": false,
+    "friendly_name": "Main Office",
+    "iso_country": "US",
+    "postal_code": "94019",
+    "region": "CA",
+    "sid": "ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "street": "4th",
+    "street_secondary": "Suite 300",
+    "validated": false,
+    "verified": false,
+    "uri": "/2010-04-01/Accounts/AC58f1e8f2b1c6b88ca90a012a4be0c279/Addresses/ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
+}
+`)
+
+var dependentPhoneNumbersPage = []byte(`
+{
+    "dependent_phone_numbers": [
+        {
+            "sid": "PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "account_sid": "AC58f1e8f2b1c6b88ca90a012a4be0c279",
+            "friendly_name": "(925) 271-7005",
+            "phone_number": "+19252717005",
+            "voice_url": "https://demo.twilio.com/welcome/voice/",
+            "voice_method": "POST",
+            "voice_fallback_url": null,
+            "voice_fallback_method": "POST",
+            "voice_caller_id_lookup": false,
+            "date_created": "Thu, 23 Feb 2017 18:26:31 +0000",
+            "date_updated": "Thu, 23 Feb 2017 18:26:31 +0000",
+            "sms_url": "https://demo.twilio.com/welcome/sms/reply",
+            "sms_method": "POST",
+            "sms_fallback_url": null,
+            "sms_fallback_method": "POST",
+            "address_requirements": "any",
+            "capabilities": {
+                "Voice": false,
+                "SMS": true,
+                "MMS": false
+            },
+            "status_callback": "",
+            "status_callback_method": "POST",
+            "api_version": "2010-04-01",
+            "voice_application_sid": "",
+            "sms_application_sid": "",
+            "trunk_sid": "",
+            "emergency_status": "Inactive",
+            "emergency_address_sid": "",
+            "uri": "/2010-04-01/Accounts/AC58f1e8f2b1c6b88ca90a012a4be0c279/IncomingPhoneNumbers/PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json"
+        }
+    ],
+    "first_page_uri": "/2010-04-01/Accounts/AC58f1e8f2b1c6b88ca90a012a4be0c279/Addresses/ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/DependentPhoneNumbers.json?PageSize=50&Page=0",
+    "next_page_uri": null,
+    "page": 0,
+    "page_size": 50,
+    "previous_page_uri": null,
+    "uri": "/2010-04-01/Accounts/AC58f1e8f2b1c6b88ca90a012a4be0c279/Addresses/ADaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/DependentPhoneNumbers.json?PageSize=50&Page=0",
+    "start": 0,
+    "end": 0
+}
+`)
+
 var accountInstance = []byte(`
 {
     "auth_token": "[redacted]",
