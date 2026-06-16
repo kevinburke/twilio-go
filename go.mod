@@ -3,7 +3,7 @@ module github.com/kevinburke/twilio-go/v2
 go 1.25.0
 
 require (
-	github.com/kevinburke/go-types v0.0.0-20260609004541-e965afa6a3a1
+	github.com/kevinburke/go-types v1.3.0
 	github.com/kevinburke/handlers v0.50.0
 	github.com/kevinburke/rest/v2 v2.15.0
 	github.com/ttacon/libphonenumber v1.2.1
