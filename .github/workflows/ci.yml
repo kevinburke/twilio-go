@@ -7,7 +7,7 @@ jobs:
         go-version: [1.25.x, 1.26.x]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v6.0.3
       with:
          path: './src/github.com/kevinburke/twilio-go'
     # The OpenAPI conformance tests (*_oai_test.go) check our structs against
@@ -15,7 +15,7 @@ jobs:
     # and pointing TWILIO_OAI_DIR at it makes them run. Pinned to a commit so CI
     # is deterministic; bump the ref to re-check against a newer spec.
     - name: Check out twilio-oai spec
-      uses: actions/checkout@v6
+      uses: actions/checkout@v6.0.3
       with:
         repository: twilio/twilio-oai
         ref: 1a9189c79a73781ddf45afcd0afd1f210742d68c
