@@ -1,13 +1,13 @@
 module github.com/kevinburke/twilio-go/v2
 
-go 1.25.0
+go 1.26.0
 
 require (
 	github.com/kevinburke/go-types v1.3.0
 	github.com/kevinburke/handlers v0.50.0
 	github.com/kevinburke/rest/v2 v2.15.0
 	github.com/ttacon/libphonenumber v1.2.1
-	golang.org/x/sync v0.22.0
+	golang.org/x/sync v0.23.0
 	golang.org/x/text v0.41.0
 )
 
