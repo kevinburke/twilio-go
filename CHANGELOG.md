@@ -1,5 +1,13 @@
 # Changes
 
+## Unreleased
+
+The default HTTP client now refuses TLS connections whose verified certificate
+chains all contain one of the eight intermediate certificates that Go 1.27.3
+distrusts (CVE-2026-111943, golang/go#82345). This brings the same protection
+to users on older Go releases. Clients constructed with a custom `*http.Client`
+are unaffected; upgrade Go to get the fix there.
+
 ## 2.14.0 (2026-06-09)
 
 Upgraded to `github.com/kevinburke/rest/v2`. The `rest` module added the

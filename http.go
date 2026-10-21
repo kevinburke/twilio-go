@@ -158,7 +158,7 @@ var defaultHttpClient *http.Client
 func init() {
 	defaultHttpClient = &http.Client{
 		Timeout:   defaultTimeout,
-		Transport: restclient.DefaultTransport,
+		Transport: newDefaultTransport(),
 	}
 }
 
