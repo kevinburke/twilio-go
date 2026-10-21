@@ -1,6 +1,6 @@
 # Changes
 
-## Unreleased
+## 2.14.1 (2026-10-20)
 
 The default HTTP client now refuses TLS connections whose verified certificate
 chains all contain one of the eight intermediate certificates that Go 1.27.3
