@@ -26,7 +26,7 @@ func TestGetWorkflow(t *testing.T) {
 	}
 
 	if workflow.TaskReservationTimeout != taskReservationTimeout {
-		t.Errorf("task router workflow: got sid %q, want %q", workflow.TaskReservationTimeout, taskReservationTimeout)
+		t.Errorf("task router workflow: got task reservation timeout %d, want %d", workflow.TaskReservationTimeout, taskReservationTimeout)
 	}
 }
 

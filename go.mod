@@ -1,6 +1,6 @@
 module github.com/kevinburke/twilio-go/v2
 
-go 1.25.0
+go 1.26.0
 
 require (
 	github.com/kevinburke/go-types v1.3.0

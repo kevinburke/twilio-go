@@ -132,8 +132,7 @@ func loadSpec(t *testing.T) *openAPISpec {
 // into embedded structs.
 func jsonFields(typ reflect.Type) map[string]reflect.StructField {
 	fields := make(map[string]reflect.StructField)
-	for i := 0; i < typ.NumField(); i++ {
-		f := typ.Field(i)
+	for f := range typ.Fields() {
 		if f.Anonymous && f.Type.Kind() == reflect.Struct {
 			maps.Copy(fields, jsonFields(f.Type))
 			continue
