@@ -8,7 +8,7 @@ require (
 	github.com/kevinburke/rest/v2 v2.15.0
 	github.com/ttacon/libphonenumber v1.2.1
 	golang.org/x/sync v0.25.0
-	golang.org/x/text v0.43.0
+	golang.org/x/text v0.44.0
 )
 
 require (
